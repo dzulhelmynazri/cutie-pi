@@ -3,11 +3,11 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import {
+  type CutiePiDesktop,
+  type CutiePiDesktopOAuthCallback,
   desktopOAuthCode,
   oauthStateOf,
   onDesktopOAuthCallback,
-  type CutiePiDesktop,
-  type CutiePiDesktopOAuthCallback,
   windowChromeKind,
 } from "./desktop.js";
 
@@ -102,7 +102,7 @@ describe("attempt correlation", () => {
     let emit: (callback: CutiePiDesktopOAuthCallback) => void = () => undefined;
     const unsubscribe = vi.fn();
     vi.stubGlobal("window", {
-      cutie-piDesktop: {
+      cutiePiDesktop: {
         ...desktop("linux"),
         oauth: {
           onCallback: (listener: (callback: CutiePiDesktopOAuthCallback) => void) => {

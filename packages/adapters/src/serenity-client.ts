@@ -1,7 +1,7 @@
 import { isIP } from "node:net";
+import { isLocalMcpHost } from "@cutie-pi/contracts";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { StreamableHTTPClientTransport } from "@modelcontextprotocol/sdk/client/streamableHttp.js";
-import { isLocalMcpHost } from "@cutie-pi/contracts";
 import { Agent } from "undici";
 import { combineSignals } from "./connector-safety.js";
 import {

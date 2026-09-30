@@ -7,7 +7,7 @@ let primedBootstrap: { botId?: string; promise: Promise<AppBootstrap> } | null =
 
 const initialTarget = initialBootstrapTarget(
   window.location.pathname,
-  Boolean(window.cutie-piDesktop),
+  Boolean(window.cutiePiDesktop),
 );
 if (initialTarget) {
   const { botId } = initialTarget;

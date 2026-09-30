@@ -1,4 +1,3 @@
-import { Trans, useLingui } from "@lingui/react/macro";
 import { COMPUTER_UPDATE_STAGES, type ComputerUpdate } from "@cutie-pi/contracts";
 import { computerUpdateNeedsAttention, computerUpdateStages } from "@cutie-pi/core";
 import {
@@ -16,6 +15,7 @@ import {
   DialogContent,
   DialogTitle,
 } from "@cutie-pi/ui-web";
+import { Trans, useLingui } from "@lingui/react/macro";
 import { CheckCircle2, Circle, CircleAlert, LoaderCircle } from "lucide-react";
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { computerUpdates } from "../lib/computer-updates";

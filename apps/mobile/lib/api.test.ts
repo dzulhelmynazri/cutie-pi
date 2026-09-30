@@ -80,7 +80,10 @@ describe("mobile API authentication", () => {
         body: JSON.stringify({ email: "ada@example.com", password: "correct horse" }),
       }),
     );
-    expect(SecureStore.setItemAsync).toHaveBeenCalledWith("cutie-pi.session_token", "session-token");
+    expect(SecureStore.setItemAsync).toHaveBeenCalledWith(
+      "cutie-pi.session_token",
+      "session-token",
+    );
     expect(resumeLiveNotifications).not.toHaveBeenCalled();
   });
 
@@ -178,7 +181,10 @@ describe("mobile API authentication", () => {
 
     await changePassword("old-password", "new-password");
 
-    expect(SecureStore.setItemAsync).toHaveBeenCalledWith("cutie-pi.session_token", "rotated-token");
+    expect(SecureStore.setItemAsync).toHaveBeenCalledWith(
+      "cutie-pi.session_token",
+      "rotated-token",
+    );
     expect(resumeLiveNotifications).toHaveBeenCalledWith(
       "http://127.0.0.1:3100",
       "rotated-token",
@@ -219,7 +225,10 @@ describe("mobile API authentication", () => {
     resolveFetch(jsonResponse({ token: "rotated-token", user: { id: "user-1" } }));
     await pending;
 
-    expect(SecureStore.setItemAsync).toHaveBeenCalledWith("cutie-pi.session_token", "rotated-token");
+    expect(SecureStore.setItemAsync).toHaveBeenCalledWith(
+      "cutie-pi.session_token",
+      "rotated-token",
+    );
   });
 
   it("keeps the rotated token in memory and reports a failed keychain write", async () => {
@@ -1593,7 +1602,10 @@ describe("mobile API authentication", () => {
       storage.delete(key);
     });
     vi.mocked(SecureStore.setItemAsync).mockImplementation(async (key, value) => {
-      if (key === "cutie-pi.api_base" || (key === "cutie-pi.space_id" && value === "space-support")) {
+      if (
+        key === "cutie-pi.api_base" ||
+        (key === "cutie-pi.space_id" && value === "space-support")
+      ) {
         throw new Error("device locked");
       }
       storage.set(key, value);

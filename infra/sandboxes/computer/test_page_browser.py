@@ -79,7 +79,7 @@ class PageBrowserTest(unittest.TestCase):
             ])
         self.assertEqual(
             evaluate.call_args_list[1].args[2],
-            'window.__cutie-piPageBrowser.fill("e1", "fake-password", "https://login.example.test")',
+            'window.__cutiePiPageBrowser.fill("e1", "fake-password", "https://login.example.test")',
         )
 
     def test_rejects_origin_outside_fill_before_any_action(self):

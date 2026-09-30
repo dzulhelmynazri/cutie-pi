@@ -1,4 +1,16 @@
 import { randomUUID } from "node:crypto";
+import type {
+  AdapterContext,
+  AgentRunRequest,
+  AgentRuntime,
+  AgentRuntimeEvent,
+  AgentSteeringMessage,
+  AgentToolCompletion,
+  AgentToolExecutionResult,
+  ConnectorTool,
+} from "@cutie-pi/adapter-kit";
+import { usableModelId } from "@cutie-pi/contracts";
+import { getLogger } from "@cutie-pi/logging";
 import {
   Agent,
   type AgentMessage,
@@ -20,18 +32,6 @@ import {
 } from "@earendil-works/pi-ai";
 import { builtinModels } from "@earendil-works/pi-ai/providers/all";
 import { AssistantMessageEventStream } from "@earendil-works/pi-ai/utils/event-stream";
-import type {
-  AdapterContext,
-  AgentRunRequest,
-  AgentRuntime,
-  AgentRuntimeEvent,
-  AgentSteeringMessage,
-  AgentToolCompletion,
-  AgentToolExecutionResult,
-  ConnectorTool,
-} from "@cutie-pi/adapter-kit";
-import { usableModelId } from "@cutie-pi/contracts";
-import { getLogger } from "@cutie-pi/logging";
 import { isToolPauseResult } from "./approval-effect.js";
 import { builtinAgentTools, DELEGATION_TOOL_NAMES } from "./builtin-tools.js";
 import { DEFAULT_OPENROUTER_MODEL_ID } from "./deployment-model.js";

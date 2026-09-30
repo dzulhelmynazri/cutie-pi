@@ -1,6 +1,6 @@
 const { contextBridge, ipcRenderer } = require("electron");
 
-contextBridge.exposeInMainWorld("cutie-piDesktop", {
+contextBridge.exposeInMainWorld("cutiePiDesktop", {
   platform: process.platform,
   localSettings: {
     request: (pathname, body) =>

@@ -1,5 +1,5 @@
-import { builtinModels } from "@earendil-works/pi-ai/providers/all";
 import { OPENAI_COMPATIBLE_PROVIDER_ID } from "@cutie-pi/contracts";
+import { builtinModels } from "@earendil-works/pi-ai/providers/all";
 import { describe, expect, it } from "vitest";
 import { buildModelConnectPlaintext } from "./model-connect.js";
 import { listPiCatalog } from "./pi-models.js";

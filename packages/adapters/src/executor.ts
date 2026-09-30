@@ -790,7 +790,7 @@ export async function persistLivePluginConnections(
 }
 
 export const APPROVED_EFFECT_REPLAY_ORDER = [{ createdAt: "asc" as const }, { id: "asc" as const }];
-const CATALOG_APPROVAL_TOOL = "__cutie-piCatalogTool";
+const CATALOG_APPROVAL_TOOL = "__cutiePiCatalogTool";
 
 export function approvalReplayEffectToolName(
   liveName: string,

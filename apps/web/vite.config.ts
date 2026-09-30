@@ -5,12 +5,12 @@ import https from "node:https";
 import net from "node:net";
 import path from "node:path";
 import tls from "node:tls";
-import { lingui } from "@lingui/vite-plugin";
 import type { DesktopStackProbeResponse } from "@cutie-pi/contracts";
 import {
   safeScreenProxyResponseHeaders,
   stripSensitiveHandshakeHeaders,
 } from "@cutie-pi/core/node/screen-proxy-response";
+import { lingui } from "@lingui/vite-plugin";
 import babel from "@rolldown/plugin-babel";
 import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react";

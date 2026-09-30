@@ -596,7 +596,7 @@ describe("dictation engine choice", () => {
   it("treats Electron as having no usable Web Speech", () => {
     vi.stubGlobal("window", {
       webkitSpeechRecognition: class {},
-      cutie-piDesktop: { platform: "darwin" },
+      cutiePiDesktop: { platform: "darwin" },
     });
     expect(webSpeechAvailable()).toBe(false);
   });
@@ -762,7 +762,7 @@ describe("Dictation web speech", () => {
     }
     vi.stubGlobal("window", {
       webkitSpeechRecognition: FakeRecognition,
-      cutie-piDesktop: { platform: "darwin" },
+      cutiePiDesktop: { platform: "darwin" },
     });
     const fetchMock = vi.fn(async () => Response.json({ text: "from fish" }));
     stubRecorderFallback(fetchMock);

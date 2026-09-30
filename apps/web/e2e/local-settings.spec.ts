@@ -6,7 +6,7 @@ test("local settings open and save integrations without an app session", async (
 }, testInfo) => {
   await page.addInitScript(() => {
     let connected = false;
-    window.cutie-piDesktop = {
+    window.cutiePiDesktop = {
       platform: "darwin",
       localSettings: {
         request: async (pathname: string, body: string) => {
@@ -58,7 +58,7 @@ test("local settings open and save integrations without an app session", async (
           return { status: 200, body: JSON.stringify({ json }) };
         },
       },
-    } as typeof window.cutie-piDesktop;
+    } as typeof window.cutiePiDesktop;
   });
   await page.goto("/desktop-settings");
   await page.getByRole("button", { name: "Server integrations", exact: true }).click();

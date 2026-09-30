@@ -1,4 +1,3 @@
-import { RPCHandler } from "@orpc/server/fetch";
 import {
   COMPUTER_SCREEN_UNAVAILABLE,
   CodexCatalogCache,
@@ -10,6 +9,7 @@ import { REPLY_QUOTE_MAX_LENGTH } from "@cutie-pi/contracts";
 import { openScreenCapability } from "@cutie-pi/core/node/screen-capability";
 import type { PrismaClient } from "@cutie-pi/db";
 import { createLogger, createTestSink, installLogger } from "@cutie-pi/logging";
+import { RPCHandler } from "@orpc/server/fetch";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { createRouter, enqueueBotIntroRun, type RouterDeps } from "./router.js";
 

@@ -136,7 +136,11 @@ describeJourneys("required product journeys", () => {
 
   it("computer updates preserve the workspace and reserve the shared computer until completion", async () => {
     const cookie = await signup(app, `maintenance-${stamp}@cutie-pi.test`, "Maintenance");
-    const outsider = await signup(app, `maintenance-other-${stamp}@cutie-pi.test`, "Other workspace");
+    const outsider = await signup(
+      app,
+      `maintenance-other-${stamp}@cutie-pi.test`,
+      "Other workspace",
+    );
     const bot = await rpc<Bot>(app, cookie, "bots/create", {
       name: "Writer",
       title: "Writer",
@@ -2678,7 +2682,11 @@ describeJourneys("required product journeys", () => {
   });
 
   it("21: routine destination writes pause on the same approval card", async () => {
-    const cookie = await signup(app, `routine-approval-j-${stamp}@cutie-pi.test`, "Routine Approval");
+    const cookie = await signup(
+      app,
+      `routine-approval-j-${stamp}@cutie-pi.test`,
+      "Routine Approval",
+    );
     const bot = await rpc<Bot>(app, cookie, "bots/create", {
       name: "Chief",
       title: "",

@@ -1,4 +1,3 @@
-import { t } from "@lingui/core/macro";
 import type { ThreadMessage, ThreadSnapshot } from "@cutie-pi/contracts";
 import {
   callClientNonce,
@@ -9,6 +8,7 @@ import {
   spokenDecision,
   spokenMemory,
 } from "@cutie-pi/core";
+import { t } from "@lingui/core/macro";
 import { useSyncExternalStore } from "react";
 import { dictation } from "./dictation.js";
 import { rpc } from "./rpc.js";

@@ -116,7 +116,8 @@ describeLive("live release-watch eval (GPT 5.6 Luna + GitHub emulator)", () => {
     );
     expect(routines.length).toBeGreaterThan(0);
     const routine =
-      routines.find((row) => /cutie-pi|release/i.test(`${row.name}\n${row.prompt}`)) ?? routines[0]!;
+      routines.find((row) => /cutie-pi|release/i.test(`${row.name}\n${row.prompt}`)) ??
+      routines[0]!;
 
     const dueAt = new Date(Date.now() - 1_000);
     await handles.prisma.routine.update({

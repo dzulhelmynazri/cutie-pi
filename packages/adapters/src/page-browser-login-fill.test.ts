@@ -39,12 +39,12 @@ function installPageHelper(url: string, html: string) {
   vm.runInContext(match[1], dom.getInternalVMContext());
   const browser = (
     domWindow as unknown as {
-      __cutie-piPageBrowser: {
+      __cutiePiPageBrowser: {
         snapshot: () => { elements: Array<{ ref: string; name: string; value?: string }> };
         fill: (ref: string, value: string, origin?: string) => { url: string };
       };
     }
-  ).__cutie-piPageBrowser;
+  ).__cutiePiPageBrowser;
   return { domWindow, browser };
 }
 

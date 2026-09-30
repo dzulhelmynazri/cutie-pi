@@ -4,12 +4,12 @@ export type { CutiePiDesktop, CutiePiDesktopOAuthCallback } from "@cutie-pi/cont
 
 declare global {
   interface Window {
-    cutie-piDesktop?: CutiePiDesktop;
+    cutiePiDesktop?: CutiePiDesktop;
   }
 }
 
 export function desktopBridge(): CutiePiDesktop | undefined {
-  return typeof window === "undefined" ? undefined : window.cutie-piDesktop;
+  return typeof window === "undefined" ? undefined : window.cutiePiDesktop;
 }
 
 /** The compact `code#state` form the manual paste flow already accepts. */

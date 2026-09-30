@@ -1,5 +1,5 @@
 (() => {
-  const bridge = window.cutie-piSetup;
+  const bridge = window.cutiePiSetup;
   document.documentElement.dataset.platform = bridge?.platform ?? "browser";
 
   const form = document.getElementById("setup");

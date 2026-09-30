@@ -1,7 +1,7 @@
-import { Trans, useLingui } from "@lingui/react/macro";
 import type { MessageBlock } from "@cutie-pi/contracts";
 import { abortableDelay } from "@cutie-pi/core";
 import { Button, Dialog, DialogClose, DialogContent, DialogTitle } from "@cutie-pi/ui-web";
+import { Trans, useLingui } from "@lingui/react/macro";
 import { X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { BuiCard, SuccessPop } from "../../components/ai/primitives";

@@ -1,10 +1,10 @@
 import { lookup } from "node:dns/promises";
 import type { LookupFunction } from "node:net";
 import { isIP } from "node:net";
-import { Client } from "@modelcontextprotocol/sdk/client/index.js";
-import { StreamableHTTPClientTransport } from "@modelcontextprotocol/sdk/client/streamableHttp.js";
 import type { ConnectorTool } from "@cutie-pi/adapter-kit";
 import { isCloudMetadataHost, isLocalMcpHost, isPrivateNetworkHost } from "@cutie-pi/contracts";
+import { Client } from "@modelcontextprotocol/sdk/client/index.js";
+import { StreamableHTTPClientTransport } from "@modelcontextprotocol/sdk/client/streamableHttp.js";
 import { Agent, fetch as undiciFetch } from "undici";
 import { combineSignals } from "./connector-safety.js";
 import {

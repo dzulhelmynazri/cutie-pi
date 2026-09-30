@@ -45,11 +45,15 @@ describe("resolveUpdaterConfig", () => {
 
   it("binds to loopback unless the deployment says otherwise, so a stray port is not a door", () => {
     expect(resolveUpdaterConfig({ ...base }).host).toBe("127.0.0.1");
-    expect(resolveUpdaterConfig({ ...base, CUTIE_PI_UPDATER_HOST: "0.0.0.0" }).host).toBe("0.0.0.0");
+    expect(resolveUpdaterConfig({ ...base, CUTIE_PI_UPDATER_HOST: "0.0.0.0" }).host).toBe(
+      "0.0.0.0",
+    );
   });
 
   it("refuses a deployment directory that is missing or relative", () => {
-    expect(() => resolveUpdaterConfig({ CUTIE_PI_UPDATER_TOKEN: "t" })).toThrow(/CUTIE_PI_DEPLOY_DIR/);
+    expect(() => resolveUpdaterConfig({ CUTIE_PI_UPDATER_TOKEN: "t" })).toThrow(
+      /CUTIE_PI_DEPLOY_DIR/,
+    );
     expect(() => resolveUpdaterConfig({ ...base, CUTIE_PI_DEPLOY_DIR: "srv/cutie-pi" })).toThrow(
       /CUTIE_PI_DEPLOY_DIR/,
     );
@@ -69,7 +73,10 @@ describe("resolveUpdaterConfig", () => {
         ...base,
         CUTIE_PI_COMPOSE_FILE: "infra/compose/docker-compose.prod.yml:ops/overlay.yml",
       }).composeFiles,
-    ).toEqual(["/srv/cutie-pi/infra/compose/docker-compose.prod.yml", "/srv/cutie-pi/ops/overlay.yml"]);
+    ).toEqual([
+      "/srv/cutie-pi/infra/compose/docker-compose.prod.yml",
+      "/srv/cutie-pi/ops/overlay.yml",
+    ]);
   });
 
   it("honours COMPOSE_PATH_SEPARATOR the way Compose does", () => {
@@ -105,7 +112,8 @@ describe("resolveUpdaterConfig", () => {
 
   it("appends the deployment's extra services to the built-in set", () => {
     expect(
-      resolveUpdaterConfig({ ...base, CUTIE_PI_UPDATE_SERVICES: "supervisor, caddy" }).updateServices,
+      resolveUpdaterConfig({ ...base, CUTIE_PI_UPDATE_SERVICES: "supervisor, caddy" })
+        .updateServices,
     ).toEqual(["api", "worker", "web", "supervisor", "caddy"]);
   });
 

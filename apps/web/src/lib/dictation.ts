@@ -49,8 +49,8 @@ export function webSpeechAvailable(): boolean {
  */
 function electronSpeechHost(): boolean {
   if (typeof window !== "undefined") {
-    const host = window as Window & { cutie-piDesktop?: unknown };
-    if (host.cutie-piDesktop) return true;
+    const host = window as Window & { cutiePiDesktop?: unknown };
+    if (host.cutiePiDesktop) return true;
   }
   if (typeof navigator === "undefined") return false;
   const agent = navigator.userAgent;

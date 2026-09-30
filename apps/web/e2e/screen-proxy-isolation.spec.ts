@@ -4,8 +4,8 @@ import { createServer as createHttpServer, type Server } from "node:http";
 import type { AddressInfo, Server as NetServer } from "node:net";
 import { tmpdir } from "node:os";
 import path from "node:path";
-import { expect, test } from "@playwright/test";
 import { openScreenCapability } from "@cutie-pi/core/node/screen-capability";
+import { expect, test } from "@playwright/test";
 import { createServer, type Plugin, preview, type ViteDevServer } from "vite";
 import { addScreenProxyCapability } from "../../api/src/screen-proxy";
 

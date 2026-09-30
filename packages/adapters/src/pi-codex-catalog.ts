@@ -1,7 +1,7 @@
-import type { OAuthCredential } from "@earendil-works/pi-ai";
 import type { ThinkingLevel } from "@cutie-pi/contracts";
 import { ThinkingLevelSchema } from "@cutie-pi/contracts";
 import type { PrismaClient } from "@cutie-pi/db";
+import type { OAuthCredential } from "@earendil-works/pi-ai";
 import type { ModelCredentialAuthKind } from "./pi-catalog-availability.js";
 import type { PiCatalogEntry } from "./pi-models.js";
 import { listPiCatalog } from "./pi-models.js";

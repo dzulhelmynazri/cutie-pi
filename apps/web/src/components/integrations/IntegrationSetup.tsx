@@ -1,6 +1,6 @@
-import { Trans, useLingui } from "@lingui/react/macro";
 import type { IntegrationCatalogResult, IntegrationSetupState } from "@cutie-pi/contracts";
 import { Button, Input } from "@cutie-pi/ui-web";
+import { Trans, useLingui } from "@lingui/react/macro";
 import { Check } from "lucide-react";
 import { useEffect, useId, useState } from "react";
 import { newClientId } from "../../lib/client-id";

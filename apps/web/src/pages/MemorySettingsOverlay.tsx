@@ -1,4 +1,3 @@
-import { Trans, useLingui } from "@lingui/react/macro";
 import type { SpaceMemoryConfig } from "@cutie-pi/contracts";
 import {
   Button,
@@ -13,6 +12,7 @@ import {
   NativeSelectOption,
   Toggle,
 } from "@cutie-pi/ui-web";
+import { Trans, useLingui } from "@lingui/react/macro";
 import { XIcon } from "lucide-react";
 import { useEffect, useId, useState } from "react";
 import { rpc } from "../lib/rpc";

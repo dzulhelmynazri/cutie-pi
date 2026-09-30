@@ -139,7 +139,12 @@ test("Executor reconnect saves a replacement token before authorization", async 
       },
     }),
   );
-  await signup(page, `executor-reconnect-${Date.now()}@cutie-pi.test`, "password12", "Executor Test");
+  await signup(
+    page,
+    `executor-reconnect-${Date.now()}@cutie-pi.test`,
+    "password12",
+    "Executor Test",
+  );
   await expect(page.getByRole("heading", { name: "Server integrations" })).toBeVisible();
   const server = await page.evaluate(async () => {
     const response = await fetch("/rpc/mcp/servers/create", {

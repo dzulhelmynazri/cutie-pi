@@ -1,4 +1,3 @@
-import { Trans, useLingui } from "@lingui/react/macro";
 import { ChatMarkdown } from "@cutie-pi/chat-ui/web";
 import type { Artifact, ArtifactVersion, Bot } from "@cutie-pi/contracts";
 import { isAttachmentImageMimeType } from "@cutie-pi/contracts";
@@ -18,6 +17,7 @@ import {
   parseBotAvatar,
   resolvePersonaColorDef,
 } from "@cutie-pi/ui-web";
+import { Trans, useLingui } from "@lingui/react/macro";
 import {
   ChevronLeft,
   Download,

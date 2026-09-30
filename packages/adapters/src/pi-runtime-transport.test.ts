@@ -1,3 +1,4 @@
+import { DEFAULT_MODEL_MAX_TOKENS } from "@cutie-pi/contracts";
 import type {
   Api,
   Context,
@@ -5,7 +6,6 @@ import type {
   ModelsSimpleStreamOptions,
   ProviderHeaders,
 } from "@earendil-works/pi-ai";
-import { DEFAULT_MODEL_MAX_TOKENS } from "@cutie-pi/contracts";
 import { describe, expect, it, vi } from "vitest";
 import {
   conversationSessionId,

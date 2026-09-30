@@ -14,7 +14,11 @@ import {
   toOAuthCredential,
 } from "@cutie-pi/adapters";
 import type { PrismaClient } from "@cutie-pi/db";
-import { findDefaultModelCredential, findModelCredential, retireModelCredential } from "@cutie-pi/db";
+import {
+  findDefaultModelCredential,
+  findModelCredential,
+  retireModelCredential,
+} from "@cutie-pi/db";
 import { getLogger } from "@cutie-pi/logging";
 
 const MAX_RULES_CHARS = 4_000;

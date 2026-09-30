@@ -1,12 +1,4 @@
 import path from "node:path";
-import {
-  Daytona,
-  type DaytonaConfig,
-  DaytonaNotFoundError,
-  DaytonaProcessExecutionTimeoutError,
-  type Sandbox,
-  SandboxState,
-} from "@daytona/sdk";
 import type {
   AdapterContext,
   CommandRequest,
@@ -24,6 +16,14 @@ import type {
   TerminalRequest,
 } from "@cutie-pi/adapter-kit";
 import { boundedSandboxCommandTimeoutMs } from "@cutie-pi/core";
+import {
+  Daytona,
+  type DaytonaConfig,
+  DaytonaNotFoundError,
+  DaytonaProcessExecutionTimeoutError,
+  type Sandbox,
+  SandboxState,
+} from "@daytona/sdk";
 import { screenSessionKey } from "./computer-screens.js";
 import { normalizeWorkspacePath, shellQuote, workspacePath } from "./computer-support.js";
 import {
@@ -140,7 +140,7 @@ export class DaytonaSandboxProvider implements SandboxProvider {
     const sandbox = await this.client.create(
       {
         ...(this.snapshotName ? { snapshot: this.snapshotName } : {}),
-        labels: { botId: request.botId, cutie-pi: "computer" },
+        labels: { botId: request.botId, "cutie-pi": "computer" },
         envVars: { VNC_RESOLUTION: "1280x800" },
         autoStopInterval: 0,
         autoDeleteInterval: -1,

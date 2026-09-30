@@ -4,7 +4,7 @@ import { isAllowedDesktopPath, normalizeDesktopWorkspacePath } from "./desktop-s
 
 describe("desktop sandbox path rules", () => {
   it("compares Windows roots case-insensitively without accepting siblings or other drives", () => {
-    const roots = ["C:\\Users\\Owner\\CutiePi\\bot"];
+    const roots = ["C:\\Users\\Owner\\cutie-pi\\bot"];
 
     expect(
       isAllowedDesktopPath("c:\\users\\owner\\cutie-pi\\BOT\\notes.txt", roots, path.win32),

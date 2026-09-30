@@ -1,6 +1,10 @@
 import { runContinueJob } from "@cutie-pi/adapter-kit";
 import { MessageBlock } from "@cutie-pi/contracts";
-import { botMessageHopExhausted, nextBotMessageHop, renderGroupMembersContext } from "@cutie-pi/core";
+import {
+  botMessageHopExhausted,
+  nextBotMessageHop,
+  renderGroupMembersContext,
+} from "@cutie-pi/core";
 import {
   appendEventInTransaction,
   createThreadMessageInTransaction,

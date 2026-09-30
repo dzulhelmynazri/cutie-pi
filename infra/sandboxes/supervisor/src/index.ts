@@ -4,7 +4,6 @@ import { mkdir } from "node:fs/promises";
 import http from "node:http";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { serve } from "@hono/node-server";
 import {
   boundedSandboxCommandTimeoutMs,
   readBoundedJsonResponse,
@@ -14,6 +13,7 @@ import { loadRootEnv } from "@cutie-pi/core/node/load-root-env";
 import { SERVICE_NAMES } from "@cutie-pi/logging";
 import { createRootLogger } from "@cutie-pi/logging/axiom";
 import { requestLogging } from "@cutie-pi/logging/hono";
+import { serve } from "@hono/node-server";
 import Docker from "dockerode";
 import { Hono, type MiddlewareHandler } from "hono";
 import { bodyLimit } from "hono/body-limit";
@@ -352,7 +352,8 @@ app.post("/computers/:id/exec", async (c) => {
       c.req.header("x-cutie-pi-bot-id"),
       c.req.header("x-cutie-pi-space-id"),
     );
-    const screenId = c.req.header("x-cutie-pi-screen-id") || c.req.header("x-cutie-pi-bot-id") || id;
+    const screenId =
+      c.req.header("x-cutie-pi-screen-id") || c.req.header("x-cutie-pi-bot-id") || id;
     const screenIndex = computerScreens.get(id)?.get(screenId)?.index ?? 0;
     const layout = screenPorts(screenIndex);
     const result = await runContainerCommand(
@@ -798,7 +799,8 @@ app.delete("/computers/:id/screen", async (c) => {
       c.req.header("x-cutie-pi-space-id"),
     );
     containerFound = true;
-    const screenId = c.req.header("x-cutie-pi-screen-id") || c.req.header("x-cutie-pi-bot-id") || id;
+    const screenId =
+      c.req.header("x-cutie-pi-screen-id") || c.req.header("x-cutie-pi-bot-id") || id;
     const cancelRunWork = c.req.header("x-cutie-pi-cancel-run-work") === "1";
     const screenLeaseId = c.req.header("x-cutie-pi-screen-lease-id");
     await withComputerScreenLock(id, async () => {
@@ -906,7 +908,7 @@ function startSupervisor() {
   // Docker problem. Failing here names the variable while the deployment is still coming up.
   computerResourceLimits();
   if (computerEgressMode === "restricted") {
-    // Enforcement is host-side (DOCKER-USER/INPUT on cutie-pi-c* bridges); the flag
+    // Enforcement is host-side (DOCKER-USER/INPUT on ctpi-c* bridges); the flag
     // only names the interfaces. Without the host script, egress stays open.
     logger.warn(
       "SANDBOX_COMPUTER_EGRESS=restricted requires the host firewall rules from infra/compose/restrict-computer-egress.sh (see docs/self-host.md)",

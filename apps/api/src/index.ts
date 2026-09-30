@@ -3,9 +3,9 @@ import { loadRootEnv } from "@cutie-pi/core/node/load-root-env";
 
 loadRootEnv();
 
-import { serve } from "@hono/node-server";
 import { SERVICE_NAMES } from "@cutie-pi/logging";
 import { createRootLogger } from "@cutie-pi/logging/axiom";
+import { serve } from "@hono/node-server";
 import { createApp } from "./app.js";
 import { loadEnv } from "./env.js";
 

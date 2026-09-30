@@ -2,7 +2,12 @@ import { expect, test } from "@playwright/test";
 import { captureScreenshot, completeOnboarding, rpc, signup } from "./helpers";
 
 test("sidebar preview preserves underscores in filenames", async ({ page }, testInfo) => {
-  await signup(page, `preview-identifiers-${Date.now()}@cutie-pi.test`, "password12", "Preview Test");
+  await signup(
+    page,
+    `preview-identifiers-${Date.now()}@cutie-pi.test`,
+    "password12",
+    "Preview Test",
+  );
   await completeOnboarding(page);
   const bot = await rpc<{ id: string }>(page, "bots/create", {
     name: "Reports",

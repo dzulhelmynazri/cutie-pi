@@ -129,7 +129,7 @@ export type DesktopSetupLink = "docker-desktop" | "orbstack" | "docker-engine";
 
 /**
  * Bridge exposed only to the first-run setup window. The app window keeps the
- * narrower `cutie-piDesktop` bridge so a connected server can never re-point the app.
+ * narrower `cutiePiDesktop` bridge so a connected server can never re-point the app.
  */
 export interface CutiePiSetup {
   /** Used only to reserve space for native window controls in the local setup UI. */

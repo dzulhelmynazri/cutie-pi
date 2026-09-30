@@ -1,7 +1,7 @@
-import { Trans } from "@lingui/react/macro";
 import type { SkillPlaybook } from "@cutie-pi/contracts";
 import { formatSkillRunPrompt } from "@cutie-pi/core";
 import { Button, Input, Label, Textarea } from "@cutie-pi/ui-web";
+import { Trans } from "@lingui/react/macro";
 import { useEffect, useState } from "react";
 import { rpc } from "../../lib/rpc";
 

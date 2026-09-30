@@ -86,7 +86,7 @@ describe("DaytonaSandboxProvider", () => {
     });
     expect(fixture.create).toHaveBeenCalledWith(
       expect.objectContaining({
-        labels: { botId: "bot-a", cutie-pi: "computer" },
+        labels: { botId: "bot-a", "cutie-pi": "computer" },
         envVars: { VNC_RESOLUTION: "1280x800" },
       }),
       { timeout: 120 },

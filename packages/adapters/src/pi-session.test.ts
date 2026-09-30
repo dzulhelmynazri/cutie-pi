@@ -90,8 +90,8 @@ describe("Pi JSONL sessions", () => {
           kind: "entry",
           customType: "cutie-pi_context",
           data: expect.objectContaining({
-            cutie-piThreadId: "thread-1",
-            cutie-piTraceId: "trace-1",
+            cutiePiThreadId: "thread-1",
+            cutiePiTraceId: "trace-1",
           }),
         }),
       );

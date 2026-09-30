@@ -29,7 +29,7 @@ describe("desktop preload bridge", () => {
 
     expect(exposeInMainWorld).toHaveBeenCalledTimes(1);
     const [globalName, bridge] = exposeInMainWorld.mock.calls[0] as [string, CutiePiDesktop];
-    expect(globalName).toBe("cutie-piDesktop");
+    expect(globalName).toBe("cutiePiDesktop");
     expect(bridge.platform).toBe("linux");
     expect(Object.keys(bridge).sort()).toEqual([
       "localSettings",
@@ -109,7 +109,7 @@ describe("setup preload bridge", () => {
 
     expect(exposeInMainWorld).toHaveBeenCalledTimes(1);
     const [globalName, bridge] = exposeInMainWorld.mock.calls[0] as [string, CutiePiSetup];
-    expect(globalName).toBe("cutie-piSetup");
+    expect(globalName).toBe("cutiePiSetup");
     expect(bridge.platform).toBe("linux");
     expect(Object.keys(bridge).sort()).toEqual([
       "openLink",

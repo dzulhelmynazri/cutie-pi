@@ -1,9 +1,9 @@
-import { t } from "@lingui/core/macro";
-import { Trans, useLingui } from "@lingui/react/macro";
 import { ChatMarkdown } from "@cutie-pi/chat-ui/web";
 import type { ThreadMessage } from "@cutie-pi/contracts";
 import { isApprovalAskBlock, isSecretAskBlock, selectedAskActionLabel } from "@cutie-pi/core";
 import { Button, Input } from "@cutie-pi/ui-web";
+import { t } from "@lingui/core/macro";
+import { Trans, useLingui } from "@lingui/react/macro";
 import { useState } from "react";
 
 export type AskBlock = Extract<ThreadMessage["blocks"][number], { kind: "ask" }>;

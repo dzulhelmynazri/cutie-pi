@@ -1,5 +1,4 @@
 import { randomUUID } from "node:crypto";
-import { ORPCError } from "@orpc/server";
 import type { AgentHomeStore, JobPublisher, SandboxProvider } from "@cutie-pi/adapter-kit";
 import {
   type AdapterContext,
@@ -47,6 +46,7 @@ import {
   type PrismaClient,
   type ThreadEvents,
 } from "@cutie-pi/db";
+import { ORPCError } from "@orpc/server";
 
 type TaughtSkillRow = {
   id: string;

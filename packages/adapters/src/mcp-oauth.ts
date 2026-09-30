@@ -1,4 +1,7 @@
 import { randomUUID } from "node:crypto";
+import { isLocalMcpHost } from "@cutie-pi/contracts";
+import type { PrismaClient } from "@cutie-pi/db";
+import { getLogger } from "@cutie-pi/logging";
 import type {
   OAuthClientProvider,
   OAuthDiscoveryState,
@@ -10,9 +13,6 @@ import type {
   OAuthClientMetadata,
   OAuthTokens,
 } from "@modelcontextprotocol/sdk/shared/auth.js";
-import { isLocalMcpHost } from "@cutie-pi/contracts";
-import type { PrismaClient } from "@cutie-pi/db";
-import { getLogger } from "@cutie-pi/logging";
 import { sanitizeConnectorError } from "./connector-safety.js";
 import { secureFetch, validateUrl, withEndpointOriginFallback } from "./mcp-transport.js";
 import { actorMayUsePrivateEndpoint } from "./private-endpoint.js";

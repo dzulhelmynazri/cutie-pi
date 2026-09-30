@@ -1,10 +1,10 @@
 import type { Dirent } from "node:fs";
 import { readdir, rm, stat } from "node:fs/promises";
 import path from "node:path";
+import { getLogger } from "@cutie-pi/logging";
 import { type AgentMessage, type Branch, JsonlSessionRepo } from "@earendil-works/pi-agent-core";
 import { BACKGROUND_CONTEXT } from "@earendil-works/pi-agent-core/harness/context";
 import { NodeExecutionEnv } from "@earendil-works/pi-agent-core/node";
-import { getLogger } from "@cutie-pi/logging";
 
 export const PI_SESSION_RETENTION_DAYS = 30;
 export const PI_SESSION_MAX_FILES_PER_BOT = 100;
@@ -189,11 +189,11 @@ export class PiJsonlSessionRecorder implements PiSessionRecorder {
     );
 
     await handle.appendCustomEntry("cutie-pi_context", {
-      cutie-piUserId: input.userId,
-      cutie-piBotId: input.botId,
-      cutie-piRunId: input.runId,
-      cutie-piThreadId: input.threadId,
-      ...(input.traceId ? { cutie-piTraceId: input.traceId } : {}),
+      cutiePiUserId: input.userId,
+      cutiePiBotId: input.botId,
+      cutiePiRunId: input.runId,
+      cutiePiThreadId: input.threadId,
+      ...(input.traceId ? { cutiePiTraceId: input.traceId } : {}),
       model: input.model,
       provider: input.provider,
       thinkingLevel: input.thinkingLevel,

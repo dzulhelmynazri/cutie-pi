@@ -1,6 +1,9 @@
+import type {
+  ModelCredentialFailedState,
+  ModelCredentialRetireReason,
+} from "@cutie-pi/adapter-kit";
 import type { OAuthCredential } from "@earendil-works/pi-ai";
 import { builtinModels } from "@earendil-works/pi-ai/providers/all";
-import type { ModelCredentialFailedState, ModelCredentialRetireReason } from "@cutie-pi/adapter-kit";
 import { describe, expect, it, vi } from "vitest";
 import { PiRuntimeCredentialStore } from "./pi-credentials.js";
 import {

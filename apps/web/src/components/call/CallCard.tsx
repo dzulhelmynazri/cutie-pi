@@ -1,5 +1,5 @@
-import { useLingui } from "@lingui/react/macro";
 import { BotAvatar, Button, cn } from "@cutie-pi/ui-web";
+import { useLingui } from "@lingui/react/macro";
 import { Captions, Mic, MicOff, PhoneOff, Settings, User } from "lucide-react";
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";

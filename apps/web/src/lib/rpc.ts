@@ -1,8 +1,8 @@
+import type { AppContract } from "@cutie-pi/contracts";
+import { LOCAL_SETTINGS_PAGE, LOCAL_SETTINGS_RPC } from "@cutie-pi/contracts";
 import { createORPCClient } from "@orpc/client";
 import { RPCLink } from "@orpc/client/fetch";
 import type { ContractRouterClient } from "@orpc/contract";
-import type { AppContract } from "@cutie-pi/contracts";
-import { LOCAL_SETTINGS_PAGE, LOCAL_SETTINGS_RPC } from "@cutie-pi/contracts";
 import { desktopBridge } from "./desktop";
 
 const SPACE_STORAGE_KEY = "cutie-pi:space-id";

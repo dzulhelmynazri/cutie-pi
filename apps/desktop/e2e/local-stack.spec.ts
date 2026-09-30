@@ -480,7 +480,7 @@ test("the native settings menu opens an isolated logged-out settings capability"
   await expect.poll(savedSetup).toEqual({ mode: "new", serverUrl });
   const denied = await main.evaluate(async () => {
     try {
-      await window.cutie-piDesktop?.localSettings?.request(
+      await window.cutiePiDesktop?.localSettings?.request(
         "/api/desktop-settings/rpc/integrationSetup/get",
         "{}",
       );
@@ -499,7 +499,7 @@ test("the native settings menu opens an isolated logged-out settings capability"
   const settings = await settingsOpened;
   await expect(settings).toHaveURL(`${serverUrl}/desktop-settings`);
   const result = await settings.evaluate(() =>
-    window.cutie-piDesktop?.localSettings?.request(
+    window.cutiePiDesktop?.localSettings?.request(
       "/api/desktop-settings/rpc/integrationSetup/get",
       "{}",
     ),

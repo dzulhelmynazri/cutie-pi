@@ -1,8 +1,8 @@
-import { Trans } from "@lingui/react/macro";
 import type { MessageBlock } from "@cutie-pi/contracts";
 import { cloudAgentHttpsUrl } from "@cutie-pi/core";
 import { Badge } from "@cutie-pi/ui-web/components/ui/badge";
 import { Card, CardContent } from "@cutie-pi/ui-web/components/ui/card";
+import { Trans } from "@lingui/react/macro";
 
 export function CloudAgentCard({
   block,

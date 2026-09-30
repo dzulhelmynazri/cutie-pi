@@ -1,4 +1,3 @@
-import { type CommandResult, Sandbox, TimeoutError } from "@e2b/desktop";
 import type {
   AdapterContext,
   CommandRequest,
@@ -16,6 +15,7 @@ import type {
   TerminalRequest,
 } from "@cutie-pi/adapter-kit";
 import { boundedSandboxCommandTimeoutMs } from "@cutie-pi/core";
+import { type CommandResult, Sandbox, TimeoutError } from "@e2b/desktop";
 import { sandboxIdleMs } from "./computer-idle.js";
 import { normalizeWorkspacePath, shellQuote, workspacePath } from "./computer-support.js";
 import {
@@ -37,7 +37,7 @@ export function e2bCreateOptions(botId: string, apiKey: string) {
   return {
     apiKey,
     timeoutMs: sandboxIdleMs(),
-    metadata: { botId, cutie-pi: "computer" },
+    metadata: { botId, "cutie-pi": "computer" },
     resolution: [1280, 800] as [number, number],
     lifecycle: { onTimeout: "pause" as const, autoResume: false },
   };

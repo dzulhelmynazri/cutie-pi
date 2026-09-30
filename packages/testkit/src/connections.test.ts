@@ -544,7 +544,11 @@ describeWithDatabase("Composio catalog reconciliation", () => {
   });
 
   it("imports a GraphQL connector, introspects operations, and routes calls", async () => {
-    const cookie = await signup(app, `graphql-connector-${stamp}@cutie-pi.test`, "GraphQL Connector");
+    const cookie = await signup(
+      app,
+      `graphql-connector-${stamp}@cutie-pi.test`,
+      "GraphQL Connector",
+    );
     const actor = await rpc<Actor>(app, cookie, "me");
     const install = await rpc<{
       id: string;

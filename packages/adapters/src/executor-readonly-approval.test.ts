@@ -5,7 +5,10 @@ import type {
   ConnectorTool,
 } from "@cutie-pi/adapter-kit";
 import type { ActionApprovalRule } from "@cutie-pi/core";
-import { approvalEffectKey, toolEffectIdempotencyKey } from "@cutie-pi/core/node/approval-effect-key";
+import {
+  approvalEffectKey,
+  toolEffectIdempotencyKey,
+} from "@cutie-pi/core/node/approval-effect-key";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { isApprovalPausedResult } from "./approval-effect.js";
 import type * as ComputerLifecycleModule from "./computer-lifecycle.js";

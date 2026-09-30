@@ -1,4 +1,3 @@
-import { Trans, useLingui } from "@lingui/react/macro";
 import type { Bot, BotSection } from "@cutie-pi/contracts";
 import {
   AlertDialog,
@@ -18,6 +17,7 @@ import {
   DialogTitle,
   Input,
 } from "@cutie-pi/ui-web";
+import { Trans, useLingui } from "@lingui/react/macro";
 import { Lock, Users } from "lucide-react";
 import { useId, useState } from "react";
 

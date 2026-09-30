@@ -1,7 +1,7 @@
+import type { RunActivityRow } from "@cutie-pi/contracts";
 import { i18n } from "@lingui/core";
 import { t } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
-import type { RunActivityRow } from "@cutie-pi/contracts";
 import { useEffect, useState } from "react";
 import { rpc } from "../lib/rpc";
 

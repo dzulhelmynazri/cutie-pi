@@ -1,4 +1,8 @@
-import type { AdapterContext, ConnectorCall, ManagedConnectorProvider } from "@cutie-pi/adapter-kit";
+import type {
+  AdapterContext,
+  ConnectorCall,
+  ManagedConnectorProvider,
+} from "@cutie-pi/adapter-kit";
 import {
   type IntegrationProviderConfig,
   IntegrationProviderConfigSchema,

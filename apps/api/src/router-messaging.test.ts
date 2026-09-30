@@ -1,6 +1,6 @@
-import { RPCHandler } from "@orpc/server/fetch";
 import type { Actor } from "@cutie-pi/contracts";
 import type { PrismaClient } from "@cutie-pi/db";
+import { RPCHandler } from "@orpc/server/fetch";
 import { describe, expect, it, vi } from "vitest";
 import { createRouter, type RouterDeps } from "./router.js";
 

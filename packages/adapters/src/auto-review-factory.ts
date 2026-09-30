@@ -1,4 +1,8 @@
-import type { AutoReviewProvider, AutoReviewRequest, AutoReviewResult } from "@cutie-pi/adapter-kit";
+import type {
+  AutoReviewProvider,
+  AutoReviewRequest,
+  AutoReviewResult,
+} from "@cutie-pi/adapter-kit";
 import type { LlmAutoReviewOptions } from "./auto-review.js";
 import {
   autoReviewMinConfidence,

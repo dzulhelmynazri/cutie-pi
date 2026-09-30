@@ -1,5 +1,4 @@
 import { createHash } from "node:crypto";
-import { ORPCError } from "@orpc/server";
 import {
   aiRecipient,
   cloudAgentsEnabled,
@@ -14,6 +13,7 @@ import {
   findDefaultVoiceCredential,
   findModelCredential,
 } from "@cutie-pi/db";
+import { ORPCError } from "@orpc/server";
 import type { RouterDeps } from "./router.js";
 import { resolveThreadTarget } from "./thread-target.js";
 

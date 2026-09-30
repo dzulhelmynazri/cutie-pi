@@ -155,7 +155,7 @@ export function resolveScreenNetworkMode(value: string | undefined): ScreenNetwo
  * cloud metadata endpoints. `restricted` keeps public internet egress but lets the
  * operator drop everything else with one host-side iptables rule set — the
  * supervisor gives each computer network a deterministic bridge interface name so
- * the rules match by interface (`-i cutie-pi-c+`) instead of ephemeral subnets.
+ * the rules match by interface (`-i ctpi-c+`) instead of ephemeral subnets.
  * Enforcement lives on the Docker host (infra/compose/restrict-computer-egress.sh);
  * the flag only marks the networks. Supervisor capabilities stay unchanged.
  */
@@ -171,12 +171,12 @@ export function resolveComputerEgressMode(
 
 /**
  * Host bridge interface name for a computer network. Linux caps interface names
- * at 15 bytes (IFNAMSIZ), so "cutie-pi-c" gets a 7-hex-char suffix derived from the
+ * at 15 bytes (IFNAMSIZ), so "ctpi-c" gets a 7-hex-char suffix derived from the
  * same digest as the network name — deterministic across recreate, unique per bot.
  */
 export function computerBridgeNameFor(botId: string) {
   const hash = createHash("sha256").update(botId).digest("hex").slice(0, 7);
-  return `cutie-pi-c${hash}`;
+  return `ctpi-c${hash}`;
 }
 
 /** docker.createNetwork payload for a bot's computer network. */

@@ -93,7 +93,11 @@ describe("computer loopback provision lifecycle", () => {
     const container = {
       inspect: vi.fn().mockResolvedValue({
         Config: {
-          Labels: { "cutie-pi.managed": "true", "cutie-pi.botId": "other", "cutie-pi.spaceId": "other" },
+          Labels: {
+            "cutie-pi.managed": "true",
+            "cutie-pi.botId": "other",
+            "cutie-pi.spaceId": "other",
+          },
         },
       }),
       stop: vi.fn(),
@@ -127,7 +131,11 @@ describe("computer loopback provision lifecycle", () => {
     const container = {
       inspect: vi.fn(async () => ({
         Config: {
-          Labels: { "cutie-pi.managed": "true", "cutie-pi.botId": "bot", "cutie-pi.spaceId": "space" },
+          Labels: {
+            "cutie-pi.managed": "true",
+            "cutie-pi.botId": "bot",
+            "cutie-pi.spaceId": "space",
+          },
         },
         State: { Running: running },
       })),
@@ -167,7 +175,11 @@ describe("computer loopback provision lifecycle", () => {
     const container = {
       inspect: vi.fn(async () => ({
         Config: {
-          Labels: { "cutie-pi.managed": "true", "cutie-pi.botId": "bot", "cutie-pi.spaceId": "space" },
+          Labels: {
+            "cutie-pi.managed": "true",
+            "cutie-pi.botId": "bot",
+            "cutie-pi.spaceId": "space",
+          },
         },
         State: { Running: true },
       })),
@@ -195,7 +207,11 @@ describe("computer loopback provision lifecycle", () => {
     const container = {
       inspect: vi.fn(async () => ({
         Config: {
-          Labels: { "cutie-pi.managed": "true", "cutie-pi.botId": "bot", "cutie-pi.spaceId": "space" },
+          Labels: {
+            "cutie-pi.managed": "true",
+            "cutie-pi.botId": "bot",
+            "cutie-pi.spaceId": "space",
+          },
         },
         State: { Running: true },
       })),
@@ -241,7 +257,11 @@ describe("computer loopback provision lifecycle", () => {
       Image: "test-image-id",
       Config: {
         User: hostComputerUser(),
-        Labels: { "cutie-pi.managed": "true", "cutie-pi.botId": "bot", "cutie-pi.spaceId": "space" },
+        Labels: {
+          "cutie-pi.managed": "true",
+          "cutie-pi.botId": "bot",
+          "cutie-pi.spaceId": "space",
+        },
       },
       HostConfig: {
         NetworkMode: computerNetworkNameFor("bot"),
@@ -431,7 +451,11 @@ describe("provisioning network rollback", () => {
       inspect: vi.fn().mockResolvedValue({
         Image: "old-image",
         Config: {
-          Labels: { "cutie-pi.managed": "true", "cutie-pi.botId": "bot", "cutie-pi.spaceId": "space" },
+          Labels: {
+            "cutie-pi.managed": "true",
+            "cutie-pi.botId": "bot",
+            "cutie-pi.spaceId": "space",
+          },
         },
         HostConfig: { PortBindings: {} },
       }),
@@ -492,7 +516,11 @@ describe("restricted egress rekeying", () => {
       Image: "test-image-id",
       Config: {
         User: hostComputerUser(),
-        Labels: { "cutie-pi.managed": "true", "cutie-pi.botId": "bot", "cutie-pi.spaceId": "space" },
+        Labels: {
+          "cutie-pi.managed": "true",
+          "cutie-pi.botId": "bot",
+          "cutie-pi.spaceId": "space",
+        },
       },
       HostConfig: { NetworkMode: botNet, PortBindings: {} },
       State: { Running: false },
@@ -734,7 +762,9 @@ describe("space computer limit enforcement", () => {
         if (labels.some((l: string) => l.startsWith("cutie-pi.botId="))) {
           return [];
         }
-        return [{ Id: "c1", Labels: { "cutie-pi.managed": "true", "cutie-pi.spaceId": "space-1" } }];
+        return [
+          { Id: "c1", Labels: { "cutie-pi.managed": "true", "cutie-pi.spaceId": "space-1" } },
+        ];
       },
     );
 
@@ -790,7 +820,10 @@ describe("space computer limit enforcement", () => {
           ];
         }
         return [
-          { Id: existing.id, Labels: { "cutie-pi.managed": "true", "cutie-pi.spaceId": "space-1" } },
+          {
+            Id: existing.id,
+            Labels: { "cutie-pi.managed": "true", "cutie-pi.spaceId": "space-1" },
+          },
         ];
       },
     );
@@ -1029,7 +1062,11 @@ describe("screen release status", () => {
     return {
       inspect: vi.fn(async () => ({
         Config: {
-          Labels: { "cutie-pi.managed": "true", "cutie-pi.botId": "bot", "cutie-pi.spaceId": "space" },
+          Labels: {
+            "cutie-pi.managed": "true",
+            "cutie-pi.botId": "bot",
+            "cutie-pi.spaceId": "space",
+          },
         },
         HostConfig: { NetworkMode: computerNetworkNameFor("bot") },
         State: { Running: true },
@@ -1067,7 +1104,11 @@ describe("screen release status", () => {
     const container = {
       inspect: vi.fn().mockResolvedValue({
         Config: {
-          Labels: { "cutie-pi.managed": "true", "cutie-pi.botId": "other", "cutie-pi.spaceId": "other" },
+          Labels: {
+            "cutie-pi.managed": "true",
+            "cutie-pi.botId": "other",
+            "cutie-pi.spaceId": "other",
+          },
         },
       }),
       exec: vi.fn(),
@@ -1150,7 +1191,11 @@ describe("screen registry across run boundaries", () => {
     const container = {
       inspect: vi.fn().mockResolvedValue({
         Config: {
-          Labels: { "cutie-pi.managed": "true", "cutie-pi.botId": "bot", "cutie-pi.spaceId": "space" },
+          Labels: {
+            "cutie-pi.managed": "true",
+            "cutie-pi.botId": "bot",
+            "cutie-pi.spaceId": "space",
+          },
         },
         HostConfig: { NetworkMode: computerNetworkNameFor("bot") },
         State: { Running: true },
@@ -1178,8 +1223,9 @@ describe("screen registry across run boundaries", () => {
         body: JSON.stringify({ interactive: false, revokeControl: false }),
       });
     const resets = () =>
-      commands.filter((command) => command.includes("for marker in /tmp/cutie-pi/browser-profile-*"))
-        .length;
+      commands.filter((command) =>
+        command.includes("for marker in /tmp/cutie-pi/browser-profile-*"),
+      ).length;
 
     expect((await view()).status).toBe(200);
     expect(resets()).toBe(1);

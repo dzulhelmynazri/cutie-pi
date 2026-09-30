@@ -1,4 +1,3 @@
-import { ORPCError } from "@orpc/server";
 import type { AdapterContext } from "@cutie-pi/adapter-kit";
 import {
   createVoiceProvider,
@@ -24,6 +23,7 @@ import {
   selectSpaceVoicePreference,
 } from "@cutie-pi/db";
 import { getLogger } from "@cutie-pi/logging";
+import { ORPCError } from "@orpc/server";
 import type { Context, Hono } from "hono";
 import { readBoundedBody } from "./http-body.js";
 import { withSerializableRetry } from "./serializable-retry.js";

@@ -591,7 +591,7 @@ test("setup IPC is not reachable from the connected app window", async () => {
   await expect(appWindow.getByText(APP_MARKER)).toBeVisible();
 
   const exposed = await appWindow.evaluate(() =>
-    Object.keys((window as typeof window & { cutie-piSetup?: unknown }).cutie-piSetup ?? {}),
+    Object.keys((window as typeof window & { cutiePiSetup?: unknown }).cutiePiSetup ?? {}),
   );
   expect(exposed).toEqual([]);
 });

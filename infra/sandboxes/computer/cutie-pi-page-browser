@@ -342,7 +342,7 @@ def ensure_world(client: CdpClient, session_id: str) -> None:
 
 EVAL_HELPERS = r"""
 (() => {
-  if (window.__cutie-piPageBrowser) return true;
+  if (window.__cutiePiPageBrowser) return true;
   const refMap = new Map();
   // Fields holding a saved login: snapshots never report their values, whatever their type.
   const loginFilled = new WeakSet();
@@ -414,7 +414,7 @@ EVAL_HELPERS = r"""
       })
       .join("\n");
   }
-  window.__cutie-piPageBrowser = {
+  window.__cutiePiPageBrowser = {
     snapshot() {
       refMap.clear();
       const elements = [];
@@ -566,7 +566,7 @@ def navigate(client: CdpClient, session_id: str, url: str) -> dict[str, Any]:
 
 def snapshot(client: CdpClient, session_id: str) -> dict[str, Any]:
     ensure_helpers(client, session_id)
-    data = eval_json(client, session_id, "window.__cutie-piPageBrowser.snapshot()")
+    data = eval_json(client, session_id, "window.__cutiePiPageBrowser.snapshot()")
     if not isinstance(data, dict):
         raise RuntimeError("snapshot returned non-object")
     return {"ok": True, **data}
@@ -593,7 +593,7 @@ def act(client: CdpClient, session_id: str, actions: list[dict[str, Any]]) -> di
         for step in actions:
             kind, ref = step["kind"], step["ref"]
             # Preflight catches stale refs before a mutation is dispatched.
-            if not eval_json(client, session_id, f"Boolean(window.__cutie-piPageBrowser.resolve({json.dumps(ref)}))"):
+            if not eval_json(client, session_id, f"Boolean(window.__cutiePiPageBrowser.resolve({json.dumps(ref)}))"):
                 raise RuntimeError("Stale element ref. Take a fresh snapshot.")
             arguments = json.dumps(ref)
             if kind != "click":
@@ -601,7 +601,7 @@ def act(client: CdpClient, session_id: str, actions: list[dict[str, Any]]) -> di
             if step.get("origin"):
                 arguments += ", " + json.dumps(step["origin"])
             uncertain = True
-            data = eval_json(client, session_id, f"window.__cutie-piPageBrowser.{kind}({arguments})")
+            data = eval_json(client, session_id, f"window.__cutiePiPageBrowser.{kind}({arguments})")
             if not isinstance(data, dict):
                 raise RuntimeError("Action response unavailable")
             completed += 1

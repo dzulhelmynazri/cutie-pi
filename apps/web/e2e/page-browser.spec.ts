@@ -20,7 +20,7 @@ test("live page helper preserves identity, masks passwords, and reports partial 
       <label>Name <input id="name"></label><input aria-label="Password" type="password" value="fake-test-password">
       <button id="save" onclick="this.dataset.clicks=Number(this.dataset.clicks||0)+1">Save</button>
       <label><input type="checkbox">Agree</label><button disabled>Disabled</button>
-      <script>window.__cutie-piPageBrowser={snapshot:()=>({title:'spoofed'})};</script>`);
+      <script>window.__cutiePiPageBrowser={snapshot:()=>({title:'spoofed'})};</script>`);
   });
   await new Promise<void>((resolve) => server.listen(0, "127.0.0.1", resolve));
   const address = server.address();

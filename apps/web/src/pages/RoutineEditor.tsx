@@ -1,5 +1,3 @@
-import { t } from "@lingui/core/macro";
-import { Trans, useLingui } from "@lingui/react/macro";
 import type { Routine } from "@cutie-pi/contracts";
 import {
   type CronFreq,
@@ -22,6 +20,8 @@ import {
   Input,
   Textarea,
 } from "@cutie-pi/ui-web";
+import { t } from "@lingui/core/macro";
+import { Trans, useLingui } from "@lingui/react/macro";
 import { ChevronLeft, Clock, GitBranch, Globe, MessageSquare, Pause, Plus, X } from "lucide-react";
 import { useId } from "react";
 import { RoutineSchedule } from "./RoutineSchedule";

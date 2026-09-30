@@ -155,7 +155,10 @@ async function main() {
     const [
       { ComposioEmulator, EmailEmulator, PipedreamConnector, ThirdPartyConnectorEmulator },
       { createApp },
-    ] = await Promise.all([import("@cutie-pi/adapters"), import("../../../../apps/api/src/app.ts")]);
+    ] = await Promise.all([
+      import("@cutie-pi/adapters"),
+      import("../../../../apps/api/src/app.ts"),
+    ]);
     const { serve } = await import("@hono/node-server");
     const thirdParties = new ThirdPartyConnectorEmulator();
     const pipedream = new PipedreamConnector(

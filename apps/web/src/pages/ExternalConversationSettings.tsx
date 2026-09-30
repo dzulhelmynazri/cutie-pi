@@ -1,4 +1,3 @@
-import { Trans, useLingui } from "@lingui/react/macro";
 import type {
   AutomatedSenderPolicies,
   AutomatedSenderPolicyMode,
@@ -7,6 +6,7 @@ import type {
   ExternalConversationPolicy,
 } from "@cutie-pi/contracts";
 import { Button } from "@cutie-pi/ui-web";
+import { Trans, useLingui } from "@lingui/react/macro";
 import { RotateCcw } from "lucide-react";
 import { useMemo, useState } from "react";
 import { SuccessPop } from "../components/ai/primitives";

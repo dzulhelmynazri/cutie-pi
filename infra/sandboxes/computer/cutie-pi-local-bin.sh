@@ -4,11 +4,11 @@
 # shows up there. Restore the sandbox home bin for every login shell, including
 # the agent shell (`bash -lc`).
 if [ -n "${HOME:-}" ]; then
-  cutie-pi_local_bin="${HOME}/.local/bin"
+  cutie_pi_local_bin="${HOME}/.local/bin"
   case ":${PATH:-}:" in
-    *":${cutie-pi_local_bin}:"*) ;;
-    *) PATH="${cutie-pi_local_bin}${PATH:+:$PATH}" ;;
+    *":${cutie_pi_local_bin}:"*) ;;
+    *) PATH="${cutie_pi_local_bin}${PATH:+:$PATH}" ;;
   esac
   export PATH
-  unset cutie-pi_local_bin
+  unset cutie_pi_local_bin
 fi

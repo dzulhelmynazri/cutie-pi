@@ -1,12 +1,8 @@
 import { randomUUID } from "node:crypto";
 import type {
-  AuthInteraction,
-  Credential,
-  OAuthAuth,
-  OAuthCredential,
-} from "@earendil-works/pi-ai";
-import { builtinModels } from "@earendil-works/pi-ai/providers/all";
-import type { ModelCredentialFailedState, ModelCredentialRetireReason } from "@cutie-pi/adapter-kit";
+  ModelCredentialFailedState,
+  ModelCredentialRetireReason,
+} from "@cutie-pi/adapter-kit";
 import {
   MAX_MODEL_CONTEXT_WINDOW,
   MAX_MODEL_MAX_TOKENS,
@@ -17,6 +13,13 @@ import {
 } from "@cutie-pi/contracts";
 import type { PrismaClient } from "@cutie-pi/db";
 import { getLogger } from "@cutie-pi/logging";
+import type {
+  AuthInteraction,
+  Credential,
+  OAuthAuth,
+  OAuthCredential,
+} from "@earendil-works/pi-ai";
+import { builtinModels } from "@earendil-works/pi-ai/providers/all";
 import { createManualAnthropicOAuthLogin } from "./pi-anthropic-oauth.js";
 import type { EncryptedSecretStore } from "./secrets.js";
 

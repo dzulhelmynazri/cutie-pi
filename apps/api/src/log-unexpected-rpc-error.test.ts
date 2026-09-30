@@ -1,5 +1,5 @@
-import { ORPCError } from "@orpc/server";
 import { createLogger, createTestSink, installLogger } from "@cutie-pi/logging";
+import { ORPCError } from "@orpc/server";
 import { afterEach, describe, expect, it } from "vitest";
 import { logUnexpectedRpcError } from "./app.js";
 

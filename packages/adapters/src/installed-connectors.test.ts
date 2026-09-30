@@ -178,7 +178,7 @@ describe("OpenAPI connector import", () => {
       signal: new AbortController().signal,
     } as never;
     const execute = (await provider.discoverTools(context))[2]!;
-    const marker = "__cutie-piCatalogTool";
+    const marker = "__cutiePiCatalogTool";
     const approvedRequest = catalogApprovalRequest(
       execute.name,
       { id: "api-approved:operation_20", arguments: {} },

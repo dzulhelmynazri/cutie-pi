@@ -1,5 +1,3 @@
-import { t } from "@lingui/core/macro";
-import { Trans, useLingui } from "@lingui/react/macro";
 import {
   CRON_FREQS,
   type CronFreq,
@@ -8,6 +6,8 @@ import {
   cronFromPreset,
 } from "@cutie-pi/core";
 import { Input, NativeSelect, NativeSelectOption } from "@cutie-pi/ui-web";
+import { t } from "@lingui/core/macro";
+import { Trans, useLingui } from "@lingui/react/macro";
 import { Clock } from "lucide-react";
 
 const UNITS: CronUnit[] = ["minutes", "hours", "days"];

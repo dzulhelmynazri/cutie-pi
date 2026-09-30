@@ -1,6 +1,7 @@
 /// <reference lib="dom" />
-import * as Plot from "@observablehq/plot";
+
 import { MAX_CHART_DATA_ROWS } from "@cutie-pi/contracts";
+import * as Plot from "@observablehq/plot";
 import { autoType, csvParse, tsvParse } from "d3-dsv";
 
 /**

@@ -1,8 +1,8 @@
-import { I18nProvider } from "@lingui/react";
 import { ChatMarkdown } from "@cutie-pi/chat-ui/web";
 import type { ProductEvent, ThreadMessage, ThreadSnapshot } from "@cutie-pi/contracts";
 import { isToolActivityBlock, withLiveStreamingProgress } from "@cutie-pi/core";
 import { DEFAULT_GROK_BOT_COLOR } from "@cutie-pi/ui-web";
+import { I18nProvider } from "@lingui/react";
 import { createRoot } from "react-dom/client";
 import { ActiveBotGlyph } from "../../src/components/ai/CollaborationMarker";
 import { bootstrapI18n, i18n } from "../../src/lib/i18n";

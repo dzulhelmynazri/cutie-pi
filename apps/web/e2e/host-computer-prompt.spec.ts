@@ -11,7 +11,7 @@ for (const platform of ["darwin", "win32"]) {
     );
     await completeOnboarding(page);
     await page.addInitScript((platform) => {
-      Object.defineProperty(window, "cutie-piDesktop", {
+      Object.defineProperty(window, "cutiePiDesktop", {
         value: {
           platform,
           window: {

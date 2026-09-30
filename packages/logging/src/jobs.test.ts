@@ -39,14 +39,14 @@ describe("job correlation envelope", () => {
 
   it("uses a nested envelope for reserved keys and non-plain objects", () => {
     const correlation = { jobId: "job-2", traceId: "d".repeat(32) };
-    const reserved = wrapJobPayload({ runId: "run-2", __cutie-piLog: "keep" }, correlation);
+    const reserved = wrapJobPayload({ runId: "run-2", __cutiePiLog: "keep" }, correlation);
     expect(reserved).toEqual({
       v: 1,
       correlation,
-      payload: { runId: "run-2", __cutie-piLog: "keep" },
+      payload: { runId: "run-2", __cutiePiLog: "keep" },
     });
     expect(unwrapJobPayload(reserved)).toEqual({
-      payload: { runId: "run-2", __cutie-piLog: "keep" },
+      payload: { runId: "run-2", __cutiePiLog: "keep" },
       correlation,
     });
 

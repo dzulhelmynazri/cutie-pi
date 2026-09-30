@@ -1,16 +1,16 @@
 import type {
+  AgentModelOAuthCredential,
+  ModelCredentialFailedState,
+  ModelCredentialRetireReason,
+} from "@cutie-pi/adapter-kit";
+import { getLogger } from "@cutie-pi/logging";
+import type {
   AuthOperationOptions,
   Credential,
   CredentialInfo,
   CredentialStore,
   OAuthCredential,
 } from "@earendil-works/pi-ai";
-import type {
-  AgentModelOAuthCredential,
-  ModelCredentialFailedState,
-  ModelCredentialRetireReason,
-} from "@cutie-pi/adapter-kit";
-import { getLogger } from "@cutie-pi/logging";
 import {
   OAUTH_ACCOUNT_CHANGED_ERROR,
   oauthCredentialAccountId,

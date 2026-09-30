@@ -48,27 +48,27 @@ class NativeCapture:
 
     def __init__(self, display):
         library = ctypes.CDLL("/usr/local/lib/libcutie-pi-xcapture.so")
-        library.cutie-pi_xcapture_open.argtypes = [ctypes.c_char_p]
-        library.cutie-pi_xcapture_open.restype = ctypes.c_void_p
-        library.cutie-pi_xcapture_png.argtypes = [
+        library.cutie_pi_xcapture_open.argtypes = [ctypes.c_char_p]
+        library.cutie_pi_xcapture_open.restype = ctypes.c_void_p
+        library.cutie_pi_xcapture_png.argtypes = [
             ctypes.c_void_p,
             ctypes.POINTER(ctypes.POINTER(ctypes.c_ubyte)),
             ctypes.POINTER(ctypes.c_size_t),
             ctypes.POINTER(ctypes.c_int),
             ctypes.POINTER(ctypes.c_int),
         ]
-        library.cutie-pi_xcapture_png.restype = ctypes.c_int
-        library.cutie-pi_xcapture_damage.argtypes = [
+        library.cutie_pi_xcapture_png.restype = ctypes.c_int
+        library.cutie_pi_xcapture_damage.argtypes = [
             ctypes.c_void_p,
             ctypes.POINTER(ctypes.c_int),
             ctypes.POINTER(ctypes.c_int),
             ctypes.POINTER(ctypes.c_int),
             ctypes.POINTER(ctypes.c_int),
         ]
-        library.cutie-pi_xcapture_damage.restype = ctypes.c_int
-        library.cutie-pi_xinput_argv.argtypes = [ctypes.c_void_p, ctypes.c_int, ctypes.POINTER(ctypes.c_char_p)]
-        library.cutie-pi_xinput_argv.restype = ctypes.c_int
-        context = library.cutie-pi_xcapture_open(display.encode("utf-8"))
+        library.cutie_pi_xcapture_damage.restype = ctypes.c_int
+        library.cutie_pi_xinput_argv.argtypes = [ctypes.c_void_p, ctypes.c_int, ctypes.POINTER(ctypes.c_char_p)]
+        library.cutie_pi_xinput_argv.restype = ctypes.c_int
+        context = library.cutie_pi_xcapture_open(display.encode("utf-8"))
         if not context:
             raise RuntimeError("MIT-SHM capture is unavailable")
         self.library = library
@@ -78,12 +78,12 @@ class NativeCapture:
         png = ctypes.POINTER(ctypes.c_ubyte)()
         png_size = ctypes.c_size_t()
         width, height = ctypes.c_int(), ctypes.c_int()
-        if self.library.cutie-pi_xcapture_png(
+        if self.library.cutie_pi_xcapture_png(
             self.context, ctypes.byref(png), ctypes.byref(png_size), ctypes.byref(width), ctypes.byref(height)
         ):
             raise RuntimeError("MIT-SHM screen capture failed")
         damage = (ctypes.c_int(), ctypes.c_int(), ctypes.c_int(), ctypes.c_int())
-        changed = self.library.cutie-pi_xcapture_damage(
+        changed = self.library.cutie_pi_xcapture_damage(
             self.context, *(ctypes.byref(value) for value in damage)
         )
         return (
@@ -96,7 +96,7 @@ class NativeCapture:
 
     def act(self, argv):
         encoded = (ctypes.c_char_p * len(argv))(*(value.encode("utf-8") for value in argv))
-        return self.library.cutie-pi_xinput_argv(self.context, len(argv), encoded)
+        return self.library.cutie_pi_xinput_argv(self.context, len(argv), encoded)
 
 
 def native_capture(display):

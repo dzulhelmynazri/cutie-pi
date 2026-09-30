@@ -15,7 +15,7 @@ test("desktop update can be checked, deferred, and installed from settings", asy
       message: null as string | null,
       checkedAt: "2026-01-01T00:00:00.000Z",
     };
-    Object.defineProperty(window, "cutie-piDesktop", {
+    Object.defineProperty(window, "cutiePiDesktop", {
       value: {
         platform: "darwin",
         window: {

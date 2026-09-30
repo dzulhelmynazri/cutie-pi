@@ -12,7 +12,9 @@ vi.mock("better-auth/adapters/prisma", async () => {
       memoryAdapter(prisma.authData),
   };
 });
-vi.mock("@cutie-pi/db", () => ({ bootstrapUserSpace: vi.fn(async () => ({ spaceId: "space-1" })) }));
+vi.mock("@cutie-pi/db", () => ({
+  bootstrapUserSpace: vi.fn(async () => ({ spaceId: "space-1" })),
+}));
 
 function fixture({
   allowlist = "",
