@@ -6,7 +6,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: @lingui/cli\n"
 "Language: ko\n"
-"Project-Id-Version: rakazo-web\n"
+"Project-Id-Version: cutie-pi-web\n"
 "Report-Msgid-Bugs-To: \n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
@@ -746,8 +746,8 @@ msgid "Choose file"
 msgstr "파일 선택"
 
 #: src/pages/ModelSettingsOverlay.tsx
-msgid "Choose which connected model Rakazo uses."
-msgstr "Rakazo에서 기본으로 사용할 연결된 모델을 선택하세요."
+msgid "Choose which connected model CutiePi uses."
+msgstr "CutiePi에서 기본으로 사용할 연결된 모델을 선택하세요."
 
 #: src/pages/shell/dialogs.tsx
 msgid "Clear"
@@ -1464,8 +1464,8 @@ msgid "Create space"
 msgstr "스페이스 만들기"
 
 #: src/pages/Auth.tsx
-msgid "Create your Rakazo"
-msgstr "Rakazo 계정 만들기"
+msgid "Create your CutiePi"
+msgstr "CutiePi 계정 만들기"
 
 #: src/components/AskCard.tsx
 msgid "Created"
@@ -2816,8 +2816,8 @@ msgid "Paste a replacement key"
 msgstr "새 API 키를 붙여넣으세요"
 
 #: src/pages/ModelSettingsOverlay.tsx
-msgid "Paste the OpenAI-compatible address from your server. Rakazo adds /v1 if needed."
-msgstr "서버의 OpenAI 호환 주소를 붙여넣으세요. 필요하면 Rakazo가 /v1을 추가합니다."
+msgid "Paste the OpenAI-compatible address from your server. CutiePi adds /v1 if needed."
+msgstr "서버의 OpenAI 호환 주소를 붙여넣으세요. 필요하면 CutiePi가 /v1을 추가합니다."
 
 #: src/pages/VoiceSettingsOverlay.tsx
 msgid "Paste your API key"
@@ -3142,8 +3142,8 @@ msgid "Retry screen"
 msgstr ""
 
 #: src/pages/McpOAuthCallback.tsx
-msgid "Return to Rakazo"
-msgstr "Rakazo로 돌아가기"
+msgid "Return to CutiePi"
+msgstr "CutiePi로 돌아가기"
 
 #. placeholder {0}: doc.revision
 #: src/pages/KnowledgeSection.tsx
@@ -3430,8 +3430,8 @@ msgid "Sign in"
 msgstr "로그인"
 
 #: src/pages/Auth.tsx
-msgid "Sign in to Rakazo"
-msgstr "Rakazo 로그인"
+msgid "Sign in to CutiePi"
+msgstr "CutiePi 로그인"
 
 #: src/pages/Auth.tsx
 #: src/pages/Welcome.tsx
@@ -3689,8 +3689,8 @@ msgid "This server is already connected. Disconnect it first to authorize again.
 msgstr "이 서버는 이미 연결되어 있습니다. 다시 인증하려면 먼저 연결을 해제하세요."
 
 #: src/pages/ModelSettingsOverlay.tsx
-msgid "This subscription sign-in is not available in Rakazo yet. Use a deployment credential or choose another provider."
-msgstr "이 구독 로그인 방식은 아직 Rakazo에서 지원되지 않습니다. 서버에 설정된 인증 정보를 사용하거나 다른 서비스를 선택하세요."
+msgid "This subscription sign-in is not available in CutiePi yet. Use a deployment credential or choose another provider."
+msgstr "이 구독 로그인 방식은 아직 CutiePi에서 지원되지 않습니다. 서버에 설정된 인증 정보를 사용하거나 다른 서비스를 선택하세요."
 
 #: src/pages/Artifacts.tsx
 msgid "This week"

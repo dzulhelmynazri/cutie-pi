@@ -68,7 +68,7 @@ describe.each(["export", "checkout", "commit"] as const)(
     it.each(["file", "parent", "root", "parent restored after open"] as const)(
       "rejects a %s replaced after validation",
       async (replacement) => {
-        const root = await fs.mkdtemp(path.join(tmpdir(), "rakazo-home-race-"));
+        const root = await fs.mkdtemp(path.join(tmpdir(), "cutie-pi-home-race-"));
         dirs.push(root);
         const store = new LocalAgentHomeStore(root);
         const source = operation === "commit" ? path.join(root, "source") : store.pathFor("bot-1");
@@ -138,7 +138,7 @@ describe.each(["export", "checkout", "commit"] as const)(
 );
 
 it("reads the held safe file when its pathname changes after open", async () => {
-  const root = await fs.mkdtemp(path.join(tmpdir(), "rakazo-home-race-"));
+  const root = await fs.mkdtemp(path.join(tmpdir(), "cutie-pi-home-race-"));
   dirs.push(root);
   const store = new LocalAgentHomeStore(root);
   const home = store.pathFor("bot-1");
@@ -160,7 +160,7 @@ it("reads the held safe file when its pathname changes after open", async () => 
 });
 
 it("fails before reading when descriptor containment cannot be established", async () => {
-  const root = await fs.mkdtemp(path.join(tmpdir(), "rakazo-home-race-"));
+  const root = await fs.mkdtemp(path.join(tmpdir(), "cutie-pi-home-race-"));
   dirs.push(root);
   const store = new LocalAgentHomeStore(root);
   const home = store.pathFor("bot-1");
@@ -180,7 +180,7 @@ it("fails before reading when descriptor containment cannot be established", asy
 it.runIf(process.platform === "win32")(
   "rejects a descriptor on another Windows volume",
   async () => {
-    const root = await fs.mkdtemp(path.join(tmpdir(), "rakazo-home-race-"));
+    const root = await fs.mkdtemp(path.join(tmpdir(), "cutie-pi-home-race-"));
     dirs.push(root);
     const store = new LocalAgentHomeStore(root);
     const home = store.pathFor("bot-1");

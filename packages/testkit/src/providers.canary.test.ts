@@ -6,10 +6,10 @@ import {
   CreateOSSandboxProvider,
   E2BSandboxProvider,
   PiAgentRuntime,
-} from "@rakazo/adapters";
-import type { RunStatus } from "@rakazo/contracts";
-import { isTerminal } from "@rakazo/core";
-import { loadRootEnv } from "@rakazo/core/node/load-root-env";
+} from "@cutie-pi/adapters";
+import type { RunStatus } from "@cutie-pi/contracts";
+import { isTerminal } from "@cutie-pi/core";
+import { loadRootEnv } from "@cutie-pi/core/node/load-root-env";
 import { afterAll, describe, expect, it } from "vitest";
 import { sessionCookieHeader } from "./index.js";
 
@@ -38,7 +38,7 @@ describeE2b("live E2B canary", () => {
       signal: new AbortController().signal,
     };
     const computer = await sandbox.provision(
-      { botId: "canary", homePath: "/home/user/rakazo-home" },
+      { botId: "canary", homePath: "/home/user/cutie-pi-home" },
       ctx,
     );
     try {
@@ -68,7 +68,7 @@ describeBox("live Box canary", () => {
       userId: "box-canary",
       signal: new AbortController().signal,
     };
-    const request = { botId: "box-canary", homePath: "/home/user/rakazo-home" };
+    const request = { botId: "box-canary", homePath: "/home/user/cutie-pi-home" };
     let computer = await sandbox.provision(request, ctx);
     try {
       await sandbox.prepare(computer, ctx);
@@ -116,7 +116,7 @@ describeCreateos("live CreateOS canary", () => {
       userId: "createos-canary",
       signal: new AbortController().signal,
     };
-    const request = { botId: "createos-canary", homePath: "/home/desktop/rakazo-home" };
+    const request = { botId: "createos-canary", homePath: "/home/desktop/cutie-pi-home" };
     let computer = await sandbox.provision(request, ctx);
     try {
       await sandbox.prepare(computer, ctx);
@@ -213,7 +213,7 @@ describePiApp("live OpenRouter product journey", () => {
 
   it("completes a bot turn through the API with the live model", async () => {
     const { createApp } = await import("../../../apps/api/src/app.ts");
-    dataDir = mkdtempSync(path.join(tmpdir(), "rakazo-pi-"));
+    dataDir = mkdtempSync(path.join(tmpdir(), "cutie-pi-pi-"));
     const handles = await createApp({
       databaseUrl: process.env.DATABASE_URL!,
       dataDir,
@@ -222,7 +222,7 @@ describePiApp("live OpenRouter product journey", () => {
     });
     stop = handles.stop;
     const stamp = Date.now();
-    const email = `pi-${stamp}@rakazo.test`;
+    const email = `pi-${stamp}@cutie-pi.test`;
     const signup = await handles.app.request("/api/auth/sign-up/email", {
       method: "POST",
       headers: { "content-type": "application/json", origin: "http://127.0.0.1:5173" },

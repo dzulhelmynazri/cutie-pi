@@ -1,4 +1,4 @@
-import type { AdapterContext } from "@rakazo/adapter-kit";
+import type { AdapterContext } from "@cutie-pi/adapter-kit";
 import { describe, expect, it, vi } from "vitest";
 import { MarkdownMemoryStore } from "./index.js";
 

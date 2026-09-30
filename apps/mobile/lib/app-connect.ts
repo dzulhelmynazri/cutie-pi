@@ -1,4 +1,4 @@
-import type { MessageBlock } from "@rakazo/contracts";
+import type { MessageBlock } from "@cutie-pi/contracts";
 import { t } from "./i18n";
 
 export type AppConnectBlock = Extract<MessageBlock, { kind: "app_connect" }>;

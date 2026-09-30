@@ -1,5 +1,5 @@
 {
-  "name": "@rakazo/sandbox-supervisor",
+  "name": "@cutie-pi/sandbox-supervisor",
   "version": "0.1.0",
   "license": "Apache-2.0",
   "type": "module",
@@ -11,8 +11,8 @@
   },
   "dependencies": {
     "@hono/node-server": "2.1.1",
-    "@rakazo/core": "workspace:*",
-    "@rakazo/logging": "workspace:*",
+    "@cutie-pi/core": "workspace:*",
+    "@cutie-pi/logging": "workspace:*",
     "dockerode": "5.0.1",
     "hono": "4.13.7",
     "tsx": "4.23.13",

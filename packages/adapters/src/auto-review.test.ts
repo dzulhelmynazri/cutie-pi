@@ -15,9 +15,9 @@ describe("resolveAutoReviewChecker", () => {
   it("prefers explicit env overrides", () => {
     expect(
       resolveAutoReviewChecker({
-        RAKAZO_AUTO_REVIEW_PROVIDER: "openrouter",
-        RAKAZO_AUTO_REVIEW_MODEL: "cheap/fast",
-        RAKAZO_LOCAL_MODELS: "local-a",
+        CUTIE_PI_AUTO_REVIEW_PROVIDER: "openrouter",
+        CUTIE_PI_AUTO_REVIEW_MODEL: "cheap/fast",
+        CUTIE_PI_LOCAL_MODELS: "local-a",
         PI_DEFAULT_MODEL: "other",
       }),
     ).toEqual({ provider: "openrouter", model: "cheap/fast" });
@@ -26,7 +26,7 @@ describe("resolveAutoReviewChecker", () => {
   it("prefers local models when configured", () => {
     expect(
       resolveAutoReviewChecker({
-        RAKAZO_LOCAL_MODELS: " llama-local , other ",
+        CUTIE_PI_LOCAL_MODELS: " llama-local , other ",
         PI_DEFAULT_PROVIDER: "openrouter",
         PI_DEFAULT_MODEL: "deepseek/deepseek-v4-flash-0731",
       }),
@@ -45,7 +45,7 @@ describe("resolveAutoReviewChecker", () => {
   it("selects Jev when the provider is jev and a TypeSafe key is present", () => {
     expect(
       resolveAutoReviewChecker({
-        RAKAZO_AUTO_REVIEW_PROVIDER: "jev",
+        CUTIE_PI_AUTO_REVIEW_PROVIDER: "jev",
         TYPESAFE_API_KEY: "ts-key",
         PI_DEFAULT_PROVIDER: "openrouter",
         PI_DEFAULT_MODEL: "cheap/fast",
@@ -53,8 +53,8 @@ describe("resolveAutoReviewChecker", () => {
     ).toEqual({ provider: "jev", model: "jev-latest" });
     expect(
       resolveAutoReviewChecker({
-        RAKAZO_AUTO_REVIEW_PROVIDER: "jev",
-        RAKAZO_AUTO_REVIEW_MODEL: "jev-custom",
+        CUTIE_PI_AUTO_REVIEW_PROVIDER: "jev",
+        CUTIE_PI_AUTO_REVIEW_MODEL: "jev-custom",
         TYPESAFE_API_KEY: "ts-key",
       }),
     ).toEqual({ provider: "jev", model: "jev-custom" });
@@ -63,7 +63,7 @@ describe("resolveAutoReviewChecker", () => {
   it("falls back to the LLM checker when Jev is selected without a key", () => {
     expect(
       resolveAutoReviewChecker({
-        RAKAZO_AUTO_REVIEW_PROVIDER: "jev",
+        CUTIE_PI_AUTO_REVIEW_PROVIDER: "jev",
         PI_DEFAULT_PROVIDER: "openrouter",
         PI_DEFAULT_MODEL: "cheap/fast",
       }),
@@ -73,23 +73,23 @@ describe("resolveAutoReviewChecker", () => {
 
 describe("resolveAutoReviewProviderKind", () => {
   it("uses Jev only when a TypeSafe key is present", () => {
-    expect(resolveAutoReviewProviderKind({ RAKAZO_AUTO_REVIEW_PROVIDER: "jev" })).toBe("llm");
+    expect(resolveAutoReviewProviderKind({ CUTIE_PI_AUTO_REVIEW_PROVIDER: "jev" })).toBe("llm");
     expect(
       resolveAutoReviewProviderKind({
-        RAKAZO_AUTO_REVIEW_PROVIDER: "jev",
+        CUTIE_PI_AUTO_REVIEW_PROVIDER: "jev",
         TYPESAFE_API_KEY: "ts-key",
       }),
     ).toBe("jev");
-    expect(resolveAutoReviewProviderKind({ RAKAZO_AUTO_REVIEW_PROVIDER: "openrouter" })).toBe(
+    expect(resolveAutoReviewProviderKind({ CUTIE_PI_AUTO_REVIEW_PROVIDER: "openrouter" })).toBe(
       "llm",
     );
     expect(
       resolveAutoReviewProviderKind({
-        RAKAZO_AUTO_REVIEW_PROVIDER: "scripted",
+        CUTIE_PI_AUTO_REVIEW_PROVIDER: "scripted",
         AGENT_RUNTIME: "scripted",
       }),
     ).toBe("scripted");
-    expect(resolveAutoReviewProviderKind({ RAKAZO_AUTO_REVIEW_PROVIDER: "scripted" })).toBe("llm");
+    expect(resolveAutoReviewProviderKind({ CUTIE_PI_AUTO_REVIEW_PROVIDER: "scripted" })).toBe("llm");
   });
 });
 
@@ -111,7 +111,7 @@ describe("isAutoReviewCheckerConfigured", () => {
     ).toBe(true);
     expect(
       isAutoReviewCheckerConfigured({
-        env: { RAKAZO_LOCAL_MODELS: "local-1" },
+        env: { CUTIE_PI_LOCAL_MODELS: "local-1" },
       }),
     ).toBe(true);
     expect(
@@ -122,13 +122,13 @@ describe("isAutoReviewCheckerConfigured", () => {
     ).toBe(true);
     expect(
       isAutoReviewCheckerConfigured({
-        env: { RAKAZO_AUTO_REVIEW_PROVIDER: "jev", TYPESAFE_API_KEY: "ts-key" },
+        env: { CUTIE_PI_AUTO_REVIEW_PROVIDER: "jev", TYPESAFE_API_KEY: "ts-key" },
       }),
     ).toBe(true);
     expect(
       isAutoReviewCheckerConfigured({
         env: {
-          RAKAZO_AUTO_REVIEW_PROVIDER: "jev",
+          CUTIE_PI_AUTO_REVIEW_PROVIDER: "jev",
           PI_DEFAULT_PROVIDER: "openrouter",
           PI_DEFAULT_MODEL: "x",
         },
@@ -136,12 +136,12 @@ describe("isAutoReviewCheckerConfigured", () => {
     ).toBe(false);
     expect(
       isAutoReviewCheckerConfigured({
-        env: { RAKAZO_AUTO_REVIEW_PROVIDER: "scripted", AGENT_RUNTIME: "scripted" },
+        env: { CUTIE_PI_AUTO_REVIEW_PROVIDER: "scripted", AGENT_RUNTIME: "scripted" },
       }),
     ).toBe(true);
     expect(
       isAutoReviewCheckerConfigured({
-        env: { RAKAZO_AUTO_REVIEW_PROVIDER: "scripted" },
+        env: { CUTIE_PI_AUTO_REVIEW_PROVIDER: "scripted" },
       }),
     ).toBe(false);
   });
@@ -150,25 +150,25 @@ describe("isAutoReviewCheckerConfigured", () => {
 describe("deploymentAutoReviewDefault", () => {
   it("defaults off", () => {
     expect(deploymentAutoReviewDefault({})).toBe(false);
-    expect(deploymentAutoReviewDefault({ RAKAZO_AUTO_REVIEW: "1" })).toBe(true);
-    expect(deploymentAutoReviewDefault({ RAKAZO_AUTO_REVIEW: "true" })).toBe(true);
+    expect(deploymentAutoReviewDefault({ CUTIE_PI_AUTO_REVIEW: "1" })).toBe(true);
+    expect(deploymentAutoReviewDefault({ CUTIE_PI_AUTO_REVIEW: "true" })).toBe(true);
   });
 });
 
 describe("autoReviewTimeoutMs", () => {
   it("defaults to 1500 and clamps bad values", () => {
     expect(autoReviewTimeoutMs({})).toBe(1_500);
-    expect(autoReviewTimeoutMs({ RAKAZO_AUTO_REVIEW_TIMEOUT_MS: "2000" })).toBe(2_000);
-    expect(autoReviewTimeoutMs({ RAKAZO_AUTO_REVIEW_TIMEOUT_MS: "nope" })).toBe(1_500);
+    expect(autoReviewTimeoutMs({ CUTIE_PI_AUTO_REVIEW_TIMEOUT_MS: "2000" })).toBe(2_000);
+    expect(autoReviewTimeoutMs({ CUTIE_PI_AUTO_REVIEW_TIMEOUT_MS: "nope" })).toBe(1_500);
   });
 });
 
 describe("autoReviewMinConfidence", () => {
   it("defaults to 0.5 and clamps out of range", () => {
     expect(autoReviewMinConfidence({})).toBe(0.5);
-    expect(autoReviewMinConfidence({ RAKAZO_AUTO_REVIEW_MIN_CONFIDENCE: "0.8" })).toBe(0.8);
-    expect(autoReviewMinConfidence({ RAKAZO_AUTO_REVIEW_MIN_CONFIDENCE: "2" })).toBe(0.5);
-    expect(autoReviewMinConfidence({ RAKAZO_AUTO_REVIEW_MIN_CONFIDENCE: "nope" })).toBe(0.5);
+    expect(autoReviewMinConfidence({ CUTIE_PI_AUTO_REVIEW_MIN_CONFIDENCE: "0.8" })).toBe(0.8);
+    expect(autoReviewMinConfidence({ CUTIE_PI_AUTO_REVIEW_MIN_CONFIDENCE: "2" })).toBe(0.5);
+    expect(autoReviewMinConfidence({ CUTIE_PI_AUTO_REVIEW_MIN_CONFIDENCE: "nope" })).toBe(0.5);
   });
 });
 

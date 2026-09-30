@@ -1,5 +1,5 @@
 export const SEEN_RUN_ERROR_LIMIT = 100;
-const SEEN_RUN_ERROR_STORAGE_KEY_PREFIX = "rakazo:seen-run-error:";
+const SEEN_RUN_ERROR_STORAGE_KEY_PREFIX = "cutie-pi:seen-run-error:";
 
 type RunErrorStorage = Pick<Storage, "getItem" | "key" | "length" | "removeItem" | "setItem">;
 

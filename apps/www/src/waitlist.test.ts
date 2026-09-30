@@ -45,7 +45,7 @@ describe("waitlist", () => {
       properties: {
         $process_person_profile: true,
         $set: { email: "person@example.com", waitlist_status: "joined" },
-        $set_once: { waitlist_source: "rakazo.com" },
+        $set_once: { waitlist_source: "cutie-pi.com" },
       },
     });
     expect(payload.distinct_id).toMatch(/^waitlist:[a-f0-9]{64}$/);
@@ -58,7 +58,7 @@ describe("waitlist", () => {
   });
 
   it("rejects an oversized body when content-length is missing", async () => {
-    const request = new Request("https://rakazo.com/api/waitlist", {
+    const request = new Request("https://cutie-pi.com/api/waitlist", {
       method: "POST",
       body: JSON.stringify({ email: `${"a".repeat(2_048)}@example.com` }),
       headers: { "content-type": "application/json" },
@@ -82,7 +82,7 @@ describe("waitlist", () => {
           return new Promise(() => undefined);
         },
       });
-      const request = new Request("https://rakazo.com/api/waitlist", {
+      const request = new Request("https://cutie-pi.com/api/waitlist", {
         method: "POST",
         headers: kind === "declared" ? { "content-length": "2049" } : undefined,
         body,
@@ -96,7 +96,7 @@ describe("waitlist", () => {
   );
 
   it("silently accepts submissions that fill the bot trap", async () => {
-    const request = new Request("https://rakazo.com/api/waitlist", {
+    const request = new Request("https://cutie-pi.com/api/waitlist", {
       method: "POST",
       body: JSON.stringify({ email: "person@example.com", contactNote: "filled by a bot" }),
       headers: { "content-type": "application/json" },

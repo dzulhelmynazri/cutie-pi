@@ -19,19 +19,19 @@ jobs:
       postgres:
         image: postgres:16-alpine
         env:
-          POSTGRES_USER: rakazo
-          POSTGRES_PASSWORD: rakazo
-          POSTGRES_DB: rakazo
+          POSTGRES_USER: cutie-pi
+          POSTGRES_PASSWORD: cutie-pi
+          POSTGRES_DB: cutie-pi
         ports:
           - 5433:5432
         options: >-
-          --health-cmd "pg_isready -U rakazo"
+          --health-cmd "pg_isready -U cutie-pi"
           --health-interval 3s
           --health-timeout 5s
           --health-retries 20
     env:
       CI: "1"
-      DATABASE_URL: postgres://rakazo:rakazo@127.0.0.1:5433/rakazo
+      DATABASE_URL: postgres://cutie-pi:cutie-pi@127.0.0.1:5433/cutie-pi
       EXPO_PUBLIC_API_URL: http://10.0.2.2:3110
 
     steps:
@@ -99,7 +99,7 @@ jobs:
       - name: Generate Android project
         if: steps.screenshot-apk.outputs.cache-hit != 'true'
         run: |
-          pnpm --filter @rakazo/mobile exec expo prebuild --platform android --no-install
+          pnpm --filter @cutie-pi/mobile exec expo prebuild --platform android --no-install
           sed -i 's/<application /<application android:usesCleartextTraffic="true" /' \
             apps/mobile/android/app/src/main/AndroidManifest.xml
           sed -i 's/MaxMetaspaceSize=512m/MaxMetaspaceSize=1g/' \

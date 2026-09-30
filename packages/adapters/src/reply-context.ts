@@ -1,7 +1,7 @@
-import type { MessageBlock } from "@rakazo/contracts";
-import { truncateReplyQuote } from "@rakazo/contracts";
-import { blocksToAgentHistoryText, messageReaction } from "@rakazo/core";
-import type { PrismaClient } from "@rakazo/db";
+import type { MessageBlock } from "@cutie-pi/contracts";
+import { truncateReplyQuote } from "@cutie-pi/contracts";
+import { blocksToAgentHistoryText, messageReaction } from "@cutie-pi/core";
+import type { PrismaClient } from "@cutie-pi/db";
 
 type QuotedMessage = { id: string; threadId: string; role: string; blocks: unknown };
 type ReplyMessage = QuotedMessage & {

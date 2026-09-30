@@ -1,5 +1,5 @@
-import type { MessageBlock } from "@rakazo/contracts";
-import { abortableDelay } from "@rakazo/core";
+import type { MessageBlock } from "@cutie-pi/contracts";
+import { abortableDelay } from "@cutie-pi/core";
 import { useEffect, useRef, useState } from "react";
 import { ActivityIndicator, Linking, Pressable, Text, View, type ViewProps } from "react-native";
 import { rpc } from "../lib/api";

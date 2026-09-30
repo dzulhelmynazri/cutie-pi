@@ -1,7 +1,7 @@
 import * as SecureStore from "expo-secure-store";
 
 /** Persisted Codex-style recency mode for home Now/Recent. Default off. */
-export const ACTIVITY_MODE_KEY = "rakazo.activity-mode";
+export const ACTIVITY_MODE_KEY = "cutie-pi.activity-mode";
 
 export async function loadActivityMode(): Promise<boolean> {
   try {

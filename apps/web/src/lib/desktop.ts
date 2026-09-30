@@ -1,19 +1,19 @@
-import type { RakazoDesktop, RakazoDesktopOAuthCallback } from "@rakazo/contracts";
+import type { CutiePiDesktop, CutiePiDesktopOAuthCallback } from "@cutie-pi/contracts";
 
-export type { RakazoDesktop, RakazoDesktopOAuthCallback } from "@rakazo/contracts";
+export type { CutiePiDesktop, CutiePiDesktopOAuthCallback } from "@cutie-pi/contracts";
 
 declare global {
   interface Window {
-    rakazoDesktop?: RakazoDesktop;
+    cutie-piDesktop?: CutiePiDesktop;
   }
 }
 
-export function desktopBridge(): RakazoDesktop | undefined {
-  return typeof window === "undefined" ? undefined : window.rakazoDesktop;
+export function desktopBridge(): CutiePiDesktop | undefined {
+  return typeof window === "undefined" ? undefined : window.cutie-piDesktop;
 }
 
 /** The compact `code#state` form the manual paste flow already accepts. */
-export function desktopOAuthCode(callback: RakazoDesktopOAuthCallback) {
+export function desktopOAuthCode(callback: CutiePiDesktopOAuthCallback) {
   return callback.state === undefined ? callback.code : `${callback.code}#${callback.state}`;
 }
 
@@ -51,7 +51,7 @@ export function onDesktopOAuthCallback(
   });
 }
 
-export function windowChromeKind(desktop?: RakazoDesktop): "spacer" | "darwin" | "controls" {
+export function windowChromeKind(desktop?: CutiePiDesktop): "spacer" | "darwin" | "controls" {
   if (!desktop) return "spacer";
   if (desktop.platform === "darwin") return "darwin";
   return "controls";

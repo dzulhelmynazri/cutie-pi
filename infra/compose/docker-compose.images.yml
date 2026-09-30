@@ -7,7 +7,7 @@
 # Pin a published vX.Y.Z tag for a fixed version; `latest` moves to each new stable release.
 # Default SANDBOX_PROVIDER=docker boots a local computer via the in-stack supervisor (no E2B key).
 # Optional: set e2b / daytona / box plus the matching API key for remote computers.
-name: rakazo
+name: cutie-pi
 
 services:
   postgres:
@@ -19,22 +19,22 @@ services:
     pids_limit: 200
     mem_limit: 2g
     environment:
-      POSTGRES_USER: ${POSTGRES_USER:-rakazo}
+      POSTGRES_USER: ${POSTGRES_USER:-cutie-pi}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
-      POSTGRES_DB: ${POSTGRES_DB:-rakazo}
+      POSTGRES_DB: ${POSTGRES_DB:-cutie-pi}
     volumes:
       - pgdata:/var/lib/postgresql/data
     networks:
       - data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-rakazo} -d ${POSTGRES_DB:-rakazo}"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-cutie-pi} -d ${POSTGRES_DB:-cutie-pi}"]
       interval: 5s
       timeout: 5s
       retries: 20
 
   # Pull-only stub so `compose up` fetches the published desktop image without a checkout.
   computer:
-    image: ${RAKAZO_COMPUTER_IMAGE:-ghcr.io/elie222/rakazo/computer}:${RAKAZO_COMPUTER_IMAGE_TAG:-edge}
+    image: ${CUTIE_PI_COMPUTER_IMAGE:-ghcr.io/elie222/cutie-pi/computer}:${CUTIE_PI_COMPUTER_IMAGE_TAG:-edge}
     command: ["true"]
     network_mode: none
     restart: "no"
@@ -51,9 +51,9 @@ services:
   # Runs from the app image. Not published as its own image and not exposed on the host:
   # access to the supervisor is equivalent to control of the Docker host.
   supervisor:
-    image: ${RAKAZO_IMAGE:-ghcr.io/elie222/rakazo/app}:${RAKAZO_IMAGE_TAG:-edge}
+    image: ${CUTIE_PI_IMAGE:-ghcr.io/elie222/cutie-pi/app}:${CUTIE_PI_IMAGE_TAG:-edge}
     restart: unless-stopped
-    command: ["pnpm", "--filter", "@rakazo/sandbox-supervisor", "start"]
+    command: ["pnpm", "--filter", "@cutie-pi/sandbox-supervisor", "start"]
     init: true
     user: root
     security_opt:
@@ -66,10 +66,10 @@ services:
       SUPERVISOR_HOST: "0.0.0.0"
       SUPERVISOR_PORT: "7091"
       DOCKER_SOCKET: /var/run/docker.sock
-      RAKAZO_COMPUTER_IMAGE: ${RAKAZO_COMPUTER_IMAGE:-ghcr.io/elie222/rakazo/computer}:${RAKAZO_COMPUTER_IMAGE_TAG:-edge}
-      RAKAZO_COMPUTER_MEMORY: ${RAKAZO_COMPUTER_MEMORY:-2g}
-      RAKAZO_COMPUTER_CPUS: ${RAKAZO_COMPUTER_CPUS:-2}
-      RAKAZO_COMPUTER_PIDS_LIMIT: ${RAKAZO_COMPUTER_PIDS_LIMIT:-2048}
+      CUTIE_PI_COMPUTER_IMAGE: ${CUTIE_PI_COMPUTER_IMAGE:-ghcr.io/elie222/cutie-pi/computer}:${CUTIE_PI_COMPUTER_IMAGE_TAG:-edge}
+      CUTIE_PI_COMPUTER_MEMORY: ${CUTIE_PI_COMPUTER_MEMORY:-2g}
+      CUTIE_PI_COMPUTER_CPUS: ${CUTIE_PI_COMPUTER_CPUS:-2}
+      CUTIE_PI_COMPUTER_PIDS_LIMIT: ${CUTIE_PI_COMPUTER_PIDS_LIMIT:-2048}
       SANDBOX_COMMAND_TIMEOUT_MS: ${SANDBOX_COMMAND_TIMEOUT_MS:-300000}
       SANDBOX_SUPERVISOR_TOKEN: ${SANDBOX_SUPERVISOR_TOKEN:?Set SANDBOX_SUPERVISOR_TOKEN in .env}
       SANDBOX_SCREEN_NETWORK: isolated
@@ -101,12 +101,12 @@ services:
       retries: 20
 
   api:
-    image: ${RAKAZO_IMAGE:-ghcr.io/elie222/rakazo/app}:${RAKAZO_IMAGE_TAG:-edge}
+    image: ${CUTIE_PI_IMAGE:-ghcr.io/elie222/cutie-pi/app}:${CUTIE_PI_IMAGE_TAG:-edge}
     restart: unless-stopped
     command:
       - bash
       - -lc
-      - pnpm --filter @rakazo/db exec prisma migrate deploy && pnpm --filter @rakazo/api start
+      - pnpm --filter @cutie-pi/db exec prisma migrate deploy && pnpm --filter @cutie-pi/api start
     init: true
     security_opt:
       - no-new-privileges:true
@@ -119,11 +119,11 @@ services:
     environment:
       NODE_ENV: production
       API_HOST: "0.0.0.0"
-      RAKAZO_DESKTOP_STACK_TOKEN: ${RAKAZO_DESKTOP_STACK_TOKEN:-}
+      CUTIE_PI_DESKTOP_STACK_TOKEN: ${CUTIE_PI_DESKTOP_STACK_TOKEN:-}
       BETTER_AUTH_URL: ${BETTER_AUTH_URL:-http://127.0.0.1:5173}
       WEB_ORIGIN: ${WEB_ORIGIN:-http://127.0.0.1:5173}
       API_URL: ${API_URL:-http://127.0.0.1:5173}
-      DATABASE_URL: postgres://${POSTGRES_USER:-rakazo}:${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}@postgres:5432/${POSTGRES_DB:-rakazo}
+      DATABASE_URL: postgres://${POSTGRES_USER:-cutie-pi}:${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}@postgres:5432/${POSTGRES_DB:-cutie-pi}
       DATA_DIR: /data
       SANDBOX_PROVIDER: ${SANDBOX_PROVIDER:-docker}
       CLOUD_AGENT_PROVIDER: ${CLOUD_AGENT_PROVIDER:-none}
@@ -140,7 +140,7 @@ services:
       https_proxy: ${https_proxy:-${HTTPS_PROXY:-}}
       no_proxy: ${no_proxy:-${NO_PROXY:-}}
     ports:
-      - "127.0.0.1:${RAKAZO_API_PORT:-3100}:3100"
+      - "127.0.0.1:${CUTIE_PI_API_PORT:-3100}:3100"
     volumes:
       - appdata:/data
     networks:
@@ -164,9 +164,9 @@ services:
       retries: 20
 
   worker:
-    image: ${RAKAZO_IMAGE:-ghcr.io/elie222/rakazo/app}:${RAKAZO_IMAGE_TAG:-edge}
+    image: ${CUTIE_PI_IMAGE:-ghcr.io/elie222/cutie-pi/app}:${CUTIE_PI_IMAGE_TAG:-edge}
     restart: unless-stopped
-    command: ["pnpm", "--filter", "@rakazo/worker", "start"]
+    command: ["pnpm", "--filter", "@cutie-pi/worker", "start"]
     init: true
     security_opt:
       - no-new-privileges:true
@@ -179,7 +179,7 @@ services:
     environment:
       BETTER_AUTH_SECRET: ""
       NODE_ENV: production
-      DATABASE_URL: postgres://${POSTGRES_USER:-rakazo}:${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}@postgres:5432/${POSTGRES_DB:-rakazo}
+      DATABASE_URL: postgres://${POSTGRES_USER:-cutie-pi}:${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}@postgres:5432/${POSTGRES_DB:-cutie-pi}
       DATA_DIR: /data
       SANDBOX_PROVIDER: ${SANDBOX_PROVIDER:-docker}
       CLOUD_AGENT_PROVIDER: ${CLOUD_AGENT_PROVIDER:-none}
@@ -212,9 +212,9 @@ services:
         condition: service_healthy
 
   web:
-    image: ${RAKAZO_IMAGE:-ghcr.io/elie222/rakazo/app}:${RAKAZO_IMAGE_TAG:-edge}
+    image: ${CUTIE_PI_IMAGE:-ghcr.io/elie222/cutie-pi/app}:${CUTIE_PI_IMAGE_TAG:-edge}
     restart: unless-stopped
-    command: ["pnpm", "--filter", "@rakazo/web", "preview", "--host", "0.0.0.0", "--port", "5173"]
+    command: ["pnpm", "--filter", "@cutie-pi/web", "preview", "--host", "0.0.0.0", "--port", "5173"]
     init: true
     security_opt:
       - no-new-privileges:true
@@ -225,14 +225,14 @@ services:
     environment:
       NODE_ENV: production
       API_PROXY_TARGET: http://api:3100
-      RAKAZO_HOST: ${RAKAZO_HOST:-localhost}
+      CUTIE_PI_HOST: ${CUTIE_PI_HOST:-localhost}
       # Set only by the packaged desktop app. Its authenticated probe prevents a
       # source dev server on the same host port from impersonating this stack.
-      RAKAZO_DESKTOP_STACK_TOKEN: ${RAKAZO_DESKTOP_STACK_TOKEN:-}
-      RAKAZO_IMAGE_TAG: ${RAKAZO_IMAGE_TAG:-edge}
+      CUTIE_PI_DESKTOP_STACK_TOKEN: ${CUTIE_PI_DESKTOP_STACK_TOKEN:-}
+      CUTIE_PI_IMAGE_TAG: ${CUTIE_PI_IMAGE_TAG:-edge}
       SCREEN_PROXY_SECRET: ${SCREEN_PROXY_SECRET:?Set SCREEN_PROXY_SECRET in .env}
     ports:
-      - "127.0.0.1:${RAKAZO_WEB_PORT:-5173}:5173"
+      - "127.0.0.1:${CUTIE_PI_WEB_PORT:-5173}:5173"
     networks:
       - app
     depends_on:

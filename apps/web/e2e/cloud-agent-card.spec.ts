@@ -5,7 +5,7 @@ import { activeBotId, captureScreenshot, completeOnboarding, rpc, signup } from 
 // cloud_agent_launch is consequential but runs without a confirmation by default (optional in settings).
 test("renders a compact cloud agent card from an emulator launch", async ({ page }, testInfo) => {
   const stamp = Date.now();
-  await signup(page, `cloud-agent-${stamp}@rakazo.test`, "password12", "Cloud Agent");
+  await signup(page, `cloud-agent-${stamp}@cutie-pi.test`, "password12", "Cloud Agent");
   await completeOnboarding(page);
 
   const botId = activeBotId(page);

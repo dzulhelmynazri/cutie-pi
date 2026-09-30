@@ -1,5 +1,5 @@
 import { createMockAdapter, createTestMessage } from "@chat-adapter/tests";
-import type { AdapterContext, MessagingInboundEvent } from "@rakazo/adapter-kit";
+import type { AdapterContext, MessagingInboundEvent } from "@cutie-pi/adapter-kit";
 import type { Adapter, ChatInstance } from "chat";
 import { describe, expect, it, vi } from "vitest";
 import {
@@ -88,7 +88,7 @@ function createSurface(
 }
 
 function webhookRequest(payload: unknown): Request {
-  return new Request("https://rakazo.test/api/v1/messaging/webhook/mock", {
+  return new Request("https://cutie-pi.test/api/v1/messaging/webhook/mock", {
     method: "POST",
     headers: { "content-type": "application/json" },
     body: JSON.stringify(payload),
@@ -266,7 +266,7 @@ describe("ChatSdkMessagingSurface webhook plumbing", () => {
     const { surface, adapter } = createSurface();
     const response = await surface.handleWebhook(
       "mock",
-      new Request("https://rakazo.test/api/v1/messaging/webhook/mock", {
+      new Request("https://cutie-pi.test/api/v1/messaging/webhook/mock", {
         method: "POST",
         body: "x".repeat(MESSAGING_WEBHOOK_MAX_BODY_BYTES + 1),
       }),

@@ -5,7 +5,7 @@ test("advanced GraphQL install shows Add GraphQL in MCP, OpenAPI, GraphQL, Execu
   page,
 }, testInfo) => {
   const stamp = Date.now();
-  await signup(page, `graphql-source-${stamp}@rakazo.test`, "password12", `GraphQL ${stamp}`);
+  await signup(page, `graphql-source-${stamp}@cutie-pi.test`, "password12", `GraphQL ${stamp}`);
   await completeOnboarding(page);
 
   await page.getByText("Integrations").click();

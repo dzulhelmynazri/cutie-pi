@@ -6,14 +6,14 @@ import {
   parseModelSecret,
   selectConfiguredModel,
   toStringRecord,
-} from "@rakazo/adapters";
-import type { Actor, AiConsentQuery, AiConsentStatus, AiRecipient } from "@rakazo/contracts";
-import { AI_DISCLOSURE_VERSION, AI_PRIVACY_URL } from "@rakazo/contracts";
+} from "@cutie-pi/adapters";
+import type { Actor, AiConsentQuery, AiConsentStatus, AiRecipient } from "@cutie-pi/contracts";
+import { AI_DISCLOSURE_VERSION, AI_PRIVACY_URL } from "@cutie-pi/contracts";
 import {
   findDefaultModelCredential,
   findDefaultVoiceCredential,
   findModelCredential,
-} from "@rakazo/db";
+} from "@cutie-pi/db";
 import type { RouterDeps } from "./router.js";
 import { resolveThreadTarget } from "./thread-target.js";
 

@@ -2,8 +2,8 @@ import { randomBytes } from "node:crypto";
 import { existsSync } from "node:fs";
 import { readFile, stat, writeFile } from "node:fs/promises";
 import path from "node:path";
-import type { DesktopReachability, DesktopSetup } from "@rakazo/contracts";
-import { LOCAL_SETTINGS_PAGE } from "@rakazo/contracts/local-settings";
+import type { DesktopReachability, DesktopSetup } from "@cutie-pi/contracts";
+import { LOCAL_SETTINGS_PAGE } from "@cutie-pi/contracts/local-settings";
 import {
   app,
   BrowserWindow,
@@ -43,7 +43,7 @@ import { installSessionPermissions } from "./session-permissions.js";
 import {
   DEFAULT_LOCAL_WEB_URL,
   desktopStackImageTag,
-  isRakazoHealth,
+  isCutiePiHealth,
   managedLocalOpenUrl,
   maySendDesktopStackToken,
   normalizeServerUrl,
@@ -64,12 +64,12 @@ import {
   warmWindowTtlMs,
 } from "./window-options.js";
 
-const PERFORMANCE_USER_DATA = process.env.RAKAZO_PERFORMANCE_USER_DATA;
+const PERFORMANCE_USER_DATA = process.env.CUTIE_PI_PERFORMANCE_USER_DATA;
 /** Test hook: where the app-managed stack answers. Mode `new` still requires loopback. */
-const LOCAL_WEB_URL = process.env.RAKAZO_LOCAL_WEB_URL?.trim() || DEFAULT_LOCAL_WEB_URL;
+const LOCAL_WEB_URL = process.env.CUTIE_PI_LOCAL_WEB_URL?.trim() || DEFAULT_LOCAL_WEB_URL;
 const PROBE_TIMEOUT_MS = 8_000;
-const DESKTOP_STACK_PROBE_PATH = "/.well-known/rakazo-desktop-stack";
-const DESKTOP_STACK_TOKEN_HEADER = "x-rakazo-desktop-stack-token";
+const DESKTOP_STACK_PROBE_PATH = "/.well-known/cutie-pi-desktop-stack";
+const DESKTOP_STACK_TOKEN_HEADER = "x-cutie-pi-desktop-stack-token";
 let mainWindow: BrowserWindow | null = null;
 const appWindowTargets = new WeakMap<BrowserWindow, string>();
 let setupWindow: BrowserWindow | null = null;
@@ -91,12 +91,12 @@ let warmWindowTimer: NodeJS.Timeout | undefined;
 // destroying the last window fires "window-all-closed" -> app.quit(); a probe
 // that runs before the first real window exists must not count as "all closed".
 let liveProbeWindows = 0;
-const WARM_WINDOW_TTL_MS = warmWindowTtlMs(process.env.RAKAZO_WARM_WINDOW_TTL_MS);
+const WARM_WINDOW_TTL_MS = warmWindowTtlMs(process.env.CUTIE_PI_WARM_WINDOW_TTL_MS);
 
 const updaterEnvironment = {
   packaged: app.isPackaged,
   version: app.getVersion(),
-  disabled: process.env.RAKAZO_DISABLE_AUTO_UPDATE === "1",
+  disabled: process.env.CUTIE_PI_DISABLE_AUTO_UPDATE === "1",
 };
 const desktopUpdater = new DesktopUpdateController(
   updaterEnvironment,
@@ -311,7 +311,7 @@ function createWindow(url: string, partition: string | null) {
     if (
       process.platform === "darwin" &&
       !quitting &&
-      process.env.RAKAZO_DISABLE_WARM_WINDOW !== "1"
+      process.env.CUTIE_PI_DISABLE_WARM_WINDOW !== "1"
     ) {
       event.preventDefault();
       win.hide();
@@ -455,7 +455,7 @@ function loadAppUrl(win: BrowserWindow, url: string): Promise<void> {
  * not a usable app. After session resolves, wait for a bootstrapped shell
  * (`data-ready` / shell-ready mark) or an auth/welcome/onboarding surface so a
  * bare Suspense fallback or pre-bootstrap ShellPage cannot pass. Plain e2e
- * fixtures omit the Rakazo app-state marker.
+ * fixtures omit the CutiePi app-state marker.
  */
 async function waitForMountedAppDocument(contents: Electron.WebContents) {
   const deadline = Date.now() + 8_000;
@@ -463,7 +463,7 @@ async function waitForMountedAppDocument(contents: Electron.WebContents) {
     if (contents.isCrashed()) throw new Error("Renderer stopped after load.");
     const ready = (await contents.executeJavaScript(`(() => {
       const appState =
-        document.querySelector("[data-rakazo-app-state]")?.getAttribute("data-rakazo-app-state") ??
+        document.querySelector("[data-cutie-pi-app-state]")?.getAttribute("data-cutie-pi-app-state") ??
         null;
       if (appState === "session-pending") return false;
 
@@ -473,7 +473,7 @@ async function waitForMountedAppDocument(contents: Electron.WebContents) {
           performance.getEntriesByName("rk:renderer:shell-ready").length > 0,
       );
       const authOrWelcomeSurface = Boolean(
-        document.querySelector('[data-rakazo-surface="welcome"]') ||
+        document.querySelector('[data-cutie-pi-surface="welcome"]') ||
           document.querySelector(
             'form input[type="email"], form input[name="email"], form input#email',
           ) ||
@@ -490,7 +490,7 @@ async function waitForMountedAppDocument(contents: Electron.WebContents) {
         performance.getEntriesByName("rk:renderer:session-committed").length > 0;
       if (sessionReady && surfaceReady) return true;
 
-      // Desktop e2e fixtures mount a plain page without Rakazo app-state markers.
+      // Desktop e2e fixtures mount a plain page without CutiePi app-state markers.
       if (appState === null) {
         const bodyText = (document.body?.innerText || "").trim();
         if (bodyText.includes("Opening your Space")) return false;
@@ -512,7 +512,7 @@ async function installBundledRenderer(
   targetSession: Session,
   partition: string | null,
 ) {
-  if (!app.isPackaged || process.env.RAKAZO_DISABLE_BUNDLED_RENDERER === "1") return;
+  if (!app.isPackaged || process.env.CUTIE_PI_DISABLE_BUNDLED_RENDERER === "1") return;
   if (!servesBundledRenderer(targetUrl)) return;
   const webUrl = new URL(targetUrl);
   const installationKey = `${partition ?? "default"}:${webUrl.protocol}`;
@@ -709,8 +709,8 @@ function installApplicationMenu() {
     },
   };
   const changeServer: Electron.MenuItemConstructorOptions = {
-    id: "change-rakazo-server",
-    label: "Change Rakazo Server…",
+    id: "change-cutie-pi-server",
+    label: "Change CutiePi Server…",
     accelerator: "CmdOrCtrl+Shift+K",
     click: () => showSetupWindow(),
   };
@@ -761,7 +761,7 @@ function installApplicationMenu() {
   Menu.setApplicationMenu(Menu.buildFromTemplate(template));
 }
 
-/** Setup IPC must only answer the setup window, never a connected Rakazo server. */
+/** Setup IPC must only answer the setup window, never a connected CutiePi server. */
 function fromSetupWindow(event: Electron.IpcMainInvokeEvent) {
   return (
     setupWindow !== null && !setupWindow.isDestroyed() && event.sender === setupWindow.webContents
@@ -788,7 +788,7 @@ async function probeServer(rawUrl: string, signal?: AbortSignal): Promise<Deskto
         ok: false,
         status: response.status,
         url,
-        error: "That address redirects elsewhere. Enter the final Rakazo server address.",
+        error: "That address redirects elsewhere. Enter the final CutiePi server address.",
       };
     }
     if (!response.ok) {
@@ -800,12 +800,12 @@ async function probeServer(rawUrl: string, signal?: AbortSignal): Promise<Deskto
       };
     }
     const health = await readProbeJson(response);
-    if (!isRakazoHealth(health)) {
+    if (!isCutiePiHealth(health)) {
       return {
         ok: false,
         status: response.status,
         url,
-        error: "That address did not respond like a Rakazo server.",
+        error: "That address did not respond like a CutiePi server.",
       };
     }
     return {
@@ -1015,12 +1015,12 @@ app.whenReady().then(async () => {
       appPath: app.getAppPath(),
     }),
     localWebUrl:
-      process.env.RAKAZO_LOCAL_WEB_URL?.trim() ||
+      process.env.CUTIE_PI_LOCAL_WEB_URL?.trim() ||
       (await readStackWebUrl(stackDir(userDataDir), LOCAL_WEB_URL)),
     imageTag: resolveImageTag({
       version: app.getVersion(),
       packaged: app.isPackaged,
-      override: process.env.RAKAZO_IMAGE_TAG,
+      override: process.env.CUTIE_PI_IMAGE_TAG,
     }),
     probe: (url, signal, token) => probeManagedStack(url, token, signal),
     randomHex: (bytes) => randomBytes(bytes).toString("hex"),
@@ -1032,11 +1032,11 @@ app.whenReady().then(async () => {
   });
   currentSetup = await readSetup(userDataDir);
   const target = resolveStartupTarget({
-    envUrl: process.env.RAKAZO_WEB_URL,
+    envUrl: process.env.CUTIE_PI_WEB_URL,
     saved: currentSetup,
-    forceSetup: process.env.RAKAZO_FORCE_SETUP === "1",
+    forceSetup: process.env.CUTIE_PI_FORCE_SETUP === "1",
   });
-  if (process.env.RAKAZO_PERFORMANCE_CLEAR_CACHE === "1") {
+  if (process.env.CUTIE_PI_PERFORMANCE_CLEAR_CACHE === "1") {
     const cacheSessions = new Set<Session>([session.defaultSession]);
     if (target.kind === "app") {
       cacheSessions.add((await resolveSessionForTarget(target.url)).value);
@@ -1211,7 +1211,7 @@ app.whenReady().then(async () => {
         if (managedUrl === null || !(await localStack.matchesDesiredStack())) {
           return {
             ok: false,
-            error: "The app-managed Rakazo services are not ready. Retry setup.",
+            error: "The app-managed CutiePi services are not ready. Retry setup.",
           };
         }
         openSetup = { mode: "new", serverUrl: managedUrl };

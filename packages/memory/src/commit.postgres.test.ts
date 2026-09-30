@@ -1,5 +1,5 @@
-import type { AdapterContext, MemoryCommitRequest } from "@rakazo/adapter-kit";
-import { createDb, type PrismaClient } from "@rakazo/db";
+import type { AdapterContext, MemoryCommitRequest } from "@cutie-pi/adapter-kit";
+import { createDb, type PrismaClient } from "@cutie-pi/db";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { MarkdownMemoryStore } from "./index.js";
 

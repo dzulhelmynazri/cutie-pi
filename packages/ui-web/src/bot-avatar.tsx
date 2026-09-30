@@ -1,4 +1,4 @@
-import type { GrokColorDef } from "@rakazo/core";
+import type { GrokColorDef } from "@cutie-pi/core";
 import {
   ACTIVE_RUN_STATUSES,
   avatarIdentitySeed,
@@ -13,8 +13,8 @@ import {
   SHIPPED_BOT_AVATAR_VIEWBOX,
   shippedBotAvatarShapePath,
   shippedHash,
-} from "@rakazo/core";
-import { tokens } from "@rakazo/ui-tokens";
+} from "@cutie-pi/core";
+import { tokens } from "@cutie-pi/ui-tokens";
 import type { CSSProperties } from "react";
 import { memo, useId, useMemo, useSyncExternalStore } from "react";
 import type { AvatarStyle } from "./avatar-style.js";
@@ -118,7 +118,7 @@ export const BotAvatar = memo(function BotAvatar({
     return (
       <div
         className={cn(
-          "rakazo-bot-avatar relative overflow-hidden rounded-full flex items-center justify-center select-none bg-secondary shrink-0 border border-border",
+          "cutie-pi-bot-avatar relative overflow-hidden rounded-full flex items-center justify-center select-none bg-secondary shrink-0 border border-border",
           className,
         )}
         data-working={isWorking}
@@ -132,7 +132,7 @@ export const BotAvatar = memo(function BotAvatar({
       >
         {isWorking ? (
           <svg
-            className="rakazo-bot-avatar-ring absolute pointer-events-none"
+            className="cutie-pi-bot-avatar-ring absolute pointer-events-none"
             style={{
               inset: -4,
               width: size + 8,
@@ -173,7 +173,7 @@ export const BotAvatar = memo(function BotAvatar({
   return (
     <div
       className={cn(
-        "rakazo-bot-avatar grok-avatar-container relative inline-flex items-center justify-center shrink-0 select-none",
+        "cutie-pi-bot-avatar grok-avatar-container relative inline-flex items-center justify-center shrink-0 select-none",
         className,
       )}
       style={{
@@ -183,7 +183,7 @@ export const BotAvatar = memo(function BotAvatar({
       data-working={isWorking}
     >
       <svg
-        className="rakazo-bot-avatar-ring absolute pointer-events-none"
+        className="cutie-pi-bot-avatar-ring absolute pointer-events-none"
         style={{
           inset: -4,
           width: size + 8,
@@ -274,7 +274,7 @@ function OrganicAvatar({
     <svg
       viewBox="-60 -60 120 120"
       aria-hidden="true"
-      className={cn("rakazo-organic-avatar overflow-visible select-none", className)}
+      className={cn("cutie-pi-organic-avatar overflow-visible select-none", className)}
       data-working={isWorking}
       data-shape-family={seed % 10}
       data-eye-pattern={seed % 4}
@@ -287,12 +287,12 @@ function OrganicAvatar({
       {(["idle", "working"] as const).map((mode) => (
         <path
           key={mode}
-          className={`rakazo-organic-avatar-body rakazo-organic-avatar-body-${mode}`}
+          className={`cutie-pi-organic-avatar-body cutie-pi-organic-avatar-body-${mode}`}
           d={shapeA}
           fill={color}
           style={
             {
-              "--rakazo-organic-path": `path("${shapeA}")`,
+              "--cutie-pi-organic-path": `path("${shapeA}")`,
               filter:
                 mode === "working"
                   ? `drop-shadow(0 0 ${Math.round(size * 0.16)}px ${color})`
@@ -314,7 +314,7 @@ function OrganicAvatar({
         {(["idle", "working"] as const).map((mode) => (
           <g
             key={mode}
-            className={`rakazo-organic-avatar-eyes rakazo-organic-avatar-eyes-${mode}`}
+            className={`cutie-pi-organic-avatar-eyes cutie-pi-organic-avatar-eyes-${mode}`}
             fill={tokens.background}
           >
             <rect x="-14" y="-12" width="7" height="24" rx="3.5" />
@@ -385,7 +385,7 @@ export function Wordmark({ className }: { className?: string }) {
         <span className="h-4 w-[7px] rounded-full bg-primary" />
       </div>
       <span className="font-[Aeonik,ui-sans-serif] text-[28px] tracking-tight text-foreground">
-        Rakazo
+        CutiePi
       </span>
     </div>
   );

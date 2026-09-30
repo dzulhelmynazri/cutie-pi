@@ -17,7 +17,7 @@ def identity(env):
         return env, []
     except KeyError:
         pass
-    env = dict(env, USER="rakazo", LOGNAME="rakazo")
+    env = dict(env, USER="cutie-pi", LOGNAME="cutie-pi")
     libraries = glob.glob("/usr/lib/*/libnss_wrapper.so") + glob.glob("/usr/lib/libnss_wrapper.so")
     if not libraries:
         return env, []
@@ -26,9 +26,9 @@ def identity(env):
         passwd = source.read()
     with open("/etc/group") as source:
         group = source.read()
-    passwd += "rakazo:x:%d:%d:Rakazo:%s:/bin/bash\\n" % (uid, gid, home)
+    passwd += "cutie-pi:x:%d:%d:CutiePi:%s:/bin/bash\\n" % (uid, gid, home)
     if not any(line.split(":")[2:3] == [str(gid)] for line in group.splitlines()):
-        group += "rakazo:x:%d:\\n" % gid
+        group += "cutie-pi:x:%d:\\n" % gid
     names = {}
     for kind, content in (("passwd", passwd), ("group", group)):
         handle, name = tempfile.mkstemp(prefix=kind + "-", dir=state)

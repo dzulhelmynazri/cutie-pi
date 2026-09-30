@@ -5,13 +5,13 @@ for (const platform of ["darwin", "win32"]) {
   test(`host computer choice explains file access on ${platform}`, async ({ page }, testInfo) => {
     await signup(
       page,
-      `host-choice-${platform}-${Date.now()}@rakazo.test`,
+      `host-choice-${platform}-${Date.now()}@cutie-pi.test`,
       "password12",
       "Host Tester",
     );
     await completeOnboarding(page);
     await page.addInitScript((platform) => {
-      Object.defineProperty(window, "rakazoDesktop", {
+      Object.defineProperty(window, "cutie-piDesktop", {
         value: {
           platform,
           window: {

@@ -12,7 +12,7 @@ import {
 
 test("needs-you computer card opens the computer", async ({ page }, testInfo) => {
   const stamp = Date.now();
-  await signup(page, `needs-you-${stamp}@rakazo.test`, "password12", "Needs You");
+  await signup(page, `needs-you-${stamp}@cutie-pi.test`, "password12", "Needs You");
   await completeOnboarding(page);
 
   const botId = activeBotId(page);
@@ -57,7 +57,7 @@ test("needs-you computer card opens the computer", async ({ page }, testInfo) =>
 
 test("needs-you computer card opens a group member bot computer", async ({ page }, testInfo) => {
   const stamp = Date.now();
-  await signup(page, `needs-you-group-${stamp}@rakazo.test`, "password12", "Needs You Group");
+  await signup(page, `needs-you-group-${stamp}@cutie-pi.test`, "password12", "Needs You Group");
   await completeOnboarding(page);
   const chiefId = activeBotId(page);
   const writerId = await createNamedBot(page, "Writer");

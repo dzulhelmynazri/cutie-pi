@@ -12,8 +12,8 @@ import {
   parseModelMaxImagesPerPrompt,
   parseModelMaxTokens,
   type ThinkingLevel,
-} from "@rakazo/contracts";
-import { createModelProbe, initialModelProbeState } from "@rakazo/core";
+} from "@cutie-pi/contracts";
+import { createModelProbe, initialModelProbeState } from "@cutie-pi/core";
 import {
   Button,
   Input,
@@ -23,7 +23,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@rakazo/ui-web";
+} from "@cutie-pi/ui-web";
 import { useEffect, useId, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { IntegrationSetup } from "../components/integrations/IntegrationSetup";
@@ -31,10 +31,10 @@ import type { ModelCatalogEntry } from "../lib/model-auth";
 import { rpc } from "../lib/rpc";
 import { useModelOAuthSignIn } from "../lib/use-model-oauth-signin";
 
-const CUSTOM_MODEL_OPTION = "__rakazo_custom_model__";
+const CUSTOM_MODEL_OPTION = "__cutie-pi_custom_model__";
 const FIRST_BOT_NAME = "Chief";
 const FIRST_BOT_SPAWN_KEY = "onboarding:first";
-const FIRST_BOT_LOCK = "rakazo:onboarding-first-bot";
+const FIRST_BOT_LOCK = "cutie-pi:onboarding-first-bot";
 
 /** Survives StrictMode remounts; concurrent first-bot creates share one in-flight attempt. */
 let firstBotEnsure: Promise<{ id: string }> | null = null;

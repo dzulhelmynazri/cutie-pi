@@ -16,9 +16,9 @@ import type {
   ScreenRequest,
   ScreenSession,
   TerminalRequest,
-} from "@rakazo/adapter-kit";
-import { boundedSandboxCommandTimeoutMs, resolveSupervisorToken } from "@rakazo/core";
-import { outgoingCorrelationHeaders } from "@rakazo/logging";
+} from "@cutie-pi/adapter-kit";
+import { boundedSandboxCommandTimeoutMs, resolveSupervisorToken } from "@cutie-pi/core";
+import { outgoingCorrelationHeaders } from "@cutie-pi/logging";
 import {
   boundedComputerActions,
   clampRounded,
@@ -132,12 +132,12 @@ export class DockerSandboxProvider implements SandboxProvider {
   private headers(context: AdapterContext, botId?: string) {
     return {
       authorization: `Bearer ${this.supervisorToken}`,
-      "x-rakazo-space-id": context.spaceId,
+      "x-cutie-pi-space-id": context.spaceId,
       ...outgoingCorrelationHeaders(),
-      ...(botId ? { "x-rakazo-bot-id": botId } : {}),
-      ...(context.botId ? { "x-rakazo-screen-id": context.botId } : {}),
-      ...(context.screenLeaseId ? { "x-rakazo-screen-lease-id": context.screenLeaseId } : {}),
-      ...(context.cancelRunWork ? { "x-rakazo-cancel-run-work": "1" } : {}),
+      ...(botId ? { "x-cutie-pi-bot-id": botId } : {}),
+      ...(context.botId ? { "x-cutie-pi-screen-id": context.botId } : {}),
+      ...(context.screenLeaseId ? { "x-cutie-pi-screen-lease-id": context.screenLeaseId } : {}),
+      ...(context.cancelRunWork ? { "x-cutie-pi-cancel-run-work": "1" } : {}),
     };
   }
 
@@ -570,9 +570,9 @@ function requestDeadline(timeoutMs: number, message: string) {
 }
 
 function dockerCwd(cwd: string | undefined) {
-  if (!cwd || cwd === "." || cwd === "/" || cwd === "/home/rakazo") return "/home/rakazo";
-  const relative = cwd.startsWith("/home/rakazo/")
-    ? cwd.slice("/home/rakazo/".length)
+  if (!cwd || cwd === "." || cwd === "/" || cwd === "/home/cutie-pi") return "/home/cutie-pi";
+  const relative = cwd.startsWith("/home/cutie-pi/")
+    ? cwd.slice("/home/cutie-pi/".length)
     : normalizeWorkspacePath(cwd);
-  return path.posix.join("/home/rakazo", relative);
+  return path.posix.join("/home/cutie-pi", relative);
 }

@@ -1,6 +1,6 @@
 import { ORPCError } from "@orpc/server";
-import { type JobPublisher, runContinueJob, type SandboxProvider } from "@rakazo/adapter-kit";
-import { cancelComputerRunWork, screenLeaseIdForRun, toComputerRef } from "@rakazo/adapters";
+import { type JobPublisher, runContinueJob, type SandboxProvider } from "@cutie-pi/adapter-kit";
+import { cancelComputerRunWork, screenLeaseIdForRun, toComputerRef } from "@cutie-pi/adapters";
 import {
   type Actor,
   GROUP_MEMBER_MIN,
@@ -10,7 +10,7 @@ import {
   type MessageReaction,
   type RunStatus,
   type ThreadSnapshot,
-} from "@rakazo/contracts";
+} from "@cutie-pi/contracts";
 import {
   ACTIVE_RUN_STATUSES,
   callIdFromClientNonce,
@@ -19,8 +19,8 @@ import {
   projectMessages,
   resolveGroupTargetBotIds,
   runFailureError,
-} from "@rakazo/core";
-import { deriveMessageQuote } from "@rakazo/core/message-quote";
+} from "@cutie-pi/core";
+import { deriveMessageQuote } from "@cutie-pi/core/message-quote";
 import {
   answerWaitingRunWithTextInTransaction,
   appendEventInTransaction,
@@ -34,8 +34,8 @@ import {
   type PrismaClient,
   type ThreadEvents,
   touchGroupUpdatedAt,
-} from "@rakazo/db";
-import { getLogger } from "@rakazo/logging";
+} from "@cutie-pi/db";
+import { getLogger } from "@cutie-pi/logging";
 import {
   buildSendPrompt,
   buildUserMessageBlocks,

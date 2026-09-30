@@ -5,13 +5,13 @@ services:
       # USER/PASSWORD/DB apply only on first pgdata init. Keep existing values in
       # .env, or ALTER ROLE / rename in place. Recreate pgdata only after backup
       # (or when the volume is disposable); down -v deletes all DB state.
-      POSTGRES_USER: ${POSTGRES_USER:-rakazo}
+      POSTGRES_USER: ${POSTGRES_USER:-cutie-pi}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
-      POSTGRES_DB: ${POSTGRES_DB:-rakazo}
+      POSTGRES_DB: ${POSTGRES_DB:-cutie-pi}
     volumes:
       - pgdata:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-rakazo} -d ${POSTGRES_DB:-rakazo}"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-cutie-pi} -d ${POSTGRES_DB:-cutie-pi}"]
       interval: 3s
       timeout: 5s
       retries: 20
@@ -25,10 +25,10 @@ services:
       SUPERVISOR_HOST: "0.0.0.0"
       SUPERVISOR_PORT: "7091"
       DOCKER_SOCKET: /var/run/docker.sock
-      RAKAZO_COMPUTER_IMAGE: rakazo/computer:local
-      RAKAZO_COMPUTER_MEMORY: ${RAKAZO_COMPUTER_MEMORY:-2g}
-      RAKAZO_COMPUTER_CPUS: ${RAKAZO_COMPUTER_CPUS:-2}
-      RAKAZO_COMPUTER_PIDS_LIMIT: ${RAKAZO_COMPUTER_PIDS_LIMIT:-2048}
+      CUTIE_PI_COMPUTER_IMAGE: cutie-pi/computer:local
+      CUTIE_PI_COMPUTER_MEMORY: ${CUTIE_PI_COMPUTER_MEMORY:-2g}
+      CUTIE_PI_COMPUTER_CPUS: ${CUTIE_PI_COMPUTER_CPUS:-2}
+      CUTIE_PI_COMPUTER_PIDS_LIMIT: ${CUTIE_PI_COMPUTER_PIDS_LIMIT:-2048}
       SANDBOX_COMMAND_TIMEOUT_MS: ${SANDBOX_COMMAND_TIMEOUT_MS:-300000}
       SANDBOX_TEAM_SCREEN_LIMIT: ${SANDBOX_TEAM_SCREEN_LIMIT:-0}
       SANDBOX_SUPERVISOR_TOKEN: ${SANDBOX_SUPERVISOR_TOKEN:?Set SANDBOX_SUPERVISOR_TOKEN in .env}
@@ -48,7 +48,7 @@ services:
         condition: service_completed_successfully
 
   computer:
-    image: rakazo/computer:local
+    image: cutie-pi/computer:local
     build:
       context: ../sandboxes/computer
     command: ["true"]
@@ -65,11 +65,11 @@ services:
     build:
       context: ../..
       dockerfile: infra/compose/Dockerfile
-    command: ["bash", "-lc", "pnpm --filter @rakazo/db exec prisma migrate deploy && pnpm --filter @rakazo/api start"]
+    command: ["bash", "-lc", "pnpm --filter @cutie-pi/db exec prisma migrate deploy && pnpm --filter @cutie-pi/api start"]
     env_file:
       - ../../.env
     environment:
-      DATABASE_URL: postgres://${POSTGRES_USER:-rakazo}:${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}@postgres:5432/${POSTGRES_DB:-rakazo}
+      DATABASE_URL: postgres://${POSTGRES_USER:-cutie-pi}:${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}@postgres:5432/${POSTGRES_DB:-cutie-pi}
       API_HOST: "0.0.0.0"
       DATA_DIR: /data
       SANDBOX_SUPERVISOR_URL: http://supervisor:7091
@@ -100,12 +100,12 @@ services:
     build:
       context: ../..
       dockerfile: infra/compose/Dockerfile
-    command: ["pnpm", "--filter", "@rakazo/worker", "start"]
+    command: ["pnpm", "--filter", "@cutie-pi/worker", "start"]
     env_file:
       - ../../.env
     environment:
       BETTER_AUTH_SECRET: ""
-      DATABASE_URL: postgres://${POSTGRES_USER:-rakazo}:${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}@postgres:5432/${POSTGRES_DB:-rakazo}
+      DATABASE_URL: postgres://${POSTGRES_USER:-cutie-pi}:${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}@postgres:5432/${POSTGRES_DB:-cutie-pi}
       DATA_DIR: /data
       SANDBOX_SUPERVISOR_URL: http://supervisor:7091
       WAKEUP_DRIVER: graphile
@@ -134,11 +134,11 @@ services:
     build:
       context: ../..
       dockerfile: infra/compose/Dockerfile
-    command: ["pnpm", "--filter", "@rakazo/web", "preview", "--host", "0.0.0.0", "--port", "5173"]
+    command: ["pnpm", "--filter", "@cutie-pi/web", "preview", "--host", "0.0.0.0", "--port", "5173"]
     environment:
       API_PROXY_TARGET: http://api:3100
       SCREEN_PROXY_SECRET: ${SCREEN_PROXY_SECRET:?Set SCREEN_PROXY_SECRET in .env}
-      RAKAZO_HOST: ${RAKAZO_HOST:-localhost}
+      CUTIE_PI_HOST: ${CUTIE_PI_HOST:-localhost}
     ports:
       - "127.0.0.1:5173:5173"
     depends_on:

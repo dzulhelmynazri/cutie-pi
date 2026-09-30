@@ -1,7 +1,7 @@
 import { useLingui } from "@lingui/react/macro";
-import type { VoiceChatGroup } from "@rakazo/core";
-import { speechFromBlocks, voiceChatDuration, voiceChatSummary } from "@rakazo/core";
-import { buttonVariants, cn } from "@rakazo/ui-web";
+import type { VoiceChatGroup } from "@cutie-pi/core";
+import { speechFromBlocks, voiceChatDuration, voiceChatSummary } from "@cutie-pi/core";
+import { buttonVariants, cn } from "@cutie-pi/ui-web";
 import { AudioLines, ChevronDown } from "lucide-react";
 import { useState } from "react";
 

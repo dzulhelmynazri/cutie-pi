@@ -1,6 +1,6 @@
 import { readFileSync } from "node:fs";
 import path from "node:path";
-import { RECREATED_SERVICES } from "@rakazo/core";
+import { RECREATED_SERVICES } from "@cutie-pi/core";
 import { describe, expect, it } from "vitest";
 import { parse } from "yaml";
 
@@ -70,13 +70,13 @@ describe("the updater compose service", () => {
   });
 
   it("is bind-mounted at the same path it has on the host", () => {
-    const mount = (updater.volumes ?? []).find((volume) => volume.includes("RAKAZO_DEPLOY_DIR"));
+    const mount = (updater.volumes ?? []).find((volume) => volume.includes("CUTIE_PI_DEPLOY_DIR"));
     // biome-ignore lint/suspicious/noTemplateCurlyInString: this is the literal Compose expression
-    const deployDir = "${RAKAZO_DEPLOY_DIR:-/srv/rakazo}";
+    const deployDir = "${CUTIE_PI_DEPLOY_DIR:-/srv/cutie-pi}";
     const separatorIndex = mount?.indexOf("}:${") ?? -1;
     const source = separatorIndex < 0 ? undefined : mount?.slice(0, separatorIndex + 1);
     const destination = separatorIndex < 0 ? undefined : mount?.slice(separatorIndex + 2);
-    expect(updater.environment?.RAKAZO_DEPLOY_DIR).toBe(deployDir);
+    expect(updater.environment?.CUTIE_PI_DEPLOY_DIR).toBe(deployDir);
     expect(mount).toBe(`${deployDir}:${deployDir}`);
     expect(source).toBe(destination);
   });
@@ -89,15 +89,15 @@ describe("the updater compose service", () => {
   });
 
   it("pins its own image tag separately from the application image", () => {
-    expect(updater.image).toContain("RAKAZO_UPDATER_IMAGE_TAG");
+    expect(updater.image).toContain("CUTIE_PI_UPDATER_IMAGE_TAG");
     for (const service of RECREATED_SERVICES) {
-      expect(compose.services[service]?.image).toContain("RAKAZO_IMAGE_TAG");
+      expect(compose.services[service]?.image).toContain("CUTIE_PI_IMAGE_TAG");
     }
   });
 
   it("uses the official registry namespace and digest-pins third-party runtime images", () => {
-    expect(updater.image).toContain("ghcr.io/elie222/rakazo/updater");
-    expect(compose.services.api?.image).toContain("ghcr.io/elie222/rakazo/app");
+    expect(updater.image).toContain("ghcr.io/elie222/cutie-pi/updater");
+    expect(compose.services.api?.image).toContain("ghcr.io/elie222/cutie-pi/app");
     expect(compose.services.postgres?.image).toMatch(
       /^\$\{POSTGRES_IMAGE:-postgres:16@sha256:e17e86066e5ef83e0952a9347f5c792b7ece00972e2aa787a6986f471b3dd3d5\}$/,
     );
@@ -111,11 +111,11 @@ describe("the updater compose service", () => {
     // environment is exactly what this file declares. Pinning them here would make the documented
     // variables inert: the operator sets them, the updater never sees them, and the overlay is
     // dropped on every recreate.
-    expect(updater.environment?.RAKAZO_COMPOSE_FILE).toBe(
-      interpolated("RAKAZO_COMPOSE_FILE", "infra/compose/docker-compose.prod.yml"),
+    expect(updater.environment?.CUTIE_PI_COMPOSE_FILE).toBe(
+      interpolated("CUTIE_PI_COMPOSE_FILE", "infra/compose/docker-compose.prod.yml"),
     );
-    expect(updater.environment?.RAKAZO_UPDATE_SERVICES).toBe(
-      interpolated("RAKAZO_UPDATE_SERVICES"),
+    expect(updater.environment?.CUTIE_PI_UPDATE_SERVICES).toBe(
+      interpolated("CUTIE_PI_UPDATE_SERVICES"),
     );
     expect(updater.environment?.COMPOSE_PATH_SEPARATOR).toBe(
       interpolated("COMPOSE_PATH_SEPARATOR"),
@@ -124,18 +124,18 @@ describe("the updater compose service", () => {
 
   it("injects the actual Compose project name into the updater container", () => {
     // biome-ignore lint/suspicious/noTemplateCurlyInString: this is the literal Compose expression
-    expect(updater.environment?.COMPOSE_PROJECT_NAME).toBe("${COMPOSE_PROJECT_NAME:-rakazo-prod}");
+    expect(updater.environment?.COMPOSE_PROJECT_NAME).toBe("${COMPOSE_PROJECT_NAME:-cutie-pi-prod}");
   });
 
   it("does not load the application env_file into the root-equivalent process", () => {
     expect(updater.env_file).toBeUndefined();
     // biome-ignore lint/suspicious/noTemplateCurlyInString: this is the literal Compose expression
-    expect(updater.environment?.RAKAZO_UPDATER_TOKEN).toBe("${RAKAZO_UPDATER_TOKEN:-}");
+    expect(updater.environment?.CUTIE_PI_UPDATER_TOKEN).toBe("${CUTIE_PI_UPDATER_TOKEN:-}");
   });
 
   it("does not let the api container reach the Docker socket to update itself", () => {
     expect(compose.services.api?.volumes ?? []).not.toContain("/var/run/docker.sock");
-    expect(compose.services.api?.environment?.RAKAZO_UPDATER_URL).toBe("http://updater:7092");
+    expect(compose.services.api?.environment?.CUTIE_PI_UPDATER_URL).toBe("http://updater:7092");
   });
 
   it("passes logging configuration without using env_file", () => {

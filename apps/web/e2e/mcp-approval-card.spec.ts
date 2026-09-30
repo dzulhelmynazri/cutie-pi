@@ -3,7 +3,7 @@ import { activeBotId, captureScreenshot, completeOnboarding, rpc, signup } from 
 
 test("keeps the approved MCP card state after the thread remounts", async ({ page }, testInfo) => {
   const stamp = Date.now();
-  await signup(page, `mcp-approval-${stamp}@rakazo.test`, "password12", "MCP Approval");
+  await signup(page, `mcp-approval-${stamp}@cutie-pi.test`, "password12", "MCP Approval");
   await completeOnboarding(page);
 
   const botId = activeBotId(page);

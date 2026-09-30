@@ -36,7 +36,7 @@ describe("loopback OAuth callbacks", () => {
 
   it("ignores non-http schemes and unparseable targets", () => {
     expect(oauthCallbackFrom("file:///callback?code=ac_123")).toBeUndefined();
-    expect(oauthCallbackFrom("rakazo://localhost/callback?code=ac_123")).toBeUndefined();
+    expect(oauthCallbackFrom("cutie-pi://localhost/callback?code=ac_123")).toBeUndefined();
     expect(oauthCallbackFrom("not a url")).toBeUndefined();
   });
 

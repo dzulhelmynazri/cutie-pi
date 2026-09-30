@@ -3,7 +3,7 @@
 	lb_try_interval 250ms
 }
 
-{$RAKAZO_HOST:app.example.com} {
+{$CUTIE_PI_HOST:app.example.com} {
 	encode zstd gzip
 
 	# A localhost trial must not pin HTTPS onto every local dev server.

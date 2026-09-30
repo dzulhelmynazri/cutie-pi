@@ -40,7 +40,7 @@ function commit(cwd: string, message: string) {
 }
 
 function fixture() {
-  const root = mkdtempSync(path.join(os.tmpdir(), "rakazo-deploy-"));
+  const root = mkdtempSync(path.join(os.tmpdir(), "cutie-pi-deploy-"));
   temporaryDirectories.push(root);
   const upstream = path.join(root, "upstream");
   const checkout = path.join(root, "checkout with spaces");
@@ -49,7 +49,7 @@ function fixture() {
   git(upstream, "init", "-q", "-b", "main");
   const first = commit(upstream, "first");
   git(root, "clone", "-q", upstream, checkout);
-  write(path.join(checkout, ".env"), "RAKAZO_HOST=app.example.test\n");
+  write(path.join(checkout, ".env"), "CUTIE_PI_HOST=app.example.test\n");
   const log = path.join(root, "commands.log");
   // Record every privileged or network command instead of running it.
   write(path.join(bin, "sudo"), '#!/bin/bash\nexec "$@"\n', 0o755);
@@ -77,8 +77,8 @@ exit 0
     PATH: [bin, "/usr/bin", "/bin"].join(path.delimiter),
     HOME: root,
     COMMAND_LOG: log,
-    RAKAZO_DEPLOY_DIR: checkout,
-    RAKAZO_DEPLOY_HEALTH_INTERVAL: "0",
+    CUTIE_PI_DEPLOY_DIR: checkout,
+    CUTIE_PI_DEPLOY_HEALTH_INTERVAL: "0",
   };
   return {
     upstream,

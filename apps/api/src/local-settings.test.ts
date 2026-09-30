@@ -1,4 +1,4 @@
-import { LOCAL_SETTINGS_RPC, LOCAL_SETTINGS_TOKEN_HEADER } from "@rakazo/contracts";
+import { LOCAL_SETTINGS_RPC, LOCAL_SETTINGS_TOKEN_HEADER } from "@cutie-pi/contracts";
 import { Hono } from "hono";
 import { describe, expect, it, vi } from "vitest";
 import { mountLocalSettings, validLocalSettingsToken } from "./local-settings.js";
@@ -29,7 +29,7 @@ function fixture(
       method,
       headers: {
         ...(supplied === null ? {} : { [LOCAL_SETTINGS_TOKEN_HEADER]: supplied }),
-        "x-rakazo-space-id": "someone-elses-space",
+        "x-cutie-pi-space-id": "someone-elses-space",
         cookie: "session=fake",
       },
     });

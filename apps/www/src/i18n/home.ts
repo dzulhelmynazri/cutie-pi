@@ -110,49 +110,49 @@ const DE_ROSTER: RosterBot[] = [
   {
     name: "Sales Outbound",
     color: "#F5A03C",
-    slug: "rakazo/sales-outbound",
+    slug: "cutie-pi/sales-outbound",
     desc: "Recherchiert nachts Accounts, bewertet Intent, entwirft in deinem Ton und hinterlässt eine Review-Liste.",
   },
   {
     name: "Inbox Manager",
     color: "#6A6BF5",
-    slug: "rakazo/inbox-manager",
+    slug: "cutie-pi/inbox-manager",
     desc: "Archiviert den Lärm, antwortet auf Routine-Threads und parkt Entwürfe, die du lesen solltest.",
   },
   {
     name: "Talent Scout",
     color: "#3B82F6",
-    slug: "rakazo/talent-scout",
+    slug: "cutie-pi/talent-scout",
     desc: "Liest jede Bewerbung, shortlistet nach deiner Latte und schreibt die Intro-Mails.",
   },
   {
     name: "Expense Manager",
     color: "#F2622A",
-    slug: "rakazo/expense-manager",
+    slug: "cutie-pi/expense-manager",
     desc: "Ordnet Belege den Buchungen zu, reicht den Report ein und fragt nach, statt zu raten.",
   },
   {
     name: "Bug Triage",
     color: "#D9508A",
-    slug: "rakazo/bug-triage",
+    slug: "cutie-pi/bug-triage",
     desc: "Reproduziert Reports in einem echten Browser und hängt die Schritte an das Issue.",
   },
   {
     name: "Account Manager",
     color: "#9B5CF6",
-    slug: "rakazo/account-manager",
+    slug: "cutie-pi/account-manager",
     desc: "Hält Renewal-Kontext, beantwortet bekannte Fragen und eskaliert den Rest.",
   },
   {
     name: "Paid Media",
     color: "#3EC5A8",
-    slug: "rakazo/paid-media",
+    slug: "cutie-pi/paid-media",
     desc: "Überwacht den Spend täglich, pausiert, was nicht konvertiert, und meldet, was sich geändert hat.",
   },
   {
     name: "Chief of Staff",
     color: "#8B93A8",
-    slug: "rakazo/chief-of-staff",
+    slug: "cutie-pi/chief-of-staff",
     desc: "Führt die Woche: Briefings, Buchungen und Übergaben zwischen deinen anderen Bots.",
   },
 ];
@@ -161,49 +161,49 @@ const KO_ROSTER: RosterBot[] = [
   {
     name: "Sales Outbound",
     color: "#F5A03C",
-    slug: "rakazo/sales-outbound",
+    slug: "cutie-pi/sales-outbound",
     desc: "밤새 계정을 조사하고 의도를 점수한 뒤, 당신 말투로 초안을 써 검토 목록을 남깁니다.",
   },
   {
     name: "Inbox Manager",
     color: "#6A6BF5",
-    slug: "rakazo/inbox-manager",
+    slug: "cutie-pi/inbox-manager",
     desc: "잡음을 보관처리하고, 루틴 스레드에 답하며, 확인이 필요한 초안은 보류합니다.",
   },
   {
     name: "Talent Scout",
     color: "#3B82F6",
-    slug: "rakazo/talent-scout",
+    slug: "cutie-pi/talent-scout",
     desc: "지원서를 모두 읽고 기준에 맞게 숏리스트한 뒤 소개 메일을 작성합니다.",
   },
   {
     name: "Expense Manager",
     color: "#F2622A",
-    slug: "rakazo/expense-manager",
+    slug: "cutie-pi/expense-manager",
     desc: "영수증과 결제를 맞추고 리포트를 제출하며, 추측하기 전에 묻습니다.",
   },
   {
     name: "Bug Triage",
     color: "#D9508A",
-    slug: "rakazo/bug-triage",
+    slug: "cutie-pi/bug-triage",
     desc: "실제 브라우저에서 리포트를 재현하고 이슈에 재현 절차를 붙입니다.",
   },
   {
     name: "Account Manager",
     color: "#9B5CF6",
-    slug: "rakazo/account-manager",
+    slug: "cutie-pi/account-manager",
     desc: "갱신 맥락을 유지하고 알려진 질문에 답하며, 나머지는 에스컬레이션합니다.",
   },
   {
     name: "Paid Media",
     color: "#3EC5A8",
-    slug: "rakazo/paid-media",
+    slug: "cutie-pi/paid-media",
     desc: "매일 지출을 지켜보고 전환되지 않는 건 일시정지한 뒤, 바뀐 점을 보고합니다.",
   },
   {
     name: "Chief of Staff",
     color: "#8B93A8",
-    slug: "rakazo/chief-of-staff",
+    slug: "cutie-pi/chief-of-staff",
     desc: "한 주를 운영합니다: 브리핑, 예약, 다른 봇 사이의 핸드오프.",
   },
 ];
@@ -212,64 +212,64 @@ const ZH_ROSTER: RosterBot[] = [
   {
     name: "Sales Outbound",
     color: "#F5A03C",
-    slug: "rakazo/sales-outbound",
+    slug: "cutie-pi/sales-outbound",
     desc: "夜间调研客户、评估意向，用你的语气起草跟进，并留下待审清单。",
   },
   {
     name: "Inbox Manager",
     color: "#6A6BF5",
-    slug: "rakazo/inbox-manager",
+    slug: "cutie-pi/inbox-manager",
     desc: "归档杂音、回复例行邮件，把需要你过目的草稿先搁置起来。",
   },
   {
     name: "Talent Scout",
     color: "#3B82F6",
-    slug: "rakazo/talent-scout",
+    slug: "cutie-pi/talent-scout",
     desc: "通读每份简历，按你的标准筛出候选名单，并写好介绍邮件。",
   },
   {
     name: "Expense Manager",
     color: "#F2622A",
-    slug: "rakazo/expense-manager",
+    slug: "cutie-pi/expense-manager",
     desc: "核对票据与账目、提交报销，拿不准时先问而不是猜。",
   },
   {
     name: "Bug Triage",
     color: "#D9508A",
-    slug: "rakazo/bug-triage",
+    slug: "cutie-pi/bug-triage",
     desc: "在真实浏览器里复现报告，并把复现步骤附到工单上。",
   },
   {
     name: "Account Manager",
     color: "#9B5CF6",
-    slug: "rakazo/account-manager",
+    slug: "cutie-pi/account-manager",
     desc: "掌握续约背景，回答常见问题，其余的自动升级给你。",
   },
   {
     name: "Paid Media",
     color: "#3EC5A8",
-    slug: "rakazo/paid-media",
+    slug: "cutie-pi/paid-media",
     desc: "每天盯投放，暂停没有转化的广告，并汇报发生了什么变化。",
   },
   {
     name: "Chief of Staff",
     color: "#8B93A8",
-    slug: "rakazo/chief-of-staff",
+    slug: "cutie-pi/chief-of-staff",
     desc: "统筹整周：准备简报、安排日程，并协调其他 Bot 之间的交接。",
   },
 ];
 
 const HOME_COPY: Record<Locale, HomeCopy> = {
   en: {
-    title: "Rakazo | Open source Grok Bot alternative",
+    title: "CutiePi | Open source Grok Bot alternative",
     description: SITE_DESCRIPTION,
     ogImageAlt:
-      "Rakazo. AI teammates you actually own. Your keys, your model, your machine.",
+      "CutiePi. AI teammates you actually own. Your keys, your model, your machine.",
     availableLanguage: "English",
     skipToContent: "Skip to content",
     starFallback: "Star",
     nav: {
-      home: "Rakazo home",
+      home: "CutiePi home",
       primary: "Primary",
       menu: "Menu",
       product: "Product",
@@ -283,7 +283,7 @@ const HOME_COPY: Record<Locale, HomeCopy> = {
       badge: "Apache-2.0",
       pill: "Self-hosted",
       heading: "AI teammates you actually own",
-      lead: "Rakazo is an open source Grok Bot alternative. Give a bot real work. It signs in to your tools, uses them the way you do, and comes back when it needs you.",
+      lead: "CutiePi is an open source Grok Bot alternative. Give a bot real work. It signs in to your tools, uses them the way you do, and comes back when it needs you.",
       getStarted: "Get started",
       viewOnGithub: "View on GitHub",
       setupWithAgent: "Set up with your agent",
@@ -293,7 +293,7 @@ const HOME_COPY: Record<Locale, HomeCopy> = {
     selfHost: {
       eyebrow: "Self-hosted",
       heading: "The computer is yours",
-      copy: "Run Rakazo on your machine. Your keys, your model, your data.",
+      copy: "Run CutiePi on your machine. Your keys, your model, your data.",
       features: [
         {
           title: "Any model, your key",
@@ -318,7 +318,7 @@ const HOME_COPY: Record<Locale, HomeCopy> = {
     openSource: {
       eyebrow: "Open source",
       heading: "No pricing page. Just the repo.",
-      copy: "Rakazo is Apache-2.0 licensed and runs on your own machine with your own model keys. Nothing is gated, nothing phones home.",
+      copy: "CutiePi is Apache-2.0 licensed and runs on your own machine with your own model keys. Nothing is gated, nothing phones home.",
       selfHostTitle: "Self-host",
       selfHostMeta: "Available today",
       selfHostItems: [
@@ -342,7 +342,7 @@ const HOME_COPY: Record<Locale, HomeCopy> = {
     },
     cta: {
       heading: "Meet your first bot",
-      copy: "Give Rakazo something you have been putting off and let it handle the follow-through.",
+      copy: "Give CutiePi something you have been putting off and let it handle the follow-through.",
       getStarted: "Get started",
       viewOnGithub: "View on GitHub",
       openSourceValue: "Open source",
@@ -362,11 +362,11 @@ const HOME_COPY: Record<Locale, HomeCopy> = {
       selfHostNow: "Self-host now",
       selfHostHint: "Install steps are in the docs.",
       cloudWaitlist: "Cloud waitlist",
-      cloudHint: "Hosted Rakazo is coming. Leave your email.",
+      cloudHint: "Hosted CutiePi is coming. Leave your email.",
       back: "Back",
       successTitle: "You're in.",
       successCopy:
-        "We'll email you when hosted Rakazo is ready. Want to start today? Jump to Self-host on this page.",
+        "We'll email you when hosted CutiePi is ready. Want to start today? Jump to Self-host on this page.",
       done: "Done",
       viewOnGithub: "View on GitHub",
     },
@@ -392,16 +392,16 @@ const HOME_COPY: Record<Locale, HomeCopy> = {
     },
   },
   de: {
-    title: "Rakazo | Open-Source-Alternative zu Grok Bot",
+    title: "CutiePi | Open-Source-Alternative zu Grok Bot",
     description:
-      "Rakazo ist eine Open-Source-Alternative zu Grok Bot für persistente KI-Teamkollegen, die echte Arbeit erledigen. Deine Keys, dein Modell, deine Maschine.",
+      "CutiePi ist eine Open-Source-Alternative zu Grok Bot für persistente KI-Teamkollegen, die echte Arbeit erledigen. Deine Keys, dein Modell, deine Maschine.",
     ogImageAlt:
-      "Rakazo. KI-Teamkollegen, die dir wirklich gehören. Deine Keys, dein Modell, deine Maschine.",
+      "CutiePi. KI-Teamkollegen, die dir wirklich gehören. Deine Keys, dein Modell, deine Maschine.",
     availableLanguage: "German",
     skipToContent: "Zum Inhalt springen",
     starFallback: "Star",
     nav: {
-      home: "Rakazo-Startseite",
+      home: "CutiePi-Startseite",
       primary: "Hauptnavigation",
       menu: "Menü",
       product: "Produkt",
@@ -415,7 +415,7 @@ const HOME_COPY: Record<Locale, HomeCopy> = {
       badge: "Apache-2.0",
       pill: "Self-hosted",
       heading: "KI-Teamkollegen, die dir wirklich gehören",
-      lead: "Rakazo ist eine Open-Source-Alternative zu Grok Bot. Gib einem Bot echte Arbeit. Er meldet sich in deinen Tools an, nutzt sie wie du. Er kommt zurück, wenn er dich braucht.",
+      lead: "CutiePi ist eine Open-Source-Alternative zu Grok Bot. Gib einem Bot echte Arbeit. Er meldet sich in deinen Tools an, nutzt sie wie du. Er kommt zurück, wenn er dich braucht.",
       getStarted: "Loslegen",
       viewOnGithub: "Auf GitHub ansehen",
       setupWithAgent: "Mit deinem Agenten einrichten",
@@ -425,7 +425,7 @@ const HOME_COPY: Record<Locale, HomeCopy> = {
     selfHost: {
       eyebrow: "Self-hosted",
       heading: "Der Computer gehört dir",
-      copy: "Betreibe Rakazo auf deiner Maschine. Deine Keys, dein Modell, deine Daten.",
+      copy: "Betreibe CutiePi auf deiner Maschine. Deine Keys, dein Modell, deine Daten.",
       features: [
         {
           title: "Beliebiges Modell, dein Key",
@@ -450,7 +450,7 @@ const HOME_COPY: Record<Locale, HomeCopy> = {
     openSource: {
       eyebrow: "Open Source",
       heading: "Keine Preisseite. Nur das Repo.",
-      copy: "Rakazo ist Apache-2.0-lizenziert und läuft auf deiner Maschine mit deinen Model-Keys. Nichts ist freigeschaltet, nichts telefoniert nach Hause.",
+      copy: "CutiePi ist Apache-2.0-lizenziert und läuft auf deiner Maschine mit deinen Model-Keys. Nichts ist freigeschaltet, nichts telefoniert nach Hause.",
       selfHostTitle: "Self-host",
       selfHostMeta: "Heute verfügbar",
       selfHostItems: [
@@ -474,7 +474,7 @@ const HOME_COPY: Record<Locale, HomeCopy> = {
     },
     cta: {
       heading: "Triff deinen ersten Bot",
-      copy: "Gib Rakazo etwas, das du aufgeschoben hast. Lass es den Follow-through übernehmen.",
+      copy: "Gib CutiePi etwas, das du aufgeschoben hast. Lass es den Follow-through übernehmen.",
       getStarted: "Loslegen",
       viewOnGithub: "Auf GitHub ansehen",
       openSourceValue: "Open Source",
@@ -494,11 +494,11 @@ const HOME_COPY: Record<Locale, HomeCopy> = {
       selfHostNow: "Jetzt self-hosten",
       selfHostHint: "Installationsschritte stehen in den Docs.",
       cloudWaitlist: "Cloud-Warteliste",
-      cloudHint: "Gehostetes Rakazo kommt. Hinterlasse deine E-Mail.",
+      cloudHint: "Gehostetes CutiePi kommt. Hinterlasse deine E-Mail.",
       back: "Zurück",
       successTitle: "Du bist dabei.",
       successCopy:
-        "Wir mailen dir, wenn gehostetes Rakazo bereit ist. Heute starten? Zum Self-host-Abschnitt auf dieser Seite.",
+        "Wir mailen dir, wenn gehostetes CutiePi bereit ist. Heute starten? Zum Self-host-Abschnitt auf dieser Seite.",
       done: "Fertig",
       viewOnGithub: "Auf GitHub ansehen",
     },
@@ -524,15 +524,15 @@ const HOME_COPY: Record<Locale, HomeCopy> = {
     },
   },
   ko: {
-    title: "Rakazo | 오픈소스 Grok Bot 대안",
+    title: "CutiePi | 오픈소스 Grok Bot 대안",
     description:
-      "Rakazo는 실제 업무를 수행하는 지속형 AI 팀원을 위한 오픈소스 Grok Bot 대안입니다. 키, 모델, 머신, 모두 당신 것.",
-    ogImageAlt: "Rakazo. 진짜로 내 것인 AI 팀원. 키, 모델, 머신, 모두 당신 것.",
+      "CutiePi는 실제 업무를 수행하는 지속형 AI 팀원을 위한 오픈소스 Grok Bot 대안입니다. 키, 모델, 머신, 모두 당신 것.",
+    ogImageAlt: "CutiePi. 진짜로 내 것인 AI 팀원. 키, 모델, 머신, 모두 당신 것.",
     availableLanguage: "Korean",
     skipToContent: "본문으로 건너뛰기",
     starFallback: "Star",
     nav: {
-      home: "Rakazo 홈",
+      home: "CutiePi 홈",
       primary: "주 메뉴",
       menu: "메뉴",
       product: "제품",
@@ -546,7 +546,7 @@ const HOME_COPY: Record<Locale, HomeCopy> = {
       badge: "Apache-2.0",
       pill: "셀프 호스트",
       heading: "진짜로 내 것인 AI 팀원",
-      lead: "Rakazo는 오픈소스 Grok Bot 대안입니다. 봇에게 실제 업무를 맡기세요. 봇이 도구에 로그인하고, 당신처럼 사용하며, 필요할 때 돌아와 묻습니다.",
+      lead: "CutiePi는 오픈소스 Grok Bot 대안입니다. 봇에게 실제 업무를 맡기세요. 봇이 도구에 로그인하고, 당신처럼 사용하며, 필요할 때 돌아와 묻습니다.",
       getStarted: "시작하기",
       viewOnGithub: "GitHub에서 보기",
       setupWithAgent: "에이전트로 설정하기",
@@ -556,7 +556,7 @@ const HOME_COPY: Record<Locale, HomeCopy> = {
     selfHost: {
       eyebrow: "셀프 호스트",
       heading: "컴퓨터는 당신 것",
-      copy: "당신 머신에서 Rakazo를 실행하세요. 키, 모델, 데이터는 모두 당신 것.",
+      copy: "당신 머신에서 CutiePi를 실행하세요. 키, 모델, 데이터는 모두 당신 것.",
       features: [
         {
           title: "어떤 모델이든, 키는 당신 것",
@@ -581,7 +581,7 @@ const HOME_COPY: Record<Locale, HomeCopy> = {
     openSource: {
       eyebrow: "오픈소스",
       heading: "가격 페이지 없음. 리포만.",
-      copy: "Rakazo는 Apache-2.0 라이선스이며, 당신 머신에서 당신 모델 키로 실행됩니다. 잠긴 기능도, 외부로 연락하는 것도 없습니다.",
+      copy: "CutiePi는 Apache-2.0 라이선스이며, 당신 머신에서 당신 모델 키로 실행됩니다. 잠긴 기능도, 외부로 연락하는 것도 없습니다.",
       selfHostTitle: "셀프 호스트",
       selfHostMeta: "지금 사용 가능",
       selfHostItems: [
@@ -605,7 +605,7 @@ const HOME_COPY: Record<Locale, HomeCopy> = {
     },
     cta: {
       heading: "첫 봇을 만나보세요",
-      copy: "미뤄 두었던 일을 Rakazo에 맡기고, 후속까지 맡기세요.",
+      copy: "미뤄 두었던 일을 CutiePi에 맡기고, 후속까지 맡기세요.",
       getStarted: "시작하기",
       viewOnGithub: "GitHub에서 보기",
       openSourceValue: "오픈소스",
@@ -625,11 +625,11 @@ const HOME_COPY: Record<Locale, HomeCopy> = {
       selfHostNow: "지금 셀프 호스트",
       selfHostHint: "설치 단계는 문서에 있습니다.",
       cloudWaitlist: "Cloud 대기열",
-      cloudHint: "호스팅 Rakazo가 곧 옵니다. 이메일을 남겨 주세요.",
+      cloudHint: "호스팅 CutiePi가 곧 옵니다. 이메일을 남겨 주세요.",
       back: "뒤로",
       successTitle: "등록되었습니다.",
       successCopy:
-        "호스팅 Rakazo가 준비되면 메일로 알려 드립니다. 오늘 시작하려면 이 페이지의 셀프 호스트 섹션으로 이동하세요.",
+        "호스팅 CutiePi가 준비되면 메일로 알려 드립니다. 오늘 시작하려면 이 페이지의 셀프 호스트 섹션으로 이동하세요.",
       done: "완료",
       viewOnGithub: "GitHub에서 보기",
     },
@@ -655,15 +655,15 @@ const HOME_COPY: Record<Locale, HomeCopy> = {
     },
   },
   zh: {
-    title: "Rakazo | 开源 Grok Bot 替代品",
+    title: "CutiePi | 开源 Grok Bot 替代品",
     description:
-      "Rakazo 是一个开源 Grok Bot 替代品，用于运行真正干活的持久化 AI 队友。密钥、模型、机器，都归你所有。",
-    ogImageAlt: "Rakazo：真正属于你的 AI 队友。密钥、模型、机器，都归你所有。",
+      "CutiePi 是一个开源 Grok Bot 替代品，用于运行真正干活的持久化 AI 队友。密钥、模型、机器，都归你所有。",
+    ogImageAlt: "CutiePi：真正属于你的 AI 队友。密钥、模型、机器，都归你所有。",
     availableLanguage: "Chinese",
     skipToContent: "跳到主要内容",
     starFallback: "加星",
     nav: {
-      home: "Rakazo 首页",
+      home: "CutiePi 首页",
       primary: "主导航",
       menu: "菜单",
       product: "产品",
@@ -677,7 +677,7 @@ const HOME_COPY: Record<Locale, HomeCopy> = {
       badge: "Apache-2.0",
       pill: "自托管",
       heading: "真正属于你的 AI 队友",
-      lead: "Rakazo 是一个开源 Grok Bot 替代品。把真正的工作交给 Bot：它会登录你的工具，像你一样使用它们，并在需要你时回来询问。",
+      lead: "CutiePi 是一个开源 Grok Bot 替代品。把真正的工作交给 Bot：它会登录你的工具，像你一样使用它们，并在需要你时回来询问。",
       getStarted: "开始使用",
       viewOnGithub: "在 GitHub 上查看",
       setupWithAgent: "用你的智能体安装",
@@ -687,7 +687,7 @@ const HOME_COPY: Record<Locale, HomeCopy> = {
     selfHost: {
       eyebrow: "自托管",
       heading: "电脑归你所有",
-      copy: "在你自己的机器上运行 Rakazo。密钥、模型、数据，都归你所有。",
+      copy: "在你自己的机器上运行 CutiePi。密钥、模型、数据，都归你所有。",
       features: [
         {
           title: "任意模型，密钥归你",
@@ -712,7 +712,7 @@ const HOME_COPY: Record<Locale, HomeCopy> = {
     openSource: {
       eyebrow: "开源",
       heading: "没有定价页，只有代码仓库。",
-      copy: "Rakazo 采用 Apache-2.0 许可证，在你自己的机器上用你自己的模型密钥运行。没有功能墙，也不会偷偷外联。",
+      copy: "CutiePi 采用 Apache-2.0 许可证，在你自己的机器上用你自己的模型密钥运行。没有功能墙，也不会偷偷外联。",
       selfHostTitle: "自托管",
       selfHostMeta: "现已可用",
       selfHostItems: [
@@ -736,7 +736,7 @@ const HOME_COPY: Record<Locale, HomeCopy> = {
     },
     cta: {
       heading: "认识你的第一个 Bot",
-      copy: "把一件你一直拖延的事交给 Rakazo，让它负责跟进到底。",
+      copy: "把一件你一直拖延的事交给 CutiePi，让它负责跟进到底。",
       getStarted: "开始使用",
       viewOnGithub: "在 GitHub 上查看",
       openSourceValue: "开源",
@@ -756,11 +756,11 @@ const HOME_COPY: Record<Locale, HomeCopy> = {
       selfHostNow: "立即自托管",
       selfHostHint: "安装步骤见文档。",
       cloudWaitlist: "云端候补名单",
-      cloudHint: "托管版 Rakazo 即将推出。留下你的邮箱。",
+      cloudHint: "托管版 CutiePi 即将推出。留下你的邮箱。",
       back: "返回",
       successTitle: "登记成功。",
       successCopy:
-        "托管版 Rakazo 就绪时我们会邮件通知你。想今天就上手？跳到本页的自托管部分。",
+        "托管版 CutiePi 就绪时我们会邮件通知你。想今天就上手？跳到本页的自托管部分。",
       done: "完成",
       viewOnGithub: "在 GitHub 上查看",
     },

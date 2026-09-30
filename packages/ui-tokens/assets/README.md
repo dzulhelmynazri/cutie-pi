@@ -1,6 +1,6 @@
 # App icon source
 
-`Rakazo.icon` is the shared editable source for macOS and iOS. Open it in Apple's
+`CutiePi.icon` is the shared editable source for macOS and iOS. Open it in Apple's
 Icon Composer with Xcode 26 or newer. The orange foreground keeps its original
 lighting, sits 90 points below center, and uses the system dark background.
 

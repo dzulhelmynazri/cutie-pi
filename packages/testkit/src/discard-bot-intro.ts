@@ -1,7 +1,7 @@
-import { runJobKey } from "@rakazo/adapter-kit";
-import type { RunStatus } from "@rakazo/contracts";
-import { isActive } from "@rakazo/core";
-import type { PrismaClient } from "@rakazo/db";
+import { runJobKey } from "@cutie-pi/adapter-kit";
+import type { RunStatus } from "@cutie-pi/contracts";
+import { isActive } from "@cutie-pi/core";
+import type { PrismaClient } from "@cutie-pi/db";
 
 type App = { request: (input: string, init?: RequestInit) => Promise<Response> };
 
@@ -88,7 +88,7 @@ async function rpc(
       "content-type": "application/json",
       cookie,
       origin: "http://127.0.0.1:5173",
-      ...(spaceId ? { "x-rakazo-space-id": spaceId } : {}),
+      ...(spaceId ? { "x-cutie-pi-space-id": spaceId } : {}),
     },
     body: JSON.stringify({ json: body }),
   });

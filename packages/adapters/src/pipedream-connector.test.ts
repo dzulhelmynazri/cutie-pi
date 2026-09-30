@@ -1,4 +1,4 @@
-import type { AdapterContext } from "@rakazo/adapter-kit";
+import type { AdapterContext } from "@cutie-pi/adapter-kit";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import {
   isPipedreamEnabled,
@@ -159,7 +159,7 @@ describe("PipedreamConnector", () => {
 
     await expect(
       connector.begin(
-        { provider: "gmail", redirectUrl: "https://rakazo.example.test/app" },
+        { provider: "gmail", redirectUrl: "https://cutie-pi.example.test/app" },
         context,
       ),
     ).rejects.toThrow("secure HTTPS connect URL");
@@ -179,7 +179,7 @@ describe("PipedreamConnector", () => {
 
     await expect(
       connector.begin(
-        { provider: "gmail", redirectUrl: "https://rakazo.example.test/app" },
+        { provider: "gmail", redirectUrl: "https://cutie-pi.example.test/app" },
         context,
       ),
     ).rejects.toThrow("Pipedream authentication failed: 502");
@@ -203,7 +203,7 @@ describe("PipedreamConnector", () => {
 
     await expect(
       connector.begin(
-        { provider: "gmail", redirectUrl: "https://rakazo.example.test/app" },
+        { provider: "gmail", redirectUrl: "https://cutie-pi.example.test/app" },
         context,
       ),
     ).rejects.toThrow("Pipedream response is too large.");
@@ -249,7 +249,7 @@ describe("PipedreamConnector", () => {
     const started = Date.now();
     await expect(
       connector.begin(
-        { provider: "gmail", redirectUrl: "https://rakazo.example.test/app" },
+        { provider: "gmail", redirectUrl: "https://cutie-pi.example.test/app" },
         { ...context, signal: abort.signal },
       ),
     ).rejects.toThrow("Pipedream response is too large.");
@@ -277,7 +277,7 @@ describe("PipedreamConnector", () => {
 
     await expect(
       connector.begin(
-        { provider: "gmail", redirectUrl: "https://rakazo.example.test/app" },
+        { provider: "gmail", redirectUrl: "https://cutie-pi.example.test/app" },
         context,
       ),
     ).rejects.toThrow("Pipedream response is too large.");
@@ -312,13 +312,13 @@ describe("PipedreamConnector", () => {
 
     await expect(
       connector.begin(
-        { provider: "gmail", redirectUrl: "https://rakazo.example.test/app" },
+        { provider: "gmail", redirectUrl: "https://cutie-pi.example.test/app" },
         context,
       ),
     ).rejects.toThrow("Pipedream response is too large.");
     await expect(
       connector.begin(
-        { provider: "gmail", redirectUrl: "https://rakazo.example.test/app" },
+        { provider: "gmail", redirectUrl: "https://cutie-pi.example.test/app" },
         context,
       ),
     ).resolves.toEqual({
@@ -381,7 +381,7 @@ describe("PipedreamConnector", () => {
       }),
     ]);
     const started = await connector.begin(
-      { provider: "gmail", redirectUrl: "https://rakazo.example.test/app" },
+      { provider: "gmail", redirectUrl: "https://cutie-pi.example.test/app" },
       context,
     );
 
@@ -605,7 +605,7 @@ describe("PipedreamConnector", () => {
     );
     await expect(
       connector.begin(
-        { provider: "linear", redirectUrl: "https://rakazo.example.test/app" },
+        { provider: "linear", redirectUrl: "https://cutie-pi.example.test/app" },
         context,
       ),
     ).resolves.toEqual({

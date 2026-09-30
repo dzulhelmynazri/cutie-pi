@@ -1,10 +1,10 @@
 import type { IncomingHttpHeaders } from "node:http";
-import type { ScreenProxyTarget } from "@rakazo/core/node/screen-capability";
+import type { ScreenProxyTarget } from "@cutie-pi/core/node/screen-capability";
 import {
   isScreenProxyTarget,
   SCREEN_RECHECK_MS,
   SCREEN_TARGET_ENDPOINT,
-} from "@rakazo/core/node/screen-capability";
+} from "@cutie-pi/core/node/screen-capability";
 
 const SENSITIVE_FORWARD_HEADERS = new Set([
   "authorization",

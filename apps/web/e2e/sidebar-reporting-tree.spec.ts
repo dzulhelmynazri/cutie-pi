@@ -10,7 +10,7 @@ function rosterRow(page: Page, name: RegExp) {
 
 test("spawned bots nest under their parent and collapse", async ({ page }, testInfo) => {
   const stamp = Date.now();
-  await signup(page, `reporting-tree-${stamp}@rakazo.test`, "password12", "Tree User");
+  await signup(page, `reporting-tree-${stamp}@cutie-pi.test`, "password12", "Tree User");
   await completeOnboarding(page);
 
   const composer = page.locator('textarea[name="chat-message"]');

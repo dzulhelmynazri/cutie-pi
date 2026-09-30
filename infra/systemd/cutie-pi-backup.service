@@ -1,12 +1,12 @@
 [Unit]
-Description=Create and verify a Rakazo production backup
+Description=Create and verify a CutiePi production backup
 Requires=docker.service
 After=docker.service
 
 [Service]
 Type=oneshot
-EnvironmentFile=-/etc/rakazo/backup.env
-ExecStart=/usr/local/sbin/rakazo-backup
+EnvironmentFile=-/etc/cutie-pi/backup.env
+ExecStart=/usr/local/sbin/cutie-pi-backup
 Nice=10
 IOSchedulingClass=best-effort
 IOSchedulingPriority=7

@@ -8,7 +8,7 @@ export const EXAMPLE_SCREEN_PROXY_SECRET_PLACEHOLDER =
   "replace-with-32-plus-character-screen-proxy-secret";
 
 const RUNTIME_SECRETS_ERROR =
-  "Set BETTER_AUTH_SECRET and ENCRYPTION_KEY to long random strings before starting Rakazo outside local development or tests.";
+  "Set BETTER_AUTH_SECRET and ENCRYPTION_KEY to long random strings before starting CutiePi outside local development or tests.";
 
 const DEDICATED_SECRET_PLACEHOLDERS = new Set([
   DEV_SUPERVISOR_TOKEN_PLACEHOLDER,
@@ -18,7 +18,7 @@ const DEDICATED_SECRET_PLACEHOLDERS = new Set([
 ]);
 
 export function isDevSecretAllowed(env: NodeJS.ProcessEnv = process.env): boolean {
-  if (env.RAKAZO_ALLOW_DEV_SECRETS === "1") return true;
+  if (env.CUTIE_PI_ALLOW_DEV_SECRETS === "1") return true;
   if (env.VITEST === "true" || env.VITEST === "1") return true;
   const nodeEnv = env.NODE_ENV;
   return nodeEnv === "development" || nodeEnv === "test";
@@ -108,11 +108,11 @@ export function resolveScreenProxySecret(env: NodeJS.ProcessEnv = process.env): 
  */
 export function resolveUpdaterToken(env: NodeJS.ProcessEnv = process.env): string {
   return resolveDedicatedSecret(env, {
-    name: "RAKAZO_UPDATER_TOKEN",
+    name: "CUTIE_PI_UPDATER_TOKEN",
     conflicts: ["BETTER_AUTH_SECRET", "SANDBOX_SUPERVISOR_TOKEN", "SCREEN_PROXY_SECRET"],
-    missingMessage: "Set RAKAZO_UPDATER_TOKEN to a dedicated random updater credential.",
+    missingMessage: "Set CUTIE_PI_UPDATER_TOKEN to a dedicated random updater credential.",
     conflictMessage:
-      "RAKAZO_UPDATER_TOKEN must differ from BETTER_AUTH_SECRET, SANDBOX_SUPERVISOR_TOKEN, and SCREEN_PROXY_SECRET.",
+      "CUTIE_PI_UPDATER_TOKEN must differ from BETTER_AUTH_SECRET, SANDBOX_SUPERVISOR_TOKEN, and SCREEN_PROXY_SECRET.",
   });
 }
 
@@ -137,7 +137,7 @@ export function timingSafeStringEqual(supplied: string | undefined, expected: st
  * Constant-time bearer comparison, shared by every privileged sidecar.
  *
  * Deliberately not `node:crypto`'s `timingSafeEqual`: this module is reachable from the web bundle
- * through `@rakazo/core`, and importing `node:crypto` here fails the production Vite build with
+ * through `@cutie-pi/core`, and importing `node:crypto` here fails the production Vite build with
  * `"timingSafeEqual" is not exported by "__vite-browser-external"`, which takes the whole
  * application image down with it. The XOR accumulation below inspects every byte no matter where
  * the first difference falls, which is the property that mattered. Length is compared first, as it

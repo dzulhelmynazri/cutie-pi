@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { createServer, type ServerResponse } from "node:http";
 import type { AddressInfo } from "node:net";
-import type { AgentRunRequest } from "@rakazo/adapter-kit";
+import type { AgentRunRequest } from "@cutie-pi/adapter-kit";
 
 export interface ModelEmulatorRequest {
   model: string;

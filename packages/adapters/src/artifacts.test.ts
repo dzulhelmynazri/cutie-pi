@@ -13,7 +13,7 @@ afterEach(async () => {
 
 describe("LocalArtifactStore", () => {
   it("creates artifact files with owner-only permissions", async () => {
-    const root = await mkdtemp(path.join(tmpdir(), "rakazo-artifacts-"));
+    const root = await mkdtemp(path.join(tmpdir(), "cutie-pi-artifacts-"));
     dirs.push(root);
     const store = new LocalArtifactStore(root);
 
@@ -27,7 +27,7 @@ describe("LocalArtifactStore", () => {
   });
 
   it("does not follow a replacement symlink when reading an artifact", async () => {
-    const root = await mkdtemp(path.join(tmpdir(), "rakazo-artifacts-"));
+    const root = await mkdtemp(path.join(tmpdir(), "cutie-pi-artifacts-"));
     dirs.push(root);
     const store = new LocalArtifactStore(root);
     const stored = await store.put(

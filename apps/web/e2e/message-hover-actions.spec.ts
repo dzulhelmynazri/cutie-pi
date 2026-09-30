@@ -47,7 +47,7 @@ test("message hover shows beside-bubble actions; reply links to parent", async (
   page,
 }, testInfo) => {
   const stamp = Date.now();
-  await signup(page, `hover-actions-${stamp}@rakazo.test`, "password12", "Hover Actions");
+  await signup(page, `hover-actions-${stamp}@cutie-pi.test`, "password12", "Hover Actions");
   await completeOnboarding(page);
   await page.context().grantPermissions(["clipboard-read", "clipboard-write"]);
 
@@ -274,7 +274,7 @@ test("message hover shows beside-bubble actions; reply links to parent", async (
 
 test("reply preview jumps to parent outside the loaded page", async ({ page }) => {
   const stamp = Date.now();
-  await signup(page, `hover-page-${stamp}@rakazo.test`, "password12", "Hover Page");
+  await signup(page, `hover-page-${stamp}@cutie-pi.test`, "password12", "Hover Page");
   await completeOnboarding(page);
 
   const parentText = `page-parent-${stamp}`;
@@ -359,7 +359,7 @@ test.describe("touch message actions", () => {
   test.use({ hasTouch: true, isMobile: true, viewport: { width: 390, height: 844 } });
 
   test("More exposes actions without simulated hover", async ({ page }, testInfo) => {
-    await signup(page, `touch-actions-${Date.now()}@rakazo.test`, "password12", "Touch Actions");
+    await signup(page, `touch-actions-${Date.now()}@cutie-pi.test`, "password12", "Touch Actions");
     await completeOnboarding(page);
     expect(
       await page.evaluate(() => matchMedia("(hover: hover) and (pointer: fine)").matches),

@@ -3,8 +3,8 @@ import { mkdirSync, mkdtempSync, readFileSync, renameSync, rmSync, writeFileSync
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { parseArgs } from "node:util";
-import { ModelConnectInputSchema } from "@rakazo/contracts";
-import { loadRootEnv } from "@rakazo/core/node/load-root-env";
+import { ModelConnectInputSchema } from "@cutie-pi/contracts";
+import { loadRootEnv } from "@cutie-pi/core/node/load-root-env";
 import { PostgreSqlContainer, type StartedPostgreSqlContainer } from "@testcontainers/postgresql";
 import { EVAL_CASES } from "../evals/cases.js";
 import { emptyTrial, redact, summarize, validateControls } from "../evals/report.js";
@@ -93,7 +93,7 @@ async function main() {
   report.provider = connection.provider;
   save();
   // This CLI owns a disposable database. Never migrate or evaluate against an inherited database.
-  const dataDir = mkdtempSync(path.join(tmpdir(), "rakazo-evals-"));
+  const dataDir = mkdtempSync(path.join(tmpdir(), "cutie-pi-evals-"));
   let postgres: StartedPostgreSqlContainer | undefined;
   try {
     postgres = await new PostgreSqlContainer("postgres:16-alpine").start();
@@ -130,11 +130,11 @@ async function main() {
       CLOUD_AGENT_PROVIDER: "",
       MODEL_API_KEY: "",
     });
-    execFileSync("pnpm", ["--filter", "@rakazo/db", "generate"], {
+    execFileSync("pnpm", ["--filter", "@cutie-pi/db", "generate"], {
       stdio: "pipe",
       timeout: 120_000,
     });
-    execFileSync("pnpm", ["--filter", "@rakazo/db", "exec", "prisma", "migrate", "deploy"], {
+    execFileSync("pnpm", ["--filter", "@cutie-pi/db", "exec", "prisma", "migrate", "deploy"], {
       stdio: "pipe",
       timeout: 120_000,
     });

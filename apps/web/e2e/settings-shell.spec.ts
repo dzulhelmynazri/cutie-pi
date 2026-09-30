@@ -6,7 +6,7 @@ test("settings shell is two-pane and deep-links Models Memory Voice Usage", asyn
 }, testInfo) => {
   const stamp = Date.now();
   const userName = `Settings shell ${stamp}`;
-  await signup(page, `settings-shell-${stamp}@rakazo.test`, "password12", userName);
+  await signup(page, `settings-shell-${stamp}@cutie-pi.test`, "password12", userName);
   await completeOnboarding(page);
 
   await page.getByTestId("user-menu-trigger").click();
@@ -37,7 +37,7 @@ test("settings shell is two-pane and deep-links Models Memory Voice Usage", asyn
   await streamReplies.click();
   await expect(streamReplies).toBeChecked();
   await expect
-    .poll(() => page.evaluate(() => window.localStorage.getItem("rakazo.responseStreaming")))
+    .poll(() => page.evaluate(() => window.localStorage.getItem("cutie-pi.responseStreaming")))
     .toBe("on");
 
   await settings.getByTestId("settings-nav-models").click();

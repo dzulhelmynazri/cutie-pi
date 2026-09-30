@@ -5,7 +5,7 @@ import { _electron as electron, expect, test } from "@playwright/test";
 const styles = readFileSync(path.resolve(import.meta.dirname, "../../web/src/styles.css"), "utf8");
 const fixture = `<!doctype html>
 <html lang="en">
-  <head><meta charset="utf-8"><title>Rakazo window drag</title><style>${styles}</style></head>
+  <head><meta charset="utf-8"><title>CutiePi window drag</title><style>${styles}</style></head>
   <body>
     <main>Desktop fixture ready</main>
     <header class="app-drag" id="conversation-header">
@@ -27,7 +27,7 @@ test("an active Electron window keeps header dragging selection-free and control
     cwd: path.resolve(import.meta.dirname, ".."),
     env: {
       ...process.env,
-      RAKAZO_WEB_URL: `data:text/html;charset=utf-8,${encodeURIComponent(fixture)}`,
+      CUTIE_PI_WEB_URL: `data:text/html;charset=utf-8,${encodeURIComponent(fixture)}`,
     },
   });
 

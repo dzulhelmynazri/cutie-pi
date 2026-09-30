@@ -1,6 +1,6 @@
 import * as z from "zod";
 
-/** Matches the eight shipped mascot shapes in `@rakazo/core`. */
+/** Matches the eight shipped mascot shapes in `@cutie-pi/core`. */
 export const BOT_AVATAR_SHAPE_COUNT = 8;
 
 /**

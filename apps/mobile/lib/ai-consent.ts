@@ -1,5 +1,5 @@
-import type { AiRecipient } from "@rakazo/contracts";
-import { AI_DATA_DISCLOSURES, AI_PRIVACY_URL } from "@rakazo/contracts";
+import type { AiRecipient } from "@cutie-pi/contracts";
+import { AI_DATA_DISCLOSURES, AI_PRIVACY_URL } from "@cutie-pi/contracts";
 import { Alert, Linking } from "react-native";
 
 export function promptAiConsent(

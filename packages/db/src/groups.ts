@@ -5,7 +5,7 @@ import {
   type Group,
   type GroupMember,
   type SpaceGroup,
-} from "@rakazo/contracts";
+} from "@cutie-pi/contracts";
 import { cancelRunsInTransaction } from "./cancel-runs.js";
 import type { Prisma, PrismaClient } from "./client.js";
 import { expireComputerExecutionLeases } from "./computers.js";

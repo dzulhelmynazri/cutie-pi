@@ -5,7 +5,7 @@ import { expect, it } from "vitest";
 import { fileHandlePath } from "./file-handle-path.js";
 
 it("resolves the held file after its original pathname is replaced", async () => {
-  const root = await mkdtemp(path.join(tmpdir(), "rakazo-fd-path-"));
+  const root = await mkdtemp(path.join(tmpdir(), "cutie-pi-fd-path-"));
   try {
     const parent = path.join(root, "parent");
     const outside = path.join(root, "outside");

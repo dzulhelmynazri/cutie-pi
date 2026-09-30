@@ -1,4 +1,4 @@
-import type { IntegrationCatalogResult, IntegrationCatalogSurface } from "@rakazo/contracts";
+import type { IntegrationCatalogResult, IntegrationCatalogSurface } from "@cutie-pi/contracts";
 
 const RESPONSE_LIMIT = 1_000_000;
 const SEARCH_LIMIT = 8;

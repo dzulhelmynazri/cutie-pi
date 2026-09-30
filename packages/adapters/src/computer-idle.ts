@@ -5,16 +5,16 @@ import {
   computerSleepJob,
   type JobPublisher,
   type SandboxProvider,
-} from "@rakazo/adapter-kit";
-import { ACTIVE_RUN_STATUSES } from "@rakazo/core";
-import type { PrismaClient, ThreadEvents } from "@rakazo/db";
+} from "@cutie-pi/adapter-kit";
+import { ACTIVE_RUN_STATUSES } from "@cutie-pi/core";
+import type { PrismaClient, ThreadEvents } from "@cutie-pi/db";
 import { expireComputerControl, hasActiveComputerControl } from "./computer-control.js";
 import { toComputerRef } from "./computer-lifecycle.js";
 import { checkpointComputerWorkspace } from "./computer-workspace.js";
 
 export const DEFAULT_SANDBOX_IDLE_MS = 10 * 60 * 1000;
-const BACKGROUND_WORK_MARKER_PREFIX = "/tmp/rakazo-background-";
-const BACKGROUND_WORK_IDLE_SENTINEL = "rakazo-background-idle";
+const BACKGROUND_WORK_MARKER_PREFIX = "/tmp/cutie-pi-background-";
+const BACKGROUND_WORK_IDLE_SENTINEL = "cutie-pi-background-idle";
 
 export const BACKGROUND_WORK_LAUNCH = [
   `marker="${BACKGROUND_WORK_MARKER_PREFIX}$1-$2-$3"`,
@@ -31,7 +31,7 @@ export const CANCEL_COMPUTER_RUN_WORK = [
   '[ -n "$computerId" ] && [ -n "$runId" ] || exit 0',
   `prefix="${BACKGROUND_WORK_MARKER_PREFIX}$computerId-$runId-"`,
   // Match the timeout wrapper cmdline (still contains the launch tag after exec into the user command).
-  `pkill -TERM -f "rakazo-background-launch $computerId $runId " 2>/dev/null || true`,
+  `pkill -TERM -f "cutie-pi-background-launch $computerId $runId " 2>/dev/null || true`,
   "if [ -d /proc ]; then",
   "  for fd in /proc/[0-9]*/fd/*; do",
   '    target="$(readlink "$fd" 2>/dev/null)" || continue',
@@ -54,7 +54,7 @@ export const CANCEL_COMPUTER_RUN_WORK = [
   "  done",
   "fi",
   "sleep 0.2",
-  `pkill -KILL -f "rakazo-background-launch $computerId $runId " 2>/dev/null || true`,
+  `pkill -KILL -f "cutie-pi-background-launch $computerId $runId " 2>/dev/null || true`,
   "if [ -d /proc ]; then",
   "  for fd in /proc/[0-9]*/fd/*; do",
   '    target="$(readlink "$fd" 2>/dev/null)" || continue',
@@ -115,7 +115,7 @@ export const CANCEL_PRIMARY_BROWSER_WORK = [
 ].join("; ");
 
 export function cancelComputerRunWorkArgv(computerId: string, runId: string): string[] {
-  return ["bash", "-c", CANCEL_COMPUTER_RUN_WORK, "rakazo-cancel-run-work", computerId, runId];
+  return ["bash", "-c", CANCEL_COMPUTER_RUN_WORK, "cutie-pi-cancel-run-work", computerId, runId];
 }
 
 export async function cancelComputerRunWork(
@@ -392,7 +392,7 @@ async function hasActiveBackgroundWork(
     for await (const event of sandbox.execute(
       computer,
       {
-        argv: ["bash", "-c", BACKGROUND_WORK_PROBE, "rakazo-background-probe", computerId],
+        argv: ["bash", "-c", BACKGROUND_WORK_PROBE, "cutie-pi-background-probe", computerId],
         timeoutMs: 10_000,
       },
       context,

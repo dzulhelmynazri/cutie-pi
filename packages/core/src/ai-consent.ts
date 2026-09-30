@@ -1,5 +1,5 @@
-import type { AiConsentStatus, AiDataUse, AiRecipient } from "@rakazo/contracts";
-import { AI_CONSENT_REQUIRED } from "@rakazo/contracts";
+import type { AiConsentStatus, AiDataUse, AiRecipient } from "@cutie-pi/contracts";
+import { AI_CONSENT_REQUIRED } from "@cutie-pi/contracts";
 
 /** A foreground check failed before the requested mutation was dispatched. */
 export class AiConsentBlocked extends Error {

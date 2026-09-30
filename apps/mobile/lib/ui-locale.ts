@@ -7,7 +7,7 @@ export const ACCOUNT_UI_LOCALES = ["en", "zh-CN"] as const satisfies readonly Ui
 
 export type AccountUiLocale = (typeof ACCOUNT_UI_LOCALES)[number];
 
-export const UI_LOCALE_STORAGE_KEY = "rakazo.uiLocale";
+export const UI_LOCALE_STORAGE_KEY = "cutie-pi.uiLocale";
 
 export const UI_LOCALE_LABELS: Record<UiLocale, string> = {
   en: "English",

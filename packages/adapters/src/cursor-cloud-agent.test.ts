@@ -1,5 +1,5 @@
-import type { AdapterContext } from "@rakazo/adapter-kit";
-import { CloudAgentRequestRejected } from "@rakazo/adapter-kit";
+import type { AdapterContext } from "@cutie-pi/adapter-kit";
+import { CloudAgentRequestRejected } from "@cutie-pi/adapter-kit";
 import { describe, expect, it } from "vitest";
 import { CursorCloudAgentProvider } from "./cursor-cloud-agent.js";
 import { CursorCloudAgentEmulator } from "./testing/cursor-cloud-agent-emulator.js";

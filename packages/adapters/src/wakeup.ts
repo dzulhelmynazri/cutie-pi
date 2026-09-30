@@ -4,9 +4,9 @@ import {
   dispatchBackgroundJob,
   type JobPublisher,
   type JobWorkerHost,
-} from "@rakazo/adapter-kit";
-import { isTooManyDatabaseConnections } from "@rakazo/db";
-import { runCorrelatedJob, unwrapJobPayload, wrapJobPayload } from "@rakazo/logging";
+} from "@cutie-pi/adapter-kit";
+import { isTooManyDatabaseConnections } from "@cutie-pi/db";
+import { runCorrelatedJob, unwrapJobPayload, wrapJobPayload } from "@cutie-pi/logging";
 import { makeWorkerUtils, type Runner, run, type WorkerUtils } from "graphile-worker";
 import type { Pool } from "pg";
 import { recordHistoryCompactAttemptsExhausted } from "./history-compaction.js";

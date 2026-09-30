@@ -1,9 +1,9 @@
-import type { AdapterContext } from "@rakazo/adapter-kit";
-import { computerControlExpireJobKey } from "@rakazo/adapter-kit";
-import { type ComputerUpdate, ComputerUpdateSchema } from "@rakazo/contracts";
-import { ACTIVE_RUN_STATUSES } from "@rakazo/core";
-import type { Prisma, PrismaClient, ThreadEvents } from "@rakazo/db";
-import { getLogger } from "@rakazo/logging";
+import type { AdapterContext } from "@cutie-pi/adapter-kit";
+import { computerControlExpireJobKey } from "@cutie-pi/adapter-kit";
+import { type ComputerUpdate, ComputerUpdateSchema } from "@cutie-pi/contracts";
+import { ACTIVE_RUN_STATUSES } from "@cutie-pi/core";
+import type { Prisma, PrismaClient, ThreadEvents } from "@cutie-pi/db";
+import { getLogger } from "@cutie-pi/logging";
 import {
   enqueueTakeoverContinuation,
   isIdleOwnComputerTakeover,

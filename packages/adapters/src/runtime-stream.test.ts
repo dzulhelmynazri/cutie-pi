@@ -1,4 +1,4 @@
-import type { AgentRuntimeEvent } from "@rakazo/adapter-kit";
+import type { AgentRuntimeEvent } from "@cutie-pi/adapter-kit";
 import { describe, expect, it, vi } from "vitest";
 import { withRuntimeCleanup } from "./runtime-stream.js";
 

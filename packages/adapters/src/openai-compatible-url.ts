@@ -1,5 +1,5 @@
 import { isIP } from "node:net";
-import { OPENAI_COMPATIBLE_PROVIDER_ID } from "@rakazo/contracts";
+import { OPENAI_COMPATIBLE_PROVIDER_ID } from "@cutie-pi/contracts";
 import { isCloudMetadataAddress, isLinkLocalAddress, isPrivateAddress } from "./network-address.js";
 
 export { OPENAI_COMPATIBLE_PROVIDER_ID };
@@ -7,7 +7,7 @@ export { OPENAI_COMPATIBLE_PROVIDER_ID };
 const METADATA_HOSTS = new Set(["metadata.google.internal", "metadata.goog"]);
 
 export function openAiCompatAllowPublicHosts(): boolean {
-  return process.env.RAKAZO_OPENAI_COMPAT_ALLOW_PUBLIC === "1";
+  return process.env.CUTIE_PI_OPENAI_COMPAT_ALLOW_PUBLIC === "1";
 }
 
 export function normalizeOpenAiCompatibleBaseUrl(raw: string): string {
@@ -113,7 +113,7 @@ export function assertAllowedOpenAiCompatibleRequestUrl(
   if (isPrivateOpenAiCompatibleHostname(hostname)) return url;
   if (!allowPublic) {
     throw new Error(
-      "Public model endpoints are blocked. Set RAKAZO_OPENAI_COMPAT_ALLOW_PUBLIC=1 to allow them. A private reverse proxy on localhost or an RFC1918 address does not need that gate.",
+      "Public model endpoints are blocked. Set CUTIE_PI_OPENAI_COMPAT_ALLOW_PUBLIC=1 to allow them. A private reverse proxy on localhost or an RFC1918 address does not need that gate.",
     );
   }
   return url;

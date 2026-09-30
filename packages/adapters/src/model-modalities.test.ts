@@ -1,8 +1,8 @@
-import { OPENAI_COMPATIBLE_PROVIDER_ID } from "@rakazo/contracts";
+import { OPENAI_COMPATIBLE_PROVIDER_ID } from "@cutie-pi/contracts";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
-const VISION_ENV = "RAKAZO_OPENAI_COMPATIBLE_VISION_MODELS";
-const LOCAL_VISION_ENV = "RAKAZO_LOCAL_VISION_MODELS";
+const VISION_ENV = "CUTIE_PI_OPENAI_COMPATIBLE_VISION_MODELS";
+const LOCAL_VISION_ENV = "CUTIE_PI_LOCAL_VISION_MODELS";
 
 /**
  * The vision gate memoizes its catalog at module scope, so every case has to
@@ -108,7 +108,7 @@ describe("operator-declared vision modalities", () => {
 
   it("applies the same declaration to the local provider", async () => {
     await withEnv(
-      { RAKAZO_LOCAL_MODELS: "qwen3-vl,qwen3-text", [LOCAL_VISION_ENV]: "qwen3-vl" },
+      { CUTIE_PI_LOCAL_MODELS: "qwen3-vl,qwen3-text", [LOCAL_VISION_ENV]: "qwen3-vl" },
       async () => {
         const { localProvider } = await import("./pi-local-provider.js");
         const models = localProvider()?.getModels() ?? [];

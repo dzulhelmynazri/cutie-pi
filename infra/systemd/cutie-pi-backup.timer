@@ -1,5 +1,5 @@
 [Unit]
-Description=Run the Rakazo production backup nightly
+Description=Run the CutiePi production backup nightly
 
 [Timer]
 OnCalendar=*-*-* 02:15:00 UTC

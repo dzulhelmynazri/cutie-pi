@@ -1,5 +1,5 @@
 {
-  "name": "@rakazo/api",
+  "name": "@cutie-pi/api",
   "version": "0.1.0",
   "license": "Apache-2.0",
   "type": "module",
@@ -12,14 +12,14 @@
   "dependencies": {
     "@hono/node-server": "2.1.1",
     "@orpc/server": "1.15.0",
-    "@rakazo/adapter-kit": "workspace:*",
-    "@rakazo/adapters": "workspace:*",
-    "@rakazo/auth": "workspace:*",
-    "@rakazo/contracts": "workspace:*",
-    "@rakazo/core": "workspace:*",
-    "@rakazo/db": "workspace:*",
-    "@rakazo/logging": "workspace:*",
-    "@rakazo/memory": "workspace:*",
+    "@cutie-pi/adapter-kit": "workspace:*",
+    "@cutie-pi/adapters": "workspace:*",
+    "@cutie-pi/auth": "workspace:*",
+    "@cutie-pi/contracts": "workspace:*",
+    "@cutie-pi/core": "workspace:*",
+    "@cutie-pi/db": "workspace:*",
+    "@cutie-pi/logging": "workspace:*",
+    "@cutie-pi/memory": "workspace:*",
     "hono": "4.13.7"
   },
   "devDependencies": {

@@ -15,7 +15,7 @@ test("desktop update can be checked, deferred, and installed from settings", asy
       message: null as string | null,
       checkedAt: "2026-01-01T00:00:00.000Z",
     };
-    Object.defineProperty(window, "rakazoDesktop", {
+    Object.defineProperty(window, "cutie-piDesktop", {
       value: {
         platform: "darwin",
         window: {
@@ -58,7 +58,7 @@ test("desktop update can be checked, deferred, and installed from settings", asy
     });
   });
   const stamp = Date.now();
-  await signup(page, `desktop-update-${stamp}@rakazo.test`, "password12", "Update Tester");
+  await signup(page, `desktop-update-${stamp}@cutie-pi.test`, "password12", "Update Tester");
   await completeOnboarding(page);
   await expect(page.getByRole("complementary", { name: "Desktop update" })).toHaveCount(0);
   await openUserSettings(page, "updates");
@@ -92,7 +92,7 @@ test("desktop update can be checked, deferred, and installed from settings", asy
 });
 
 test("ordinary web sessions do not show desktop update controls", async ({ page }) => {
-  await signup(page, `web-update-${Date.now()}@rakazo.test`, "password12", "Web Tester");
+  await signup(page, `web-update-${Date.now()}@cutie-pi.test`, "password12", "Web Tester");
   await completeOnboarding(page);
   await openUserSettings(page, "updates");
   await expect(page.getByTestId("desktop-update-settings")).toHaveCount(0);

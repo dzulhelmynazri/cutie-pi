@@ -26,7 +26,7 @@ describe("space selection storage", () => {
 
   it("treats an already-persisted selection as success when writes fail", () => {
     const localStorage = {
-      getItem: (key: string) => (key === "rakazo:space-id" ? "space-support" : null),
+      getItem: (key: string) => (key === "cutie-pi:space-id" ? "space-support" : null),
       setItem: () => {
         throw new Error("quota exceeded");
       },
@@ -46,6 +46,6 @@ describe("space selection storage", () => {
     vi.stubGlobal("localStorage", localStorage);
 
     expect(selectSpace("space-support")).toBe(true);
-    expect(setItem).toHaveBeenCalledWith("rakazo:space-id", "space-support");
+    expect(setItem).toHaveBeenCalledWith("cutie-pi:space-id", "space-support");
   });
 });

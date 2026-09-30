@@ -1,10 +1,10 @@
 #!/bin/sh
 set -eu
-RAKAZO_HOME="${HOME:-/home/rakazo}"
+CUTIE_PI_HOME="${HOME:-/home/cutie-pi}"
 # start.sh exports the session bus for the whole desktop; the supervisor may
 # launch this script with a minimal environment, so recover the bus address.
-if [ -z "${DBUS_SESSION_BUS_ADDRESS:-}" ] && [ -r /tmp/rakazo/dbus-session ]; then
-  . /tmp/rakazo/dbus-session
+if [ -z "${DBUS_SESSION_BUS_ADDRESS:-}" ] && [ -r /tmp/cutie-pi/dbus-session ]; then
+  . /tmp/cutie-pi/dbus-session
 fi
 # Page-browser tools and desktop launchers share the assigned display profile.
 DISPLAY_NUM="${DISPLAY:-:1}"
@@ -17,14 +17,14 @@ esac
 while [ "${DISPLAY_NUM#0}" != "$DISPLAY_NUM" ]; do DISPLAY_NUM="${DISPLAY_NUM#0}"; done
 DISPLAY_NUM="${DISPLAY_NUM:-0}"
 DEBUG_PORT=$((9221 + DISPLAY_NUM))
-if [ -n "${RAKAZO_BROWSER_PROFILE:-}" ]; then
-  PROFILE="$RAKAZO_BROWSER_PROFILE"
-elif [ -s "/tmp/rakazo/browser-profile-$DISPLAY_NUM" ]; then
-  PROFILE="$(cat "/tmp/rakazo/browser-profile-$DISPLAY_NUM")"
+if [ -n "${CUTIE_PI_BROWSER_PROFILE:-}" ]; then
+  PROFILE="$CUTIE_PI_BROWSER_PROFILE"
+elif [ -s "/tmp/cutie-pi/browser-profile-$DISPLAY_NUM" ]; then
+  PROFILE="$(cat "/tmp/cutie-pi/browser-profile-$DISPLAY_NUM")"
 else
   case "$DISPLAY_NUM" in
-    1) PROFILE="$RAKAZO_HOME/.browser-profiles/chromium" ;;
-    *) PROFILE="$RAKAZO_HOME/.browser-profiles/chromium-screen-$DISPLAY_NUM" ;;
+    1) PROFILE="$CUTIE_PI_HOME/.browser-profiles/chromium" ;;
+    *) PROFILE="$CUTIE_PI_HOME/.browser-profiles/chromium-screen-$DISPLAY_NUM" ;;
   esac
 fi
 mkdir -p "$PROFILE"
@@ -91,16 +91,16 @@ profile_lock_pid() {
   printf '%s\n' "$pid"
 }
 
-# This script is a shell whose argv names rakazo-browser, including a relative
-# path such as ./rakazo-browser. A browser binary is not that script. A flag
-# assignment (--user-data-dir=.../rakazo-browser) is not the script path either.
+# This script is a shell whose argv names cutie-pi-browser, including a relative
+# path such as ./cutie-pi-browser. A browser binary is not that script. A flag
+# assignment (--user-data-dir=.../cutie-pi-browser) is not the script path either.
 is_wrapper_pid() {
   pid=$1
   exe=$(readlink "/proc/$pid/exe" 2>/dev/null || true)
   case "${exe##*/}" in
     chromium|chromium-browser|chrome|google-chrome|google-chrome-stable) return 1 ;;
   esac
-  cmdline_text "$pid" | grep -qE '^([^=]*/)?rakazo-browser$'
+  cmdline_text "$pid" | grep -qE '^([^=]*/)?cutie-pi-browser$'
 }
 
 profile_lock_is_live() {

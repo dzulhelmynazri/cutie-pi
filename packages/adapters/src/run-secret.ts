@@ -1,6 +1,6 @@
-import type { AdapterContext, ManagedConnectorProvider } from "@rakazo/adapter-kit";
-import { SecretAskPurpose } from "@rakazo/contracts";
-import type { PrismaClient, RunSecretWriter } from "@rakazo/db";
+import type { AdapterContext, ManagedConnectorProvider } from "@cutie-pi/adapter-kit";
+import { SecretAskPurpose } from "@cutie-pi/contracts";
+import type { PrismaClient, RunSecretWriter } from "@cutie-pi/db";
 import { type ApprovalPausedToolResult, resolveDuplicateEffectGate } from "./approval-effect.js";
 import { storeBotSecret } from "./bot-secrets.js";
 import type { EncryptedSecretStore } from "./secrets.js";

@@ -1,6 +1,6 @@
-import type { JobPublisher, JobWorkerHost } from "@rakazo/adapter-kit";
-import { ComposioConnector, IntegrationProviderSettings } from "@rakazo/adapters";
-import { loadRootEnv } from "@rakazo/core/node/load-root-env";
+import type { JobPublisher, JobWorkerHost } from "@cutie-pi/adapter-kit";
+import { ComposioConnector, IntegrationProviderSettings } from "@cutie-pi/adapters";
+import { loadRootEnv } from "@cutie-pi/core/node/load-root-env";
 
 loadRootEnv();
 
@@ -45,17 +45,17 @@ import {
   ScriptedAgentRuntime,
   SpaceMemoryProviderResolver,
   sandboxProviderOptionsFromEnv,
-} from "@rakazo/adapters";
-import { resolveEncryptionKey, resolveSupervisorToken } from "@rakazo/core";
+} from "@cutie-pi/adapters";
+import { resolveEncryptionKey, resolveSupervisorToken } from "@cutie-pi/core";
 import {
   createDb,
   createThreadEvents,
   isTooManyDatabaseConnections,
   parsePositiveInteger,
-} from "@rakazo/db";
-import { SERVICE_NAMES } from "@rakazo/logging";
-import { createRootLogger } from "@rakazo/logging/axiom";
-import { MarkdownMemoryStore } from "@rakazo/memory";
+} from "@cutie-pi/db";
+import { SERVICE_NAMES } from "@cutie-pi/logging";
+import { createRootLogger } from "@cutie-pi/logging/axiom";
+import { MarkdownMemoryStore } from "@cutie-pi/memory";
 
 const logger = createRootLogger(SERVICE_NAMES.worker);
 
@@ -69,7 +69,7 @@ async function main() {
   // larger max just competes for Postgres max_connections (53300).
   const { prisma, pool } = createDb(databaseUrl, {
     poolMax: parsePositiveInteger(process.env.DB_POOL_MAX, 8),
-    applicationName: "rakazo-worker",
+    applicationName: "cutie-pi-worker",
   });
   const realtime = new PostgresRealtimeFanout({
     connectionString: process.env.REALTIME_DATABASE_URL ?? databaseUrl,

@@ -1,28 +1,28 @@
 #!/usr/bin/env bash
 # Build and roll out origin/main on the single-VM production stack.
 #
-# Install as /usr/local/sbin/rakazo-deploy-main and run it as the deploy user, for example
+# Install as /usr/local/sbin/cutie-pi-deploy-main and run it as the deploy user, for example
 # from CI through an SSH forced command. The deploy user needs passwordless sudo for Docker.
 set -Eeuo pipefail
 
 # A forced SSH command carries no environment, so read the checkout path from a root-owned file.
-if [[ -z "${RAKAZO_DEPLOY_DIR:-}" && -r /etc/rakazo/deploy.env ]]; then
+if [[ -z "${CUTIE_PI_DEPLOY_DIR:-}" && -r /etc/cutie-pi/deploy.env ]]; then
   # shellcheck disable=SC1091
-  source /etc/rakazo/deploy.env
+  source /etc/cutie-pi/deploy.env
 fi
-APP_DIR="${RAKAZO_DEPLOY_DIR:-/srv/rakazo}"
-[[ "${APP_DIR}" == /* ]] || { echo "RAKAZO_DEPLOY_DIR must be an absolute path" >&2; exit 1; }
+APP_DIR="${CUTIE_PI_DEPLOY_DIR:-/srv/cutie-pi}"
+[[ "${APP_DIR}" == /* ]] || { echo "CUTIE_PI_DEPLOY_DIR must be an absolute path" >&2; exit 1; }
 COMPOSE_FILE="infra/compose/docker-compose.prod.yml"
 # CI allows 30 minutes: 15m build + 5m start + ~1m of health retries + 8m rollback.
-BUILD_TIMEOUT="${RAKAZO_DEPLOY_BUILD_TIMEOUT:-15m}"
-UP_TIMEOUT="${RAKAZO_DEPLOY_UP_TIMEOUT:-5m}"
-ROLLBACK_TIMEOUT="${RAKAZO_DEPLOY_ROLLBACK_TIMEOUT:-8m}"
+BUILD_TIMEOUT="${CUTIE_PI_DEPLOY_BUILD_TIMEOUT:-15m}"
+UP_TIMEOUT="${CUTIE_PI_DEPLOY_UP_TIMEOUT:-5m}"
+ROLLBACK_TIMEOUT="${CUTIE_PI_DEPLOY_ROLLBACK_TIMEOUT:-8m}"
 
 cd "${APP_DIR}"
-if [[ -z "${RAKAZO_HEALTH_URL:-}" ]]; then
-  host="$(sed -n 's/^RAKAZO_HOST=//p' .env | tail -n 1)"
-  [[ -n "${host}" ]] || { echo "Set RAKAZO_HOST in .env or RAKAZO_HEALTH_URL" >&2; exit 1; }
-  RAKAZO_HEALTH_URL="https://${host}/health"
+if [[ -z "${CUTIE_PI_HEALTH_URL:-}" ]]; then
+  host="$(sed -n 's/^CUTIE_PI_HOST=//p' .env | tail -n 1)"
+  [[ -n "${host}" ]] || { echo "Set CUTIE_PI_HOST in .env or CUTIE_PI_HEALTH_URL" >&2; exit 1; }
+  CUTIE_PI_HEALTH_URL="https://${host}/health"
 fi
 
 compose() {
@@ -32,7 +32,7 @@ compose() {
 }
 
 healthy() {
-  curl --fail --silent --show-error --max-time 15 "${RAKAZO_HEALTH_URL}" >/dev/null
+  curl --fail --silent --show-error --max-time 15 "${CUTIE_PI_HEALTH_URL}" >/dev/null
 }
 
 exec 9>"${APP_DIR}/.deploy.lock"
@@ -78,7 +78,7 @@ for _ in {1..30}; do
     echo "Deployed ${target_revision} successfully."
     exit 0
   fi
-  sleep "${RAKAZO_DEPLOY_HEALTH_INTERVAL:-2}"
+  sleep "${CUTIE_PI_DEPLOY_HEALTH_INTERVAL:-2}"
 done
 
 echo "Production health check did not recover in time." >&2

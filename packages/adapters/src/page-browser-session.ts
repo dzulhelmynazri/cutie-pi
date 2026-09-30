@@ -4,7 +4,7 @@ import type {
   BrowserNavigateResult,
   BrowserSnapshotNode,
   BrowserSnapshotResult,
-} from "@rakazo/adapter-kit";
+} from "@cutie-pi/adapter-kit";
 import { JSDOM } from "jsdom";
 
 const INTERACTIVE_SELECTOR = [

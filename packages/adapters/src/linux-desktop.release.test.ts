@@ -1,4 +1,4 @@
-import type { AdapterContext, ComputerRef } from "@rakazo/adapter-kit";
+import type { AdapterContext, ComputerRef } from "@cutie-pi/adapter-kit";
 import { describe, expect, it } from "vitest";
 import { BrowserStoppedReleaseError } from "./computer-screens.js";
 import { LinuxDesktop } from "./linux-desktop.js";
@@ -22,9 +22,9 @@ const computer = {
 function host(result: { code: number; stdout: string; stderr?: string }) {
   return {
     environment: async () => ({
-      homeDir: "/home/rakazo",
-      workspaceDir: "/home/rakazo",
-      browserProfilesDir: "/home/rakazo/.browser-profiles",
+      homeDir: "/home/cutie-pi",
+      workspaceDir: "/home/cutie-pi",
+      browserProfilesDir: "/home/cutie-pi/.browser-profiles",
       displayStart: 1,
     }),
     run: async () => result,
@@ -35,7 +35,7 @@ function host(result: { code: number; stdout: string; stderr?: string }) {
 describe("LinuxDesktop.releaseScreen", () => {
   it("reports the browser stopped when slot cleanup fails after the release marker", async () => {
     const desktop = new LinuxDesktop(
-      host({ code: 1, stdout: "RAKAZO_DESKTOP_RELEASED=0\n", stderr: "slot lock failed" }),
+      host({ code: 1, stdout: "CUTIE_PI_DESKTOP_RELEASED=0\n", stderr: "slot lock failed" }),
     );
 
     await expect(desktop.releaseScreen(computer, context)).rejects.toBeInstanceOf(

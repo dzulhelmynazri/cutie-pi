@@ -16,7 +16,7 @@ import {
   DEFAULT_DESKTOP_ENV,
   ensureScreenCommand,
   TERMINAL_MENU_COMMAND,
-} from "@rakazo/core/node/desktop-runtime";
+} from "@cutie-pi/core/node/desktop-runtime";
 import type Docker from "dockerode";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import {
@@ -77,22 +77,22 @@ describe("graphical computer spec", () => {
 
   it("creates a VNC desktop, not an alpine sleep fallback", () => {
     const options = containerCreateOptions({
-      name: "rakazo-bot-abc",
+      name: "cutie-pi-bot-abc",
       image: COMPUTER_IMAGE,
       botId: "abc",
       spaceId: "ws",
-      homePath: "/var/rakazo/homes/abc",
-      networkMode: "rakazo_default",
+      homePath: "/var/cutie-pi/homes/abc",
+      networkMode: "cutie-pi_default",
     });
-    expect(options.Image).toBe("rakazo/computer:local");
+    expect(options.Image).toBe("cutie-pi/computer:local");
     expect(options.Image).not.toMatch(/alpine/);
     expect(options).not.toHaveProperty("Entrypoint");
     expect(JSON.stringify(options)).not.toMatch(/sleep/);
-    expect(options.HostConfig.Binds).toEqual(["/var/rakazo/homes/abc:/home/rakazo"]);
+    expect(options.HostConfig.Binds).toEqual(["/var/cutie-pi/homes/abc:/home/cutie-pi"]);
     expect(options.Env).toContain(
-      "PATH=/home/rakazo/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "PATH=/home/cutie-pi/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
     );
-    expect(options.Env).toContain("NPM_CONFIG_PREFIX=/home/rakazo/.local");
+    expect(options.Env).toContain("NPM_CONFIG_PREFIX=/home/cutie-pi/.local");
     expect(options.Env?.join("\n")).not.toMatch(/AXIOM_|LOG_LEVEL|LOG_FORMAT/);
     expect(options.ExposedPorts).toEqual({ "6080/tcp": {} });
     // Browser debugging stays inside the computer trust boundary.
@@ -114,7 +114,7 @@ describe("graphical computer spec", () => {
     expect(options.HostConfig.SecurityOpt).toEqual(["no-new-privileges:true"]);
     expect(options.HostConfig.PidsLimit).toBe(2048);
     expect(options.HostConfig.ReadonlyPaths).toContain("/usr/share/novnc");
-    expect(options.HostConfig.NetworkMode).toBe("rakazo_default");
+    expect(options.HostConfig.NetworkMode).toBe("cutie-pi_default");
   });
 
   it("still publishes host ports when NetworkMode is a per-bot isolated network", () => {
@@ -124,10 +124,10 @@ describe("graphical computer spec", () => {
       image: COMPUTER_IMAGE,
       botId: "bot_isolation",
       spaceId: "ws",
-      homePath: "/var/rakazo/homes/bot_isolation",
+      homePath: "/var/cutie-pi/homes/bot_isolation",
       networkMode,
     });
-    expect(networkMode).toMatch(/^rakazo-computer-bot_isolation-[0-9a-f]{32}$/);
+    expect(networkMode).toMatch(/^cutie-pi-computer-bot_isolation-[0-9a-f]{32}$/);
     expect(options.HostConfig.NetworkMode).toBe(networkMode);
     expect(options.HostConfig.PortBindings["6080/tcp"]).toEqual([
       { HostIp: "127.0.0.1", HostPort: "0" },
@@ -152,7 +152,7 @@ describe("graphical computer spec", () => {
   it("derives deterministic host bridge names within the 15-byte interface limit", () => {
     for (const botId of ["bot", "a/b", "bot with spaces", "x".repeat(80)]) {
       const name = computerBridgeNameFor(botId);
-      expect(name).toMatch(/^rakazo-c[0-9a-f]{7}$/);
+      expect(name).toMatch(/^cutie-pi-c[0-9a-f]{7}$/);
       expect(Buffer.byteLength(name)).toBeLessThanOrEqual(15);
       expect(computerBridgeNameFor(botId)).toBe(name);
     }
@@ -174,14 +174,14 @@ describe("graphical computer spec", () => {
     });
     expect(computerNetworkCreateOptions("bot_1")).toEqual(open);
     // The bridge name differs from the network name so `docker network` output
-    // still shows the readable rakazo-computer-* name while iptables matches the interface.
+    // still shows the readable cutie-pi-computer-* name while iptables matches the interface.
     expect(restricted.Options?.["com.docker.network.bridge.name"]).not.toBe(restricted.Name);
   });
 
   it("lists prior network name variants for cleanup", () => {
     const names = computerNetworkNamesForCleanup("bot_1");
     expect(names[0]).toBe(computerNetworkNameFor("bot_1"));
-    expect(names).toContain("rakazo-computer-bot_1");
+    expect(names).toContain("cutie-pi-computer-bot_1");
     expect(names.some((name) => /-[0-9a-f]{8}$/.test(name))).toBe(true);
     expect(names.some((name) => /-[0-9a-f]{32}$/.test(name))).toBe(true);
   });
@@ -197,31 +197,31 @@ describe("graphical computer spec", () => {
     const root = path.resolve(import.meta.dirname, "../../computer");
     const dockerfile = readFileSync(path.join(root, "Dockerfile"), "utf8");
     const start = readFileSync(path.join(root, "start.sh"), "utf8");
-    const browser = readFileSync(path.join(root, "rakazo-browser"), "utf8");
-    const desktop = readFileSync(path.join(root, "rakazo-browser.desktop"), "utf8");
+    const browser = readFileSync(path.join(root, "cutie-pi-browser"), "utf8");
+    const desktop = readFileSync(path.join(root, "cutie-pi-browser.desktop"), "utf8");
     expect(dockerfile).toMatch(/chromium/);
-    expect(dockerfile).toMatch(/rakazo-browser\.desktop/);
+    expect(dockerfile).toMatch(/cutie-pi-browser\.desktop/);
     expect(dockerfile).toMatch(/control.py/);
     expect(dockerfile).toMatch(/USER 1000:1000/);
-    expect(start).toMatch(/rakazo-computer-control/);
-    expect(start).toMatch(/rakazo-browser/);
+    expect(start).toMatch(/cutie-pi-computer-control/);
+    expect(start).toMatch(/cutie-pi-browser/);
     expect(start).not.toMatch(/browser\.log/);
-    expect(start).toMatch(/xdg-mime default rakazo-browser\.desktop/);
+    expect(start).toMatch(/xdg-mime default cutie-pi-browser\.desktop/);
     expect(start).toMatch(/register_browser_handler x-scheme-handler\/http/);
     expect(start).toMatch(/register_browser_handler x-scheme-handler\/https/);
     expect(start).toMatch(/register_browser_handler text\/html/);
     expect(start).toMatch(/xdg-mime query default/);
-    expect(start).toMatch(/failed to register rakazo-browser/);
+    expect(start).toMatch(/failed to register cutie-pi-browser/);
     expect(start).toMatch(/failed to set default web browser/);
-    expect(start).toMatch(/xdg-settings set default-web-browser rakazo-browser\.desktop/);
-    expect(start).not.toMatch(/xdg-mime default rakazo-browser\.desktop .*\|\| true/);
+    expect(start).toMatch(/xdg-settings set default-web-browser cutie-pi-browser\.desktop/);
+    expect(start).not.toMatch(/xdg-mime default cutie-pi-browser\.desktop .*\|\| true/);
     expect(start).toMatch(/x11vnc .* -viewonly /);
     expect(browser).toMatch(/\.browser-profiles\/chromium/);
     expect(browser).toMatch(/chromium-screen-\$DISPLAY_NUM/);
     expect(browser).toMatch(/USER_DATA_DIR_SET/);
-    expect(browser).toMatch(/RAKAZO_BROWSER_PROFILE/);
-    expect(desktop).toMatch(/Exec=\/usr\/local\/bin\/rakazo-browser %U/);
-    expect(dockerfile).toMatch(/rakazo-page-browser/);
+    expect(browser).toMatch(/CUTIE_PI_BROWSER_PROFILE/);
+    expect(desktop).toMatch(/Exec=\/usr\/local\/bin\/cutie-pi-browser %U/);
+    expect(dockerfile).toMatch(/cutie-pi-page-browser/);
     expect(browser).toMatch(/remote-debugging-port/);
     expect(desktop).toMatch(/x-scheme-handler\/http/);
     expect(desktop).toMatch(/x-scheme-handler\/https/);
@@ -251,9 +251,9 @@ describe("graphical computer spec", () => {
       const bin = path.join(temp, "bin");
       mkdirSync(bin);
       try {
-        for (const name of ["xterm", "rakazo-browser"]) {
+        for (const name of ["xterm", "cutie-pi-browser"]) {
           const stub = path.join(bin, name);
-          writeFileSync(stub, '#!/bin/sh\nprintf "%s\\n" "$@" > "$RAKAZO_TEST_ARGS"\n');
+          writeFileSync(stub, '#!/bin/sh\nprintf "%s\\n" "$@" > "$CUTIE_PI_TEST_ARGS"\n');
           chmodSync(stub, 0o755);
         }
         const argvFor = (label: string) => {
@@ -267,7 +267,7 @@ describe("graphical computer spec", () => {
             env: {
               ...process.env,
               PATH: `${bin}${path.delimiter}${process.env.PATH ?? ""}`,
-              RAKAZO_TEST_ARGS: capture,
+              CUTIE_PI_TEST_ARGS: capture,
             },
             encoding: "utf8",
           });
@@ -314,7 +314,7 @@ describe("graphical computer spec", () => {
         mkdirSync(path.dirname(menuPath), { recursive: true });
         writeFileSync(
           menuPath,
-          "[begin] (Desktop)\n[exec] (Browser) {/tmp/rakazo/browser-launch-1}\n[end]\n",
+          "[begin] (Desktop)\n[exec] (Browser) {/tmp/cutie-pi/browser-launch-1}\n[end]\n",
         );
         writeFileSync(initPath, init);
         const lines = generated.replaceAll("/tmp/fluxbox-home-1", fluxHome).split("\n");
@@ -339,7 +339,7 @@ describe("graphical computer spec", () => {
         expect(written).toBe(
           [
             "[begin] (Desktop)",
-            "[exec] (Browser) {/tmp/rakazo/browser-launch-1}",
+            "[exec] (Browser) {/tmp/cutie-pi/browser-launch-1}",
             terminalLine,
             "[end]",
             "",
@@ -356,23 +356,23 @@ describe("graphical computer spec", () => {
     "selects a display-specific browser profile and preserves explicit profiles",
     () => {
       const root = path.resolve(import.meta.dirname, "../../computer");
-      const temp = mkdtempSync(path.join(tmpdir(), "rakazo-browser-wrapper-"));
+      const temp = mkdtempSync(path.join(tmpdir(), "cutie-pi-browser-wrapper-"));
       const bin = path.join(temp, "bin");
       const capture = path.join(temp, "args");
       const home = path.join(temp, "home");
       const chromium = path.join(bin, "chromium");
       mkdirSync(bin);
-      writeFileSync(chromium, '#!/bin/sh\nprintf "%s\\n" "$@" > "$RAKAZO_TEST_ARGS"\n');
+      writeFileSync(chromium, '#!/bin/sh\nprintf "%s\\n" "$@" > "$CUTIE_PI_TEST_ARGS"\n');
       chmodSync(chromium, 0o755);
 
       const run = (display: string, args: string[] = []) => {
-        const result = spawnSync("sh", [path.join(root, "rakazo-browser"), ...args], {
+        const result = spawnSync("sh", [path.join(root, "cutie-pi-browser"), ...args], {
           env: {
             ...process.env,
             DISPLAY: display,
             HOME: home,
             PATH: `${bin}${path.delimiter}${process.env.PATH ?? ""}`,
-            RAKAZO_TEST_ARGS: capture,
+            CUTIE_PI_TEST_ARGS: capture,
           },
           encoding: "utf8",
         });
@@ -412,13 +412,13 @@ describe("graphical computer spec", () => {
     "spawns Chromium when the caller passes the profile and debug flags itself",
     () => {
       const root = path.resolve(import.meta.dirname, "../../computer");
-      const temp = mkdtempSync(path.join(tmpdir(), "rakazo-browser-self-"));
+      const temp = mkdtempSync(path.join(tmpdir(), "cutie-pi-browser-self-"));
       const bin = path.join(temp, "bin");
       const capture = path.join(temp, "args");
       const home = path.join(temp, "home");
       const chromium = path.join(bin, "chromium");
       mkdirSync(bin);
-      writeFileSync(chromium, '#!/bin/sh\nprintf "%s\\n" "$@" > "$RAKAZO_TEST_ARGS"\n');
+      writeFileSync(chromium, '#!/bin/sh\nprintf "%s\\n" "$@" > "$CUTIE_PI_TEST_ARGS"\n');
       chmodSync(chromium, 0o755);
 
       // browser-launch-N execs this wrapper with --user-data-dir and
@@ -432,7 +432,7 @@ describe("graphical computer spec", () => {
         const result = spawnSync(
           "sh",
           [
-            path.join(root, "rakazo-browser"),
+            path.join(root, "cutie-pi-browser"),
             `--user-data-dir=${profile}`,
             "--remote-debugging-port=9222",
           ],
@@ -442,7 +442,7 @@ describe("graphical computer spec", () => {
               DISPLAY: ":1",
               HOME: home,
               PATH: `${bin}${path.delimiter}${process.env.PATH ?? ""}`,
-              RAKAZO_TEST_ARGS: capture,
+              CUTIE_PI_TEST_ARGS: capture,
             },
             encoding: "utf8",
           },
@@ -458,26 +458,26 @@ describe("graphical computer spec", () => {
   );
 
   it.skipIf(process.platform !== "linux")(
-    "spawns Chromium when the wrapper is invoked as ./rakazo-browser",
+    "spawns Chromium when the wrapper is invoked as ./cutie-pi-browser",
     () => {
       const root = path.resolve(import.meta.dirname, "../../computer");
-      const temp = mkdtempSync(path.join(tmpdir(), "rakazo-browser-rel-"));
+      const temp = mkdtempSync(path.join(tmpdir(), "cutie-pi-browser-rel-"));
       const bin = path.join(temp, "bin");
       const capture = path.join(temp, "args");
       const home = path.join(temp, "home");
       const chromium = path.join(bin, "chromium");
       mkdirSync(bin);
-      writeFileSync(chromium, '#!/bin/sh\nprintf "%s\\n" "$@" > "$RAKAZO_TEST_ARGS"\n');
+      writeFileSync(chromium, '#!/bin/sh\nprintf "%s\\n" "$@" > "$CUTIE_PI_TEST_ARGS"\n');
       chmodSync(chromium, 0o755);
       const profile = path.join(home, ".browser-profiles", "chromium-bot-screen");
       mkdirSync(profile, { recursive: true });
       // The kernel records the path passed to exec, so a relative invocation
-      // shows up as ./rakazo-browser rather than an absolute script path.
-      symlinkSync(path.join(root, "rakazo-browser"), path.join(temp, "rakazo-browser"));
+      // shows up as ./cutie-pi-browser rather than an absolute script path.
+      symlinkSync(path.join(root, "cutie-pi-browser"), path.join(temp, "cutie-pi-browser"));
 
       try {
         const result = spawnSync(
-          "./rakazo-browser",
+          "./cutie-pi-browser",
           [`--user-data-dir=${profile}`, "--remote-debugging-port=9222"],
           {
             cwd: temp,
@@ -486,7 +486,7 @@ describe("graphical computer spec", () => {
               DISPLAY: ":1",
               HOME: home,
               PATH: `${bin}${path.delimiter}${process.env.PATH ?? ""}`,
-              RAKAZO_TEST_ARGS: capture,
+              CUTIE_PI_TEST_ARGS: capture,
             },
             encoding: "utf8",
           },
@@ -502,14 +502,14 @@ describe("graphical computer spec", () => {
   );
 
   it.skipIf(process.platform !== "linux")(
-    "keeps a live browser when its profile directory is named rakazo-browser",
+    "keeps a live browser when its profile directory is named cutie-pi-browser",
     () => {
       const root = path.resolve(import.meta.dirname, "../../computer");
-      const temp = mkdtempSync(path.join(tmpdir(), "rakazo-browser-named-"));
+      const temp = mkdtempSync(path.join(tmpdir(), "cutie-pi-browser-named-"));
       const bin = path.join(temp, "bin");
       const capture = path.join(temp, "args");
       const home = path.join(temp, "home");
-      const profile = path.join(temp, "rakazo-browser");
+      const profile = path.join(temp, "cutie-pi-browser");
       const prefsPath = path.join(profile, "Default", "Preferences");
       const liveBin = path.join(temp, "live", "chromium");
       mkdirSync(bin);
@@ -517,7 +517,7 @@ describe("graphical computer spec", () => {
       mkdirSync(path.dirname(prefsPath), { recursive: true });
       writeFileSync(
         path.join(bin, "chromium"),
-        '#!/bin/sh\nprintf "%s\\n" "$@" > "$RAKAZO_TEST_ARGS"\n',
+        '#!/bin/sh\nprintf "%s\\n" "$@" > "$CUTIE_PI_TEST_ARGS"\n',
       );
       chmodSync(path.join(bin, "chromium"), 0o755);
       // /proc/pid/exe is this binary, so the basename is chromium without compiling.
@@ -543,7 +543,7 @@ describe("graphical computer spec", () => {
         const result = spawnSync(
           "sh",
           [
-            path.join(root, "rakazo-browser"),
+            path.join(root, "cutie-pi-browser"),
             `--user-data-dir=${profile}`,
             "--remote-debugging-port=9222",
           ],
@@ -553,7 +553,7 @@ describe("graphical computer spec", () => {
               DISPLAY: ":1",
               HOME: home,
               PATH: `${bin}${path.delimiter}${process.env.PATH ?? ""}`,
-              RAKAZO_TEST_ARGS: capture,
+              CUTIE_PI_TEST_ARGS: capture,
             },
             encoding: "utf8",
           },
@@ -576,20 +576,20 @@ describe("graphical computer spec", () => {
   );
 
   it.skipIf(process.platform !== "linux")(
-    "keeps a live shell browser when the profile flag ends in /rakazo-browser",
+    "keeps a live shell browser when the profile flag ends in /cutie-pi-browser",
     () => {
       const root = path.resolve(import.meta.dirname, "../../computer");
-      const temp = mkdtempSync(path.join(tmpdir(), "rakazo-browser-flag-"));
+      const temp = mkdtempSync(path.join(tmpdir(), "cutie-pi-browser-flag-"));
       const bin = path.join(temp, "bin");
       const capture = path.join(temp, "args");
       const home = path.join(temp, "home");
-      const profile = path.join(temp, "rakazo-browser");
+      const profile = path.join(temp, "cutie-pi-browser");
       const prefsPath = path.join(profile, "Default", "Preferences");
       mkdirSync(bin);
       mkdirSync(path.dirname(prefsPath), { recursive: true });
       writeFileSync(
         path.join(bin, "chromium"),
-        '#!/bin/sh\nprintf "%s\\n" "$@" > "$RAKAZO_TEST_ARGS"\n',
+        '#!/bin/sh\nprintf "%s\\n" "$@" > "$CUTIE_PI_TEST_ARGS"\n',
       );
       chmodSync(path.join(bin, "chromium"), 0o755);
       const sleeper = path.join(bin, "sleeper");
@@ -606,7 +606,7 @@ describe("graphical computer spec", () => {
         const result = spawnSync(
           "sh",
           [
-            path.join(root, "rakazo-browser"),
+            path.join(root, "cutie-pi-browser"),
             `--user-data-dir=${profile}`,
             "--remote-debugging-port=9222",
           ],
@@ -616,7 +616,7 @@ describe("graphical computer spec", () => {
               DISPLAY: ":1",
               HOME: home,
               PATH: `${bin}${path.delimiter}${process.env.PATH ?? ""}`,
-              RAKAZO_TEST_ARGS: capture,
+              CUTIE_PI_TEST_ARGS: capture,
             },
             encoding: "utf8",
           },
@@ -641,13 +641,13 @@ describe("graphical computer spec", () => {
     "clears crashed state from Chromium preferences and Local State",
     () => {
       const root = path.resolve(import.meta.dirname, "../../computer");
-      const temp = mkdtempSync(path.join(tmpdir(), "rakazo-browser-crash-"));
+      const temp = mkdtempSync(path.join(tmpdir(), "cutie-pi-browser-crash-"));
       const bin = path.join(temp, "bin");
       const home = path.join(temp, "home");
       const chromium = path.join(bin, "chromium");
       const capture = path.join(temp, "args");
       mkdirSync(bin);
-      writeFileSync(chromium, '#!/bin/sh\nprintf "%s\\n" "$@" > "$RAKAZO_TEST_ARGS"\n');
+      writeFileSync(chromium, '#!/bin/sh\nprintf "%s\\n" "$@" > "$CUTIE_PI_TEST_ARGS"\n');
       chmodSync(chromium, 0o755);
 
       const profile = path.join(home, ".browser-profiles/chromium");
@@ -662,13 +662,13 @@ describe("graphical computer spec", () => {
       writeFileSync(localStatePath, '{\n  "profile": {\n    "exited_cleanly": false\n  }\n}\n');
 
       try {
-        const result = spawnSync("bash", [path.join(root, "rakazo-browser")], {
+        const result = spawnSync("bash", [path.join(root, "cutie-pi-browser")], {
           env: {
             ...process.env,
             DISPLAY: ":1",
             HOME: home,
             PATH: `${bin}${path.delimiter}${process.env.PATH ?? ""}`,
-            RAKAZO_TEST_ARGS: capture,
+            CUTIE_PI_TEST_ARGS: capture,
           },
           encoding: "utf8",
         });
@@ -698,13 +698,13 @@ describe("graphical computer spec", () => {
         });
         const liveLock = path.join(profile, "SingletonLock");
         const launch = () =>
-          spawnSync("bash", [path.join(root, "rakazo-browser")], {
+          spawnSync("bash", [path.join(root, "cutie-pi-browser")], {
             env: {
               ...process.env,
               DISPLAY: ":1",
               HOME: home,
               PATH: `${bin}${path.delimiter}${process.env.PATH ?? ""}`,
-              RAKAZO_TEST_ARGS: capture,
+              CUTIE_PI_TEST_ARGS: capture,
             },
             encoding: "utf8",
           });
@@ -792,13 +792,13 @@ describe("graphical computer spec", () => {
                 }
                 const spacedLock = path.join(spacedProfile, "SingletonLock");
                 symlinkSync(`testhost-${joined.pid}`, spacedLock);
-                const kept = spawnSync("bash", [path.join(root, "rakazo-browser")], {
+                const kept = spawnSync("bash", [path.join(root, "cutie-pi-browser")], {
                   env: {
                     ...process.env,
                     DISPLAY: ":1",
                     HOME: spacedHome,
                     PATH: `${bin}${path.delimiter}${process.env.PATH ?? ""}`,
-                    RAKAZO_TEST_ARGS: capture,
+                    CUTIE_PI_TEST_ARGS: capture,
                   },
                   encoding: "utf8",
                 });
@@ -853,7 +853,7 @@ describe("graphical computer spec", () => {
     "forwards a URL to the live browser when SingletonLock misses that process",
     () => {
       const root = path.resolve(import.meta.dirname, "../../computer");
-      const temp = mkdtempSync(path.join(tmpdir(), "rakazo-browser-live-"));
+      const temp = mkdtempSync(path.join(tmpdir(), "cutie-pi-browser-live-"));
       const bin = path.join(temp, "bin");
       const home = path.join(temp, "home");
       const capture = path.join(temp, "args");
@@ -863,10 +863,10 @@ describe("graphical computer spec", () => {
       mkdirSync(bin);
       writeFileSync(
         path.join(bin, "chromium"),
-        '#!/bin/sh\nprintf "%s\\n" "$@" > "$RAKAZO_TEST_ARGS"\n',
+        '#!/bin/sh\nprintf "%s\\n" "$@" > "$CUTIE_PI_TEST_ARGS"\n',
       );
       chmodSync(path.join(bin, "chromium"), 0o755);
-      symlinkSync(path.join(root, "rakazo-browser"), path.join(bin, "rakazo-browser"));
+      symlinkSync(path.join(root, "cutie-pi-browser"), path.join(bin, "cutie-pi-browser"));
       const sleeper = path.join(bin, "sleeper");
       writeFileSync(sleeper, "#!/bin/sh\nsleep 120\n");
       chmodSync(sleeper, 0o755);
@@ -880,7 +880,7 @@ describe("graphical computer spec", () => {
           "state = {'consumed': False, 'listed': False, 'mode': ''}",
           "def mode():",
           "    try:",
-          "        with open(os.environ['RAKAZO_TEST_DROP'], encoding='utf-8') as handle:",
+          "        with open(os.environ['CUTIE_PI_TEST_DROP'], encoding='utf-8') as handle:",
           "            current = handle.read().strip()",
           "    except OSError:",
           "        current = ''",
@@ -918,7 +918,7 @@ describe("graphical computer spec", () => {
           "            return",
           "        query = self.path.split('?', 1)[1] if '?' in self.path else ''",
           "        opened = urllib.parse.unquote(query)",
-          "        with open(os.environ['RAKAZO_TEST_URLS'], 'a', encoding='utf-8') as handle:",
+          "        with open(os.environ['CUTIE_PI_TEST_URLS'], 'a', encoding='utf-8') as handle:",
           "            handle.write(self.path + '\\n')",
           "        current = mode()",
           "        if current == 'before' and not state['listed']:",
@@ -939,7 +939,7 @@ describe("graphical computer spec", () => {
           "    def log_message(self, fmt, *args):",
           "        return",
           "server = ThreadingHTTPServer(('127.0.0.1', 0), Handler)",
-          "with open(os.environ['RAKAZO_TEST_PORT'], 'w', encoding='utf-8') as handle:",
+          "with open(os.environ['CUTIE_PI_TEST_PORT'], 'w', encoding='utf-8') as handle:",
           "    handle.write(str(server.server_address[1]))",
           "server.serve_forever()",
           "",
@@ -955,11 +955,11 @@ describe("graphical computer spec", () => {
           "sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)",
           "sock.bind(('127.0.0.1', 0))",
           "sock.listen(8)",
-          "with open(os.environ['RAKAZO_TEST_PORT'], 'w', encoding='utf-8') as handle:",
+          "with open(os.environ['CUTIE_PI_TEST_PORT'], 'w', encoding='utf-8') as handle:",
           "    handle.write(str(sock.getsockname()[1]))",
           "while True:",
           "    connection, _addr = sock.accept()",
-          "    with open(os.environ['RAKAZO_TEST_ACCEPTED'], 'a', encoding='utf-8') as handle:",
+          "    with open(os.environ['CUTIE_PI_TEST_ACCEPTED'], 'a', encoding='utf-8') as handle:",
           "        handle.write('accepted\\n')",
           "    time.sleep(30)",
           "    connection.close()",
@@ -981,17 +981,17 @@ describe("graphical computer spec", () => {
         DISPLAY: ":1",
         HOME: home,
         PATH: `${bin}${path.delimiter}${process.env.PATH ?? ""}`,
-        RAKAZO_BROWSER_PROFILE: profile,
-        RAKAZO_TEST_ARGS: capture,
+        CUTIE_PI_BROWSER_PROFILE: profile,
+        CUTIE_PI_TEST_ARGS: capture,
       };
       const endpointProcess = spawn("python3", [endpoint], {
         stdio: "ignore",
         detached: true,
         env: {
           ...process.env,
-          RAKAZO_TEST_PORT: portFile,
-          RAKAZO_TEST_URLS: urlsFile,
-          RAKAZO_TEST_DROP: dropFile,
+          CUTIE_PI_TEST_PORT: portFile,
+          CUTIE_PI_TEST_URLS: urlsFile,
+          CUTIE_PI_TEST_DROP: dropFile,
         },
       });
       const children = [endpointProcess];
@@ -1021,7 +1021,7 @@ describe("graphical computer spec", () => {
         children.push(browser, renderer, wrapper);
         const liveLock = path.join(profile, "SingletonLock");
         const launch = (args: string[] = []) =>
-          spawnSync("bash", [path.join(root, "rakazo-browser"), ...args], {
+          spawnSync("bash", [path.join(root, "cutie-pi-browser"), ...args], {
             env: launchEnv,
             encoding: "utf8",
           });
@@ -1142,8 +1142,8 @@ describe("graphical computer spec", () => {
           detached: true,
           env: {
             ...process.env,
-            RAKAZO_TEST_PORT: hungPortFile,
-            RAKAZO_TEST_ACCEPTED: acceptedFile,
+            CUTIE_PI_TEST_PORT: hungPortFile,
+            CUTIE_PI_TEST_ACCEPTED: acceptedFile,
           },
         });
         children.push(hung);
@@ -1164,7 +1164,7 @@ describe("graphical computer spec", () => {
               "spec = importlib.util.spec_from_file_location('control', sys.argv[1])",
               "module = importlib.util.module_from_spec(spec)",
               "spec.loader.exec_module(module)",
-              "argv = ['env', 'DISPLAY=:1', 'rakazo-browser', sys.argv[2]]",
+              "argv = ['env', 'DISPLAY=:1', 'cutie-pi-browser', sys.argv[2]]",
               "try:",
               "    module.run_control_argv(argv, ':1')",
               "except RuntimeError as error:",
@@ -1197,7 +1197,7 @@ describe("graphical computer spec", () => {
   );
 
   it("keeps container names stable so a bot can resume", () => {
-    expect(containerNameFor("bot_1")).toBe("rakazo-bot-bot_1");
+    expect(containerNameFor("bot_1")).toBe("cutie-pi-bot-bot_1");
     expect(containerNameFor("bot_1")).toBe(containerNameFor("bot_1"));
   });
 
@@ -1250,7 +1250,7 @@ describe("graphical computer spec", () => {
   });
 
   it("uses the container IP only for the internal screen network topology", () => {
-    const networkMode = "rakazo_default";
+    const networkMode = "cutie-pi_default";
     expect(
       resolveScreenPublishTarget({
         screenNetwork: "internal",
@@ -1263,8 +1263,8 @@ describe("graphical computer spec", () => {
     expect(
       resolveScreenPublishTarget({
         screenNetwork: "isolated",
-        networkMode: "rakazo-computer-bot-1",
-        networks: { "rakazo-computer-bot-1": { IPAddress: "172.20.0.4" } },
+        networkMode: "cutie-pi-computer-bot-1",
+        networks: { "cutie-pi-computer-bot-1": { IPAddress: "172.20.0.4" } },
         hostPort: "49152",
         containerPort: "6080",
       }),
@@ -1273,11 +1273,11 @@ describe("graphical computer spec", () => {
 
   it("does not publish computer control port 7070 on the host", () => {
     const options = containerCreateOptions({
-      name: "rakazo-bot-ctrl",
+      name: "cutie-pi-bot-ctrl",
       image: COMPUTER_IMAGE,
       botId: "ctrl",
       spaceId: "ws",
-      homePath: "/var/rakazo/homes/ctrl",
+      homePath: "/var/cutie-pi/homes/ctrl",
     });
     expect(options.HostConfig.PortBindings["7070/tcp"]).toBeUndefined();
     expect(options.ExposedPorts["7070/tcp"]).toBeUndefined();
@@ -1286,11 +1286,11 @@ describe("graphical computer spec", () => {
 
   it("publishes the control port to loopback only when explicitly opted in", () => {
     const options = containerCreateOptions({
-      name: "rakazo-bot-ctrl",
+      name: "cutie-pi-bot-ctrl",
       image: COMPUTER_IMAGE,
       botId: "ctrl",
       spaceId: "ws",
-      homePath: "/var/rakazo/homes/ctrl",
+      homePath: "/var/cutie-pi/homes/ctrl",
       publishControlPort: true,
     });
     expect(options.ExposedPorts["7070/tcp"]).toEqual({});
@@ -1300,7 +1300,7 @@ describe("graphical computer spec", () => {
   });
 
   it("resolves computer control through the container network IP, never a host mapping", () => {
-    const networkMode = "rakazo_default";
+    const networkMode = "cutie-pi_default";
     expect(
       resolveComputerControlEndpoint({
         token: "secret",
@@ -1332,7 +1332,7 @@ describe("graphical computer spec", () => {
   });
 
   it("resolves computer control through a published loopback port when provided", () => {
-    const networkMode = "rakazo_default";
+    const networkMode = "cutie-pi_default";
     expect(
       resolveComputerControlEndpoint({
         token: "secret",
@@ -1406,7 +1406,7 @@ describe("graphical computer spec", () => {
   );
 
   it("does not fall back to the container IP when a published control port is required", () => {
-    const networkMode = "rakazo_default";
+    const networkMode = "cutie-pi_default";
     expect(
       resolveComputerControlEndpoint({
         token: "secret",
@@ -1448,11 +1448,11 @@ describe("graphical computer spec", () => {
           "assert allow(['env', 'DISPLAY=:1', 'xdotool', 'click', '--repeat', '3', '4'], ':1')",
           "assert allow(['env', 'DISPLAY=:1', 'xdotool', 'type', '--clearmodifiers', '--', 'hi'], ':1')",
           "assert allow(['env', 'DISPLAY=:2', 'xdg-open', 'https://example.com'], ':2')",
-          "assert allow(['env', 'DISPLAY=:1', 'rakazo-browser'], ':1')",
-          "assert allow(['env', 'DISPLAY=:2', 'rakazo-browser', 'https://example.com'], ':2')",
+          "assert allow(['env', 'DISPLAY=:1', 'cutie-pi-browser'], ':1')",
+          "assert allow(['env', 'DISPLAY=:2', 'cutie-pi-browser', 'https://example.com'], ':2')",
           "assert allow(['env', 'DISPLAY=:1', 'xterm'], ':1')",
-          "assert long_lived(['env', 'DISPLAY=:1', 'rakazo-browser'])",
-          "assert long_lived(['env', 'DISPLAY=:1', 'rakazo-browser', 'https://example.com'])",
+          "assert long_lived(['env', 'DISPLAY=:1', 'cutie-pi-browser'])",
+          "assert long_lived(['env', 'DISPLAY=:1', 'cutie-pi-browser', 'https://example.com'])",
           "assert long_lived(['env', 'DISPLAY=:1', 'xterm'])",
           "assert long_lived(['env', 'DISPLAY=:1', 'xdg-open', 'https://example.com'])",
           "assert not long_lived(['env', 'DISPLAY=:1', 'xdotool', 'key', '--clearmodifiers', 'a'])",
@@ -1499,12 +1499,12 @@ describe("graphical computer spec", () => {
           "finally:",
           "  module.CONTROL_TIMEOUT_SEC = timeout",
           "slow = tempfile.mkdtemp()",
-          "launcher = os.path.join(slow, 'rakazo-browser')",
+          "launcher = os.path.join(slow, 'cutie-pi-browser')",
           "open(launcher, 'w').write('#!/bin/sh\\nsleep 0.25\\nexit 1\\n')",
           "os.chmod(launcher, 0o755)",
           "os.environ['PATH'] = slow + os.pathsep + os.environ.get('PATH', '')",
           "try:",
-          "  module.run_control_argv(['env', 'DISPLAY=:1', 'rakazo-browser'], ':1')",
+          "  module.run_control_argv(['env', 'DISPLAY=:1', 'cutie-pi-browser'], ':1')",
           "  raise SystemExit('slow failure looked successful')",
           "except RuntimeError as error:",
           "  assert str(error) == 'computer action failed', str(error)",
@@ -1538,9 +1538,9 @@ describe("graphical computer spec", () => {
 
 describe("computer resource limits", () => {
   const KEYS = [
-    "RAKAZO_COMPUTER_MEMORY",
-    "RAKAZO_COMPUTER_CPUS",
-    "RAKAZO_COMPUTER_PIDS_LIMIT",
+    "CUTIE_PI_COMPUTER_MEMORY",
+    "CUTIE_PI_COMPUTER_CPUS",
+    "CUTIE_PI_COMPUTER_PIDS_LIMIT",
   ] as const;
   const saved = new Map<string, string | undefined>();
 
@@ -1559,11 +1559,11 @@ describe("computer resource limits", () => {
   });
 
   const createInput = {
-    name: "rakazo-bot-x",
-    image: "rakazo/computer:local",
+    name: "cutie-pi-bot-x",
+    image: "cutie-pi/computer:local",
     botId: "bot-x",
     spaceId: "ws",
-    homePath: "/var/rakazo/homes/bot-x",
+    homePath: "/var/cutie-pi/homes/bot-x",
   };
 
   it("caps memory and cpu by default and keeps #343's pids ceiling", () => {
@@ -1576,9 +1576,9 @@ describe("computer resource limits", () => {
 
   it("falls back to the defaults when a variable is blank", () => {
     // .env.example ships these keys blank; a blank value must read as "unset".
-    process.env.RAKAZO_COMPUTER_MEMORY = "";
-    process.env.RAKAZO_COMPUTER_CPUS = "  ";
-    process.env.RAKAZO_COMPUTER_PIDS_LIMIT = "";
+    process.env.CUTIE_PI_COMPUTER_MEMORY = "";
+    process.env.CUTIE_PI_COMPUTER_CPUS = "  ";
+    process.env.CUTIE_PI_COMPUTER_PIDS_LIMIT = "";
     const { HostConfig } = containerCreateOptions(createInput);
     expect(HostConfig.Memory).toBe(2 * 1024 ** 3);
     expect(HostConfig.NanoCpus).toBe(2e9);
@@ -1586,21 +1586,21 @@ describe("computer resource limits", () => {
   });
 
   it("pins MemorySwap to Memory so the ceiling cannot be swapped past", () => {
-    process.env.RAKAZO_COMPUTER_MEMORY = "1536m";
+    process.env.CUTIE_PI_COMPUTER_MEMORY = "1536m";
     const { HostConfig } = containerCreateOptions(createInput);
     expect(HostConfig.Memory).toBe(1536 * 1024 ** 2);
     expect(HostConfig.MemorySwap).toBe(1536 * 1024 ** 2);
   });
 
   it("accepts fractional CPUs", () => {
-    process.env.RAKAZO_COMPUTER_CPUS = "1.5";
+    process.env.CUTIE_PI_COMPUTER_CPUS = "1.5";
     expect(containerCreateOptions(createInput).HostConfig.NanoCpus).toBe(1_500_000_000);
   });
 
   it("lets an operator opt out explicitly", () => {
-    process.env.RAKAZO_COMPUTER_MEMORY = "unlimited";
-    process.env.RAKAZO_COMPUTER_CPUS = "0";
-    process.env.RAKAZO_COMPUTER_PIDS_LIMIT = "none";
+    process.env.CUTIE_PI_COMPUTER_MEMORY = "unlimited";
+    process.env.CUTIE_PI_COMPUTER_CPUS = "0";
+    process.env.CUTIE_PI_COMPUTER_PIDS_LIMIT = "none";
     const { HostConfig } = containerCreateOptions(createInput);
     expect(HostConfig.Memory).toBe(0);
     expect(HostConfig.NanoCpus).toBe(0);
@@ -1608,44 +1608,44 @@ describe("computer resource limits", () => {
   });
 
   it("rejects a malformed size instead of silently falling back", () => {
-    process.env.RAKAZO_COMPUTER_MEMORY = "2 gigs";
-    expect(() => containerCreateOptions(createInput)).toThrow(/RAKAZO_COMPUTER_MEMORY/);
+    process.env.CUTIE_PI_COMPUTER_MEMORY = "2 gigs";
+    expect(() => containerCreateOptions(createInput)).toThrow(/CUTIE_PI_COMPUTER_MEMORY/);
   });
 
   it("rejects a negative cpu count", () => {
-    process.env.RAKAZO_COMPUTER_CPUS = "-1";
-    expect(() => containerCreateOptions(createInput)).toThrow(/RAKAZO_COMPUTER_CPUS/);
+    process.env.CUTIE_PI_COMPUTER_CPUS = "-1";
+    expect(() => containerCreateOptions(createInput)).toThrow(/CUTIE_PI_COMPUTER_CPUS/);
   });
 
   it("rejects a pids limit that is not a positive integer", () => {
-    process.env.RAKAZO_COMPUTER_PIDS_LIMIT = "12.5";
-    expect(() => containerCreateOptions(createInput)).toThrow(/RAKAZO_COMPUTER_PIDS_LIMIT/);
+    process.env.CUTIE_PI_COMPUTER_PIDS_LIMIT = "12.5";
+    expect(() => containerCreateOptions(createInput)).toThrow(/CUTIE_PI_COMPUTER_PIDS_LIMIT/);
   });
 
   it("rejects a memory limit below Docker's 6 MiB minimum", () => {
     // The daemon refuses these at container creation, so accepting them here would turn a typo
     // into a 500 on the first bot rather than a startup failure naming the variable.
     for (const value of ["1", "1m", "5m", "5242880"]) {
-      process.env.RAKAZO_COMPUTER_MEMORY = value;
-      expect(() => containerCreateOptions(createInput)).toThrow(/RAKAZO_COMPUTER_MEMORY/);
+      process.env.CUTIE_PI_COMPUTER_MEMORY = value;
+      expect(() => containerCreateOptions(createInput)).toThrow(/CUTIE_PI_COMPUTER_MEMORY/);
     }
-    process.env.RAKAZO_COMPUTER_MEMORY = "6m";
+    process.env.CUTIE_PI_COMPUTER_MEMORY = "6m";
     expect(containerCreateOptions(createInput).HostConfig.Memory).toBe(6 * 1024 ** 2);
   });
 
   it("rejects a CPU count that would floor to Docker's unlimited", () => {
     // Math.floor(1e-10 * 1e9) is 0, and 0 NanoCpus means uncapped. An accepted value must never
     // turn a ceiling into no ceiling.
-    process.env.RAKAZO_COMPUTER_CPUS = "0.0000000001";
-    expect(() => containerCreateOptions(createInput)).toThrow(/RAKAZO_COMPUTER_CPUS/);
+    process.env.CUTIE_PI_COMPUTER_CPUS = "0.0000000001";
+    expect(() => containerCreateOptions(createInput)).toThrow(/CUTIE_PI_COMPUTER_CPUS/);
   });
 
   it("rejects a CPU count that leaves the safe-integer NanoCpus range", () => {
     // 1e300 is finite, but Math.floor(1e300 * 1e9) is Infinity. 1e7 CPUs yields a non-safe
     // integer. Both must fail closed rather than reach HostConfig.NanoCpus.
     for (const value of ["1e300", "10000000"]) {
-      process.env.RAKAZO_COMPUTER_CPUS = value;
-      expect(() => containerCreateOptions(createInput)).toThrow(/RAKAZO_COMPUTER_CPUS/);
+      process.env.CUTIE_PI_COMPUTER_CPUS = value;
+      expect(() => containerCreateOptions(createInput)).toThrow(/CUTIE_PI_COMPUTER_CPUS/);
     }
   });
 
@@ -1679,7 +1679,7 @@ describe("computer home storage", () => {
       {
         Type: "volume",
         Source: "example_appdata",
-        Target: "/home/rakazo",
+        Target: "/home/cutie-pi",
         VolumeOptions: { NoCopy: true, Subpath: "homes/bot" },
       },
     ]);

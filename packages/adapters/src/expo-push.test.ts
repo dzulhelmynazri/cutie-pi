@@ -51,7 +51,7 @@ describe("expo push tickets", () => {
 
 describe("expo push", () => {
   it("keeps refreshed push tokens owner-only", async () => {
-    const dataDir = await mkdtemp(path.join(tmpdir(), "rakazo-push-"));
+    const dataDir = await mkdtemp(path.join(tmpdir(), "cutie-pi-push-"));
     dirs.push(dataDir);
     const tokenFile = path.join(dataDir, "push-tokens", "user-1.txt");
     await savePushToken(dataDir, "user-1", "ExponentPushToken[old]");
@@ -63,7 +63,7 @@ describe("expo push", () => {
   });
 
   it("does not follow a token-file symlink for reads or writes", async () => {
-    const dataDir = await mkdtemp(path.join(tmpdir(), "rakazo-push-"));
+    const dataDir = await mkdtemp(path.join(tmpdir(), "cutie-pi-push-"));
     dirs.push(dataDir);
     const tokenDir = path.join(dataDir, "push-tokens");
     const tokenFile = path.join(tokenDir, "user-1.txt");
@@ -79,7 +79,7 @@ describe("expo push", () => {
   });
 
   it("removes a registered token", async () => {
-    const dataDir = await mkdtemp(path.join(tmpdir(), "rakazo-push-"));
+    const dataDir = await mkdtemp(path.join(tmpdir(), "cutie-pi-push-"));
     dirs.push(dataDir);
     await savePushToken(dataDir, "user-1", "ExponentPushToken[test]");
     await deletePushToken(dataDir, "user-1");
@@ -87,7 +87,7 @@ describe("expo push", () => {
   });
 
   it("does not call Expo when the user has no token", async () => {
-    const dataDir = await mkdtemp(path.join(tmpdir(), "rakazo-push-"));
+    const dataDir = await mkdtemp(path.join(tmpdir(), "cutie-pi-push-"));
     dirs.push(dataDir);
     const fetchMock = vi.fn();
     vi.stubGlobal("fetch", fetchMock);
@@ -106,7 +106,7 @@ describe("expo push", () => {
   });
 
   it("posts to Expo when a token is registered", async () => {
-    const dataDir = await mkdtemp(path.join(tmpdir(), "rakazo-push-"));
+    const dataDir = await mkdtemp(path.join(tmpdir(), "cutie-pi-push-"));
     dirs.push(dataDir);
     await savePushToken(dataDir, "user-1", "ExponentPushToken[test]");
     const fetchMock = vi
@@ -136,7 +136,7 @@ describe("expo push", () => {
   });
 
   it("throws when Expo rejects the request", async () => {
-    const dataDir = await mkdtemp(path.join(tmpdir(), "rakazo-push-"));
+    const dataDir = await mkdtemp(path.join(tmpdir(), "cutie-pi-push-"));
     dirs.push(dataDir);
     await savePushToken(dataDir, "user-1", "ExponentPushToken[test]");
     vi.stubGlobal(
@@ -153,7 +153,7 @@ describe("expo push", () => {
   });
 
   it("rejects and cancels a declared oversized response", async () => {
-    const dataDir = await mkdtemp(path.join(tmpdir(), "rakazo-push-"));
+    const dataDir = await mkdtemp(path.join(tmpdir(), "cutie-pi-push-"));
     dirs.push(dataDir);
     await savePushToken(dataDir, "user-1", "ExponentPushToken[test]");
     const response = new Response("oversized", {
@@ -172,7 +172,7 @@ describe("expo push", () => {
   });
 
   it("does not wait past cancellation when an oversized body cancel hangs", async () => {
-    const dataDir = await mkdtemp(path.join(tmpdir(), "rakazo-push-"));
+    const dataDir = await mkdtemp(path.join(tmpdir(), "cutie-pi-push-"));
     dirs.push(dataDir);
     await savePushToken(dataDir, "user-1", "ExponentPushToken[test]");
     let cancelStarted = false;
@@ -205,7 +205,7 @@ describe("expo push", () => {
   });
 
   it("caps a streamed response without a content length", async () => {
-    const dataDir = await mkdtemp(path.join(tmpdir(), "rakazo-push-"));
+    const dataDir = await mkdtemp(path.join(tmpdir(), "cutie-pi-push-"));
     dirs.push(dataDir);
     await savePushToken(dataDir, "user-1", "ExponentPushToken[test]");
     vi.stubGlobal(
@@ -222,7 +222,7 @@ describe("expo push", () => {
   });
 
   it("rejects malformed successful responses", async () => {
-    const dataDir = await mkdtemp(path.join(tmpdir(), "rakazo-push-"));
+    const dataDir = await mkdtemp(path.join(tmpdir(), "cutie-pi-push-"));
     dirs.push(dataDir);
     await savePushToken(dataDir, "user-1", "ExponentPushToken[test]");
     vi.stubGlobal("fetch", vi.fn().mockResolvedValue(new Response("not json")));
@@ -236,7 +236,7 @@ describe("expo push", () => {
   });
 
   it("passes caller cancellation to the Expo request", async () => {
-    const dataDir = await mkdtemp(path.join(tmpdir(), "rakazo-push-"));
+    const dataDir = await mkdtemp(path.join(tmpdir(), "cutie-pi-push-"));
     dirs.push(dataDir);
     await savePushToken(dataDir, "user-1", "ExponentPushToken[test]");
     const controller = new AbortController();
@@ -257,7 +257,7 @@ describe("expo push", () => {
   });
 
   it("throws when the Expo request never reaches the network", async () => {
-    const dataDir = await mkdtemp(path.join(tmpdir(), "rakazo-push-"));
+    const dataDir = await mkdtemp(path.join(tmpdir(), "cutie-pi-push-"));
     dirs.push(dataDir);
     await savePushToken(dataDir, "user-1", "ExponentPushToken[test]");
     vi.stubGlobal("fetch", vi.fn().mockRejectedValue(new Error("offline")));
@@ -271,7 +271,7 @@ describe("expo push", () => {
   });
 
   it("reports DeviceNotRegistered without deleting a stored or replacement token", async () => {
-    const dataDir = await mkdtemp(path.join(tmpdir(), "rakazo-push-"));
+    const dataDir = await mkdtemp(path.join(tmpdir(), "cutie-pi-push-"));
     dirs.push(dataDir);
     await savePushToken(dataDir, "user-1", "ExponentPushToken[old]");
     vi.stubGlobal(

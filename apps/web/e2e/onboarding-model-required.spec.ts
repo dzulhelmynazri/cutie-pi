@@ -21,7 +21,7 @@ test("onboarding requires a model when the deployment has none", async ({ page }
   const stamp = Date.now();
   await signup(
     page,
-    `model-required-${stamp}@rakazo.test`,
+    `model-required-${stamp}@cutie-pi.test`,
     "password12",
     `Model required ${stamp}`,
   );
@@ -51,7 +51,7 @@ for (const unavailable of ["empty", "failed"] as const) {
       unavailable === "failed" ? route.abort() : route.fulfill({ json: { json: [] } }),
     );
     const stamp = Date.now();
-    await signup(page, `catalog-${unavailable}-${stamp}@rakazo.test`, "password12", "Model setup");
+    await signup(page, `catalog-${unavailable}-${stamp}@cutie-pi.test`, "password12", "Model setup");
     await expect(page.getByRole("heading", { name: "Connect a model" })).toBeVisible();
     await expect(page.getByRole("button", { name: "Continue", exact: true })).toBeDisabled();
     await expect(page.getByRole("heading", { name: "Create your first bot" })).toHaveCount(0);

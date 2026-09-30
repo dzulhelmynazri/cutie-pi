@@ -4,7 +4,7 @@ import { captureScreenshot, completeOnboarding, openUserSettings, rpc, signup } 
 test("voice settings connect a key, speak a reply, and open a call", async ({ page }, testInfo) => {
   const stamp = Date.now();
   const userName = `Voice ${stamp}`;
-  await signup(page, `voice-${stamp}@rakazo.test`, "password12", userName);
+  await signup(page, `voice-${stamp}@cutie-pi.test`, "password12", userName);
   await completeOnboarding(page);
 
   await expect(page.getByRole("button", { name: "Call", exact: true })).toHaveCount(0);

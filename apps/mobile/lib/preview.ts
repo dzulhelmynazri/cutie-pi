@@ -1,4 +1,4 @@
-import { plainTextFromMarkdown } from "@rakazo/core";
+import { plainTextFromMarkdown } from "@cutie-pi/core";
 
 const MAX_PREVIEW_WORDS = 12;
 

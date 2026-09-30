@@ -1,7 +1,7 @@
 import { mkdtempSync, readFileSync, rmSync, symlinkSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
-import type { ComputerRef, ProcessEvent, SandboxProvider } from "@rakazo/adapter-kit";
+import type { ComputerRef, ProcessEvent, SandboxProvider } from "@cutie-pi/adapter-kit";
 import { describe, expect, it } from "vitest";
 import { BoxSandboxEmulator } from "./box-emulator.js";
 import { DaytonaSandboxEmulator } from "./daytona-emulator.js";
@@ -130,7 +130,7 @@ describe("sandbox conformance", () => {
   });
 
   it("desktop executor times out and kills descendants that inherited its pipes", async () => {
-    const root = mkdtempSync(path.join(tmpdir(), "rakazo-desktop-timeout-"));
+    const root = mkdtempSync(path.join(tmpdir(), "cutie-pi-desktop-timeout-"));
     const desktop = new DesktopSandboxProvider({ root });
     const computer = await desktop.provision({ botId: "timeout", homePath: "/unused" }, ctx);
     const marker = path.join(computer.providerRef, "descendant-survived");
@@ -162,7 +162,7 @@ describe("sandbox conformance", () => {
   });
 
   it("desktop executor aborts and kills a running command", async () => {
-    const root = mkdtempSync(path.join(tmpdir(), "rakazo-desktop-abort-"));
+    const root = mkdtempSync(path.join(tmpdir(), "cutie-pi-desktop-abort-"));
     const desktop = new DesktopSandboxProvider({ root });
     const computer = await desktop.provision({ botId: "abort", homePath: "/unused" }, ctx);
     const controller = new AbortController();
@@ -185,7 +185,7 @@ describe("sandbox conformance", () => {
   });
 
   it("treats a repeated destroy as success so a stale deletion retry is safe", async () => {
-    const root = mkdtempSync(path.join(tmpdir(), "rakazo-destroy-idempotent-"));
+    const root = mkdtempSync(path.join(tmpdir(), "cutie-pi-destroy-idempotent-"));
     const providers: SandboxProvider[] = [
       new FakeSandboxProvider(),
       new ManagedSandboxEmulator(),
@@ -206,7 +206,7 @@ describe("sandbox conformance", () => {
   });
 
   it("reuses one desktop machine per bot", async () => {
-    const root = mkdtempSync(path.join(tmpdir(), "rakazo-desktop-reuse-"));
+    const root = mkdtempSync(path.join(tmpdir(), "cutie-pi-desktop-reuse-"));
     const desktop = new DesktopSandboxProvider({ root });
     const first = await desktop.provision({ botId: "stable", homePath: "/unused" }, ctx);
     const second = await desktop.provision({ botId: "stable", homePath: "/unused" }, ctx);
@@ -220,7 +220,7 @@ describe("sandbox conformance", () => {
   });
 
   it("desktop file writes do not follow a final symlink outside the workspace", async () => {
-    const root = mkdtempSync(path.join(tmpdir(), "rakazo-desktop-symlink-"));
+    const root = mkdtempSync(path.join(tmpdir(), "cutie-pi-desktop-symlink-"));
     const desktop = new DesktopSandboxProvider({ root });
     const computer = await desktop.provision({ botId: "symlink", homePath: "/unused" }, ctx);
     const outside = path.join(root, "outside.txt");

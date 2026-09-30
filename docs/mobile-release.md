@@ -1,10 +1,10 @@
 # Mobile builds and store releases
 
-Rakazo's public repository does not contain production App Store Connect,
+CutiePi's public repository does not contain production App Store Connect,
 Google Play, Apple team, or private EAS submission identifiers. Those values
 belong in the release operator's private configuration.
 
-Self-hosters normally do not need to publish their own mobile app: the Rakazo
+Self-hosters normally do not need to publish their own mobile app: the CutiePi
 client can select a compatible server from the sign-in screen. If you distribute
 your own branded build, use your own Expo and store accounts.
 
@@ -17,7 +17,7 @@ your own branded build, use your own Expo and store accounts.
 4. Keep store application IDs, team IDs, signing credentials, API keys, and
    review-account credentials out of Git.
 5. Before a native iOS or Android build, run
-   `pnpm --filter @rakazo/mobile exec expo install --check`. Attachment pickers
+   `pnpm --filter @cutie-pi/mobile exec expo install --check`. Attachment pickers
    and other Expo native modules must match the SDK (SDK 57 needs
    `expo-image-picker@~57.0.11`, not 17.x). Use `pnpm exec expo install --fix`
    from `apps/mobile` if that check fails.

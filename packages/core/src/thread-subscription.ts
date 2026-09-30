@@ -1,4 +1,4 @@
-import type { ProductEvent } from "@rakazo/contracts";
+import type { ProductEvent } from "@cutie-pi/contracts";
 import { abortableDelay } from "./async.js";
 
 type ThreadHead = { threadId: string; cursor: number };

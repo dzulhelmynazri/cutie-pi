@@ -1,6 +1,6 @@
 @import "tw-animate-css";
 @import "./shadcn.css";
-@import "@rakazo/ui-tokens/css";
+@import "@cutie-pi/ui-tokens/css";
 
 @source "./**/*.{ts,tsx}";
 
@@ -55,7 +55,7 @@
   }
 }
 
-@keyframes rakazo-avatar-spin {
+@keyframes cutie-pi-avatar-spin {
   0% {
     transform: rotate(0deg);
   }
@@ -64,141 +64,141 @@
   }
 }
 
-.rakazo-bot-avatar-ring {
-  animation: rakazo-avatar-spin 1.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+.cutie-pi-bot-avatar-ring {
+  animation: cutie-pi-avatar-spin 1.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
   opacity: 0;
   transition: opacity 180ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.rakazo-bot-avatar {
+.cutie-pi-bot-avatar {
   transition: box-shadow 180ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.rakazo-bot-avatar[data-working="true"] .rakazo-bot-avatar-ring {
+.cutie-pi-bot-avatar[data-working="true"] .cutie-pi-bot-avatar-ring {
   opacity: 1;
 }
 
-.rakazo-bot-avatar-eyes {
-  animation: var(--rakazo-eye-animation-name) var(--rakazo-eye-animation-duration)
-    var(--rakazo-eye-animation-easing) var(--rakazo-eye-animation-delay) infinite;
+.cutie-pi-bot-avatar-eyes {
+  animation: var(--cutie-pi-eye-animation-name) var(--cutie-pi-eye-animation-duration)
+    var(--cutie-pi-eye-animation-easing) var(--cutie-pi-eye-animation-delay) infinite;
   transition: opacity 180ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.rakazo-bot-avatar-eyes-working {
+.cutie-pi-bot-avatar-eyes-working {
   opacity: 0;
 }
 
-.rakazo-bot-avatar[data-working="true"] .rakazo-bot-avatar-eyes-idle {
+.cutie-pi-bot-avatar[data-working="true"] .cutie-pi-bot-avatar-eyes-idle {
   opacity: 0;
 }
 
-.rakazo-bot-avatar[data-working="true"] .rakazo-bot-avatar-eyes-working {
+.cutie-pi-bot-avatar[data-working="true"] .cutie-pi-bot-avatar-eyes-working {
   opacity: 1;
 }
 
-.rakazo-organic-avatar-body {
+.cutie-pi-organic-avatar-body {
   transform-origin: center;
   transition: opacity 180ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.rakazo-organic-avatar-body-idle {
-  animation: rakazo-organic-idle 5.6s ease-in-out infinite;
+.cutie-pi-organic-avatar-body-idle {
+  animation: cutie-pi-organic-idle 5.6s ease-in-out infinite;
 }
 
-.rakazo-organic-avatar-body-working {
+.cutie-pi-organic-avatar-body-working {
   opacity: 0;
 }
 
-.rakazo-organic-avatar[data-working="true"] .rakazo-organic-avatar-body-idle {
+.cutie-pi-organic-avatar[data-working="true"] .cutie-pi-organic-avatar-body-idle {
   opacity: 0;
 }
 
-.rakazo-organic-avatar[data-working="true"] .rakazo-organic-avatar-body-working {
+.cutie-pi-organic-avatar[data-working="true"] .cutie-pi-organic-avatar-body-working {
   opacity: 1;
 }
 
-.rakazo-organic-avatar-eyes {
+.cutie-pi-organic-avatar-eyes {
   transition: opacity 180ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.rakazo-organic-avatar-eyes-working {
+.cutie-pi-organic-avatar-eyes-working {
   opacity: 0;
 }
 
-.rakazo-organic-avatar[data-working="true"] .rakazo-organic-avatar-eyes-idle {
+.cutie-pi-organic-avatar[data-working="true"] .cutie-pi-organic-avatar-eyes-idle {
   opacity: 0;
 }
 
-.rakazo-organic-avatar[data-working="true"] .rakazo-organic-avatar-eyes-working {
+.cutie-pi-organic-avatar[data-working="true"] .cutie-pi-organic-avatar-eyes-working {
   opacity: 1;
 }
 
-.rakazo-organic-avatar[data-eye-pattern="0"] .rakazo-organic-avatar-eyes-idle {
-  animation: rakazo-eyes-idle-0 5.8s ease-in-out infinite;
+.cutie-pi-organic-avatar[data-eye-pattern="0"] .cutie-pi-organic-avatar-eyes-idle {
+  animation: cutie-pi-eyes-idle-0 5.8s ease-in-out infinite;
 }
 
-.rakazo-organic-avatar[data-eye-pattern="1"] .rakazo-organic-avatar-eyes-idle {
-  animation: rakazo-eyes-idle-1 6.4s ease-in-out -1.7s infinite;
+.cutie-pi-organic-avatar[data-eye-pattern="1"] .cutie-pi-organic-avatar-eyes-idle {
+  animation: cutie-pi-eyes-idle-1 6.4s ease-in-out -1.7s infinite;
 }
 
-.rakazo-organic-avatar[data-eye-pattern="2"] .rakazo-organic-avatar-eyes-idle {
-  animation: rakazo-eyes-idle-2 5.2s ease-in-out -3.1s infinite;
+.cutie-pi-organic-avatar[data-eye-pattern="2"] .cutie-pi-organic-avatar-eyes-idle {
+  animation: cutie-pi-eyes-idle-2 5.2s ease-in-out -3.1s infinite;
 }
 
-.rakazo-organic-avatar[data-eye-pattern="3"] .rakazo-organic-avatar-eyes-idle {
-  animation: rakazo-eyes-idle-3 6.8s ease-in-out -2.3s infinite;
+.cutie-pi-organic-avatar[data-eye-pattern="3"] .cutie-pi-organic-avatar-eyes-idle {
+  animation: cutie-pi-eyes-idle-3 6.8s ease-in-out -2.3s infinite;
 }
 
-.rakazo-organic-avatar[data-eye-pattern="0"] .rakazo-organic-avatar-eyes-working {
-  animation: rakazo-organic-eyes-loop-0 6.6s ease-in-out infinite;
+.cutie-pi-organic-avatar[data-eye-pattern="0"] .cutie-pi-organic-avatar-eyes-working {
+  animation: cutie-pi-organic-eyes-loop-0 6.6s ease-in-out infinite;
 }
 
-.rakazo-organic-avatar[data-eye-pattern="1"] .rakazo-organic-avatar-eyes-working {
-  animation: rakazo-organic-eyes-loop-1 7.2s ease-in-out -1.4s infinite;
+.cutie-pi-organic-avatar[data-eye-pattern="1"] .cutie-pi-organic-avatar-eyes-working {
+  animation: cutie-pi-organic-eyes-loop-1 7.2s ease-in-out -1.4s infinite;
 }
 
-.rakazo-organic-avatar[data-eye-pattern="2"] .rakazo-organic-avatar-eyes-working {
-  animation: rakazo-organic-eyes-loop-2 6.1s ease-in-out -3.2s infinite;
+.cutie-pi-organic-avatar[data-eye-pattern="2"] .cutie-pi-organic-avatar-eyes-working {
+  animation: cutie-pi-organic-eyes-loop-2 6.1s ease-in-out -3.2s infinite;
 }
 
-.rakazo-organic-avatar[data-eye-pattern="3"] .rakazo-organic-avatar-eyes-working {
-  animation: rakazo-organic-eyes-loop-3 7.8s ease-in-out -2.1s infinite;
+.cutie-pi-organic-avatar[data-eye-pattern="3"] .cutie-pi-organic-avatar-eyes-working {
+  animation: cutie-pi-organic-eyes-loop-3 7.8s ease-in-out -2.1s infinite;
 }
 
-/* Durations mirror @rakazo/core WORKING_AVATAR_DURATIONS_MS (avatar-motion). */
-.rakazo-organic-avatar[data-shape-family="0"] .rakazo-organic-avatar-body-working {
-  animation: rakazo-organic-float 1.8s ease-in-out infinite;
+/* Durations mirror @cutie-pi/core WORKING_AVATAR_DURATIONS_MS (avatar-motion). */
+.cutie-pi-organic-avatar[data-shape-family="0"] .cutie-pi-organic-avatar-body-working {
+  animation: cutie-pi-organic-float 1.8s ease-in-out infinite;
 }
 
-.rakazo-organic-avatar[data-shape-family="1"] .rakazo-organic-avatar-body-working {
-  animation: rakazo-organic-stretch 1.35s ease-in-out infinite;
+.cutie-pi-organic-avatar[data-shape-family="1"] .cutie-pi-organic-avatar-body-working {
+  animation: cutie-pi-organic-stretch 1.35s ease-in-out infinite;
 }
 
-.rakazo-organic-avatar[data-shape-family="2"] .rakazo-organic-avatar-body-working,
-.rakazo-organic-avatar[data-shape-family="8"] .rakazo-organic-avatar-body-working {
-  animation: rakazo-organic-sway 1.6s ease-in-out infinite;
+.cutie-pi-organic-avatar[data-shape-family="2"] .cutie-pi-organic-avatar-body-working,
+.cutie-pi-organic-avatar[data-shape-family="8"] .cutie-pi-organic-avatar-body-working {
+  animation: cutie-pi-organic-sway 1.6s ease-in-out infinite;
 }
 
-.rakazo-organic-avatar[data-shape-family="3"] .rakazo-organic-avatar-body-working,
-.rakazo-organic-avatar[data-shape-family="4"] .rakazo-organic-avatar-body-working {
-  animation: rakazo-organic-turn 2.4s ease-in-out infinite;
+.cutie-pi-organic-avatar[data-shape-family="3"] .cutie-pi-organic-avatar-body-working,
+.cutie-pi-organic-avatar[data-shape-family="4"] .cutie-pi-organic-avatar-body-working {
+  animation: cutie-pi-organic-turn 2.4s ease-in-out infinite;
 }
 
-.rakazo-organic-avatar[data-shape-family="5"] .rakazo-organic-avatar-body-working,
-.rakazo-organic-avatar[data-shape-family="9"] .rakazo-organic-avatar-body-working {
-  animation: rakazo-organic-squash 1.35s ease-in-out infinite;
+.cutie-pi-organic-avatar[data-shape-family="5"] .cutie-pi-organic-avatar-body-working,
+.cutie-pi-organic-avatar[data-shape-family="9"] .cutie-pi-organic-avatar-body-working {
+  animation: cutie-pi-organic-squash 1.35s ease-in-out infinite;
 }
 
-.rakazo-organic-avatar[data-shape-family="6"] .rakazo-organic-avatar-body-working {
-  animation: rakazo-organic-pulse 1.1s ease-in-out infinite;
+.cutie-pi-organic-avatar[data-shape-family="6"] .cutie-pi-organic-avatar-body-working {
+  animation: cutie-pi-organic-pulse 1.1s ease-in-out infinite;
 }
 
-.rakazo-organic-avatar[data-shape-family="7"] .rakazo-organic-avatar-body-working {
+.cutie-pi-organic-avatar[data-shape-family="7"] .cutie-pi-organic-avatar-body-working {
   transform-origin: center 20%;
-  animation: rakazo-organic-ring 1.35s ease-in-out infinite;
+  animation: cutie-pi-organic-ring 1.35s ease-in-out infinite;
 }
 
-@keyframes rakazo-organic-float {
+@keyframes cutie-pi-organic-float {
   0%,
   100% {
     transform: translateY(2px) scaleX(1.02);
@@ -208,7 +208,7 @@
   }
 }
 
-@keyframes rakazo-organic-idle {
+@keyframes cutie-pi-organic-idle {
   0%,
   100% {
     transform: translateY(1.2px) scale(1.012, 0.988);
@@ -218,7 +218,7 @@
   }
 }
 
-@keyframes rakazo-organic-stretch {
+@keyframes cutie-pi-organic-stretch {
   0%,
   100% {
     transform: translateY(2px) scale(1.04, 0.96);
@@ -228,7 +228,7 @@
   }
 }
 
-@keyframes rakazo-organic-sway {
+@keyframes cutie-pi-organic-sway {
   0%,
   100% {
     transform: rotate(-3deg) translateX(-1px);
@@ -238,7 +238,7 @@
   }
 }
 
-@keyframes rakazo-organic-turn {
+@keyframes cutie-pi-organic-turn {
   0%,
   100% {
     transform: rotate(-4deg) scale(0.98);
@@ -248,7 +248,7 @@
   }
 }
 
-@keyframes rakazo-organic-squash {
+@keyframes cutie-pi-organic-squash {
   0%,
   100% {
     transform: scale(1.04, 0.96);
@@ -258,7 +258,7 @@
   }
 }
 
-@keyframes rakazo-organic-pulse {
+@keyframes cutie-pi-organic-pulse {
   0%,
   100% {
     transform: scale(0.96);
@@ -268,7 +268,7 @@
   }
 }
 
-@keyframes rakazo-organic-ring {
+@keyframes cutie-pi-organic-ring {
   0%,
   100% {
     transform: rotate(-4deg);
@@ -281,7 +281,7 @@
   }
 }
 
-@keyframes rakazo-organic-eyes-loop-0 {
+@keyframes cutie-pi-organic-eyes-loop-0 {
   0%,
   100% {
     transform: translate(-9%, 1%) scaleY(0.94);
@@ -309,7 +309,7 @@
   }
 }
 
-@keyframes rakazo-organic-eyes-loop-1 {
+@keyframes cutie-pi-organic-eyes-loop-1 {
   0%,
   100% {
     transform: translate(0, -8%) scale(1.06);
@@ -334,7 +334,7 @@
   }
 }
 
-@keyframes rakazo-organic-eyes-loop-2 {
+@keyframes cutie-pi-organic-eyes-loop-2 {
   0%,
   100% {
     transform: scale(0.9, 1.08);
@@ -359,7 +359,7 @@
   }
 }
 
-@keyframes rakazo-organic-eyes-loop-3 {
+@keyframes cutie-pi-organic-eyes-loop-3 {
   0%,
   100% {
     transform: translateY(7%) scaleY(0.9);
@@ -384,7 +384,7 @@
   }
 }
 
-@keyframes rakazo-eyes-idle-0 {
+@keyframes cutie-pi-eyes-idle-0 {
   0%,
   32%,
   100% {
@@ -412,7 +412,7 @@
   }
 }
 
-@keyframes rakazo-eyes-idle-1 {
+@keyframes cutie-pi-eyes-idle-1 {
   0%,
   25%,
   100% {
@@ -440,7 +440,7 @@
   }
 }
 
-@keyframes rakazo-eyes-idle-2 {
+@keyframes cutie-pi-eyes-idle-2 {
   0%,
   28%,
   100% {
@@ -468,7 +468,7 @@
   }
 }
 
-@keyframes rakazo-eyes-idle-3 {
+@keyframes cutie-pi-eyes-idle-3 {
   0%,
   24%,
   100% {
@@ -496,7 +496,7 @@
   }
 }
 
-@keyframes rakazo-eyes-working {
+@keyframes cutie-pi-eyes-working {
   0% {
     transform: translate(-4px, 0) scale(0.92, 0.95);
   }
@@ -515,27 +515,27 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .rakazo-bot-avatar-ring,
-  .rakazo-bot-avatar-eyes {
+  .cutie-pi-bot-avatar-ring,
+  .cutie-pi-bot-avatar-eyes {
     animation: none;
     transition: none;
   }
 
-  .rakazo-bot-avatar {
+  .cutie-pi-bot-avatar {
     transition: none;
   }
 
-  .rakazo-bot-avatar-visor {
+  .cutie-pi-bot-avatar-visor {
     transition: none;
   }
 
-  .rakazo-organic-avatar[data-shape-family] .rakazo-organic-avatar-body {
+  .cutie-pi-organic-avatar[data-shape-family] .cutie-pi-organic-avatar-body {
     animation: none;
-    d: var(--rakazo-organic-path);
+    d: var(--cutie-pi-organic-path);
     transition: none;
   }
 
-  .rakazo-organic-avatar[data-eye-pattern] .rakazo-organic-avatar-eyes {
+  .cutie-pi-organic-avatar[data-eye-pattern] .cutie-pi-organic-avatar-eyes {
     animation: none;
     transition: none;
   }

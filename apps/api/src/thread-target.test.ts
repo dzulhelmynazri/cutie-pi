@@ -1,8 +1,8 @@
-import type { SandboxProvider } from "@rakazo/adapter-kit";
-import type { Actor, MessageBlock } from "@rakazo/contracts";
-import { callClientNonce } from "@rakazo/core";
-import type * as MessageQuoteModule from "@rakazo/core/message-quote";
-import type { PrismaClient } from "@rakazo/db";
+import type { SandboxProvider } from "@cutie-pi/adapter-kit";
+import type { Actor, MessageBlock } from "@cutie-pi/contracts";
+import { callClientNonce } from "@cutie-pi/core";
+import type * as MessageQuoteModule from "@cutie-pi/core/message-quote";
+import type { PrismaClient } from "@cutie-pi/db";
 import { describe, expect, it, vi } from "vitest";
 import {
   cancelSupersededQueuedRuns,
@@ -16,7 +16,7 @@ import {
 
 // Passthrough mock: every hint derives for real except the sentinel that
 // exercises the "derivation must never cost the send" path.
-vi.mock("@rakazo/core/message-quote", async (importOriginal) => {
+vi.mock("@cutie-pi/core/message-quote", async (importOriginal) => {
   const actual = await importOriginal<typeof MessageQuoteModule>();
   return {
     ...actual,
@@ -2988,14 +2988,14 @@ describe("stopThreadRuns", () => {
     expect(execute).toHaveBeenCalledWith(
       expect.objectContaining({ providerRef: "computer-team" }),
       expect.objectContaining({
-        argv: expect.arrayContaining(["rakazo-cancel-run-work", "computer-db-team", "run-a"]),
+        argv: expect.arrayContaining(["cutie-pi-cancel-run-work", "computer-db-team", "run-a"]),
       }),
       expect.objectContaining({ cancelRunWork: true, runId: "run-a", botId: "bot-a" }),
     );
     expect(execute).toHaveBeenCalledWith(
       expect.objectContaining({ providerRef: "computer-team" }),
       expect.objectContaining({
-        argv: expect.arrayContaining(["rakazo-cancel-run-work", "computer-db-team", "run-b"]),
+        argv: expect.arrayContaining(["cutie-pi-cancel-run-work", "computer-db-team", "run-b"]),
       }),
       expect.objectContaining({ cancelRunWork: true, runId: "run-b", botId: "bot-b" }),
     );
@@ -3112,14 +3112,14 @@ describe("stopThreadRuns", () => {
     expect(execute).toHaveBeenCalledWith(
       expect.objectContaining({ providerRef: "computer-a" }),
       expect.objectContaining({
-        argv: expect.arrayContaining(["rakazo-cancel-run-work", "computer-db-a", "run-a"]),
+        argv: expect.arrayContaining(["cutie-pi-cancel-run-work", "computer-db-a", "run-a"]),
       }),
       expect.objectContaining({ cancelRunWork: true, runId: "run-a", botId: "bot-a" }),
     );
     expect(execute).not.toHaveBeenCalledWith(
       expect.anything(),
       expect.objectContaining({
-        argv: expect.arrayContaining(["rakazo-cancel-run-work", "computer-db-a", "run-b"]),
+        argv: expect.arrayContaining(["cutie-pi-cancel-run-work", "computer-db-a", "run-b"]),
       }),
       expect.anything(),
     );

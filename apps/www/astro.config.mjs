@@ -7,7 +7,7 @@ import { resolveWwwPort } from "./www-port.mjs";
 const wwwPort = resolveWwwPort();
 
 export default defineConfig({
-  site: "https://rakazo.com",
+  site: "https://cutie-pi.com",
   output: "static",
   i18n: {
     defaultLocale: "en",

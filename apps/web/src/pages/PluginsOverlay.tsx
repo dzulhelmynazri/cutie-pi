@@ -5,14 +5,14 @@ import type {
   ConnectionCatalogItem,
   IntegrationCatalogResult,
   IntegrationCatalogSurface,
-} from "@rakazo/contracts";
+} from "@cutie-pi/contracts";
 import {
   abortableDelay,
   buildFeaturedConnectorTiles,
   CONNECTION_CATALOG_PAGE_SIZE,
   filterConnectionCatalogItems,
   humanizeToolName,
-} from "@rakazo/core";
+} from "@cutie-pi/core";
 import {
   Button,
   Card,
@@ -27,7 +27,7 @@ import {
   Input,
   NativeSelect,
   NativeSelectOption,
-} from "@rakazo/ui-web";
+} from "@cutie-pi/ui-web";
 import { ChevronDown, ChevronLeft, ChevronUp, X } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { IntegrationSetup } from "../components/integrations/IntegrationSetup";
@@ -229,7 +229,7 @@ export function PluginsOverlay({
         displayName: nextAccountLabel(item.name, existing.length),
       });
       if (started.authorizationUrl)
-        window.open(started.authorizationUrl, "rakazo-plugin-connect", "noopener,noreferrer");
+        window.open(started.authorizationUrl, "cutie-pi-plugin-connect", "noopener,noreferrer");
       if (item.noAuth && !started.authorizationUrl) {
         if (controller.signal.aborted) return;
         setItemConnected(item, true);

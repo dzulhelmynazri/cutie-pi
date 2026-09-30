@@ -166,7 +166,7 @@ describe("buildPlaywrightPrScreenshotComment", () => {
   const urls = {
     dashboardUrl: "https://example.com/playwright/index.html",
     galleryUrl: "https://example.com/playwright/prs/452/index.html",
-    runUrl: "https://github.com/example/rakazo/actions/runs/1",
+    runUrl: "https://github.com/example/cutie-pi/actions/runs/1",
     screenshotsUrl: "https://example.com/playwright/runs/1-1/screenshots/index.html",
     sha: "abcdef1234567890",
   };
@@ -192,7 +192,7 @@ describe("buildPlaywrightPrScreenshotComment", () => {
       "- [shell live collapsed desktop 1440x900](https://example.com/playwright/runs/1-1/screenshots/images/010-shell-live-collapsed-desktop-1440x900.png) (new)",
     );
     expect(body).toContain(
-      "[Open screenshot gallery](https://example.com/playwright/prs/452/index.html) · [Dashboard](https://example.com/playwright/index.html) · [CI run](https://github.com/example/rakazo/actions/runs/1)",
+      "[Open screenshot gallery](https://example.com/playwright/prs/452/index.html) · [Dashboard](https://example.com/playwright/index.html) · [CI run](https://github.com/example/cutie-pi/actions/runs/1)",
     );
     expect(body).toContain("Updated for commit `abcdef1`.");
     expect(body).not.toContain("![");

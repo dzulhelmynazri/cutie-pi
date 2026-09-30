@@ -31,7 +31,7 @@ export type RecreateLastRun = {
 /**
  * After reconnect, only claim success from a finished sidecar run that started from the
  * pre-action tag. A changed env pin alone is not enough: recreate can fail, restore the prior
- * image, and still leave `RAKAZO_IMAGE_TAG` pointing at the target.
+ * image, and still leave `CUTIE_PI_IMAGE_TAG` pointing at the target.
  */
 export function confirmUpdaterRecreate(input: {
   beforeImageTag: string | null;

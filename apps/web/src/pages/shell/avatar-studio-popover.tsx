@@ -12,7 +12,7 @@ import {
   GROK_BOT_COLORS,
   GrokShapePreview,
   parseBotAvatar,
-} from "@rakazo/ui-web";
+} from "@cutie-pi/ui-web";
 import { Check, Pencil, Upload, X } from "lucide-react";
 import { type ClipboardEvent, type DragEvent, useRef, useState } from "react";
 

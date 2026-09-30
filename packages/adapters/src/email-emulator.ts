@@ -1,4 +1,4 @@
-import type { TransactionalEmail, TransactionalEmailProvider } from "@rakazo/adapter-kit";
+import type { TransactionalEmail, TransactionalEmailProvider } from "@cutie-pi/adapter-kit";
 
 /** Deterministic, offline transactional-email emulator for tests and local development. */
 export class EmailEmulator implements TransactionalEmailProvider {

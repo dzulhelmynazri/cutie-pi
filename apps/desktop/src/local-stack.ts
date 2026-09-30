@@ -1,7 +1,7 @@
 import { copyFile, lstat, mkdir, readFile } from "node:fs/promises";
 import { createServer } from "node:net";
 import path from "node:path";
-import type { DesktopLocalStackState } from "@rakazo/contracts";
+import type { DesktopLocalStackState } from "@cutie-pi/contracts";
 import {
   classifyDockerFailure,
   composeSupportsWaitTimeout,
@@ -14,7 +14,7 @@ import {
 import { readPrivateFile, writePrivateFile } from "./setup-store.js";
 
 export const STACK_DIR_NAME = "stack";
-export const STACK_PROJECT_NAME = "rakazo-desktop";
+export const STACK_PROJECT_NAME = "cutie-pi-desktop";
 export const STACK_COMPOSE_FILE = "docker-compose.images.yml";
 export const STACK_ENV_TEMPLATE = ".env.images.example";
 export const STACK_ENV_FILE = ".env";
@@ -97,7 +97,7 @@ const GENERATED_SECRETS: Record<string, number> = {
   SCREEN_PROXY_SECRET: 32,
   SANDBOX_SUPERVISOR_TOKEN: 32,
 };
-const LAUNCH_SUPPLIED = ["RAKAZO_IMAGE_TAG", "RAKAZO_COMPUTER_IMAGE_TAG"];
+const LAUNCH_SUPPLIED = ["CUTIE_PI_IMAGE_TAG", "CUTIE_PI_COMPUTER_IMAGE_TAG"];
 
 /**
  * Port of install-images.sh `create_env`: fills the empty secret lines with random
@@ -259,8 +259,8 @@ export function stackFailureMessage(
       return "Docker Compose is missing. Install Docker Desktop or the docker-compose-plugin, then retry.";
     case "other":
       return phase === "pulling"
-        ? "Downloading Rakazo images failed. Check the output below, then retry."
-        : "Rakazo services did not start. Check the output below, then retry.";
+        ? "Downloading CutiePi images failed. Check the output below, then retry."
+        : "CutiePi services did not start. Check the output below, then retry.";
   }
 }
 
@@ -540,14 +540,14 @@ export class LocalStackController {
     return this.deps.run(binary, args, {
       cwd: this.deps.stackDir,
       env: dockerSpawnEnv(this.deps.platform, this.deps.env, binary, {
-        RAKAZO_IMAGE_TAG: this.deps.imageTag,
-        RAKAZO_COMPUTER_IMAGE_TAG: this.deps.imageTag,
+        CUTIE_PI_IMAGE_TAG: this.deps.imageTag,
+        CUTIE_PI_COMPUTER_IMAGE_TAG: this.deps.imageTag,
         ...(this.currentStackToken === null
           ? {}
-          : { RAKAZO_DESKTOP_STACK_TOKEN: this.currentStackToken }),
-        RAKAZO_WEB_PORT: new URL(this.currentWebUrl).port || "80",
+          : { CUTIE_PI_DESKTOP_STACK_TOKEN: this.currentStackToken }),
+        CUTIE_PI_WEB_PORT: new URL(this.currentWebUrl).port || "80",
         // Only web needs a stable host address. Docker allocates the API host port.
-        RAKAZO_API_PORT: "0",
+        CUTIE_PI_API_PORT: "0",
         BETTER_AUTH_URL: this.currentWebUrl,
         WEB_ORIGIN: this.currentWebUrl,
         API_URL: this.currentWebUrl,

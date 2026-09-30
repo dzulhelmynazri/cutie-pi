@@ -1,4 +1,4 @@
-import { DEFAULT_COMPOSE_PROJECT_NAME, isLocalImageTag } from "@rakazo/core";
+import { DEFAULT_COMPOSE_PROJECT_NAME, isLocalImageTag } from "@cutie-pi/core";
 import { describe, expect, it } from "vitest";
 import {
   DEFAULT_COMPOSE_FILE,
@@ -10,20 +10,20 @@ import {
 } from "./updater-logic.js";
 
 const base = {
-  RAKAZO_DEPLOY_DIR: "/srv/rakazo",
-  RAKAZO_UPDATER_TOKEN: "fake-review-updater-token-000000000000",
+  CUTIE_PI_DEPLOY_DIR: "/srv/cutie-pi",
+  CUTIE_PI_UPDATER_TOKEN: "fake-review-updater-token-000000000000",
 } as const;
 
 describe("resolveUpdaterConfig", () => {
   it("derives the compose file, env file, and defaults from the deployment directory", () => {
     const config = resolveUpdaterConfig({ ...base });
     expect(config).toMatchObject({
-      deployDir: "/srv/rakazo",
-      composeFiles: [`/srv/rakazo/${DEFAULT_COMPOSE_FILE}`],
+      deployDir: "/srv/cutie-pi",
+      composeFiles: [`/srv/cutie-pi/${DEFAULT_COMPOSE_FILE}`],
       updateServices: ["api", "worker", "web"],
-      envFile: "/srv/rakazo/.env",
+      envFile: "/srv/cutie-pi/.env",
       projectName: DEFAULT_COMPOSE_PROJECT_NAME,
-      token: base.RAKAZO_UPDATER_TOKEN,
+      token: base.CUTIE_PI_UPDATER_TOKEN,
       port: DEFAULT_UPDATER_PORT,
     });
   });
@@ -33,7 +33,7 @@ describe("resolveUpdaterConfig", () => {
       resolveUpdaterConfig({ ...base, COMPOSE_PROJECT_NAME: "operator-stack" }).projectName,
     ).toBe("operator-stack");
     expect(
-      resolveUpdaterConfig({ ...base, RAKAZO_COMPOSE_PROJECT_NAME: "manual-stack" }).projectName,
+      resolveUpdaterConfig({ ...base, CUTIE_PI_COMPOSE_PROJECT_NAME: "manual-stack" }).projectName,
     ).toBe("manual-stack");
   });
 
@@ -45,20 +45,20 @@ describe("resolveUpdaterConfig", () => {
 
   it("binds to loopback unless the deployment says otherwise, so a stray port is not a door", () => {
     expect(resolveUpdaterConfig({ ...base }).host).toBe("127.0.0.1");
-    expect(resolveUpdaterConfig({ ...base, RAKAZO_UPDATER_HOST: "0.0.0.0" }).host).toBe("0.0.0.0");
+    expect(resolveUpdaterConfig({ ...base, CUTIE_PI_UPDATER_HOST: "0.0.0.0" }).host).toBe("0.0.0.0");
   });
 
   it("refuses a deployment directory that is missing or relative", () => {
-    expect(() => resolveUpdaterConfig({ RAKAZO_UPDATER_TOKEN: "t" })).toThrow(/RAKAZO_DEPLOY_DIR/);
-    expect(() => resolveUpdaterConfig({ ...base, RAKAZO_DEPLOY_DIR: "srv/rakazo" })).toThrow(
-      /RAKAZO_DEPLOY_DIR/,
+    expect(() => resolveUpdaterConfig({ CUTIE_PI_UPDATER_TOKEN: "t" })).toThrow(/CUTIE_PI_DEPLOY_DIR/);
+    expect(() => resolveUpdaterConfig({ ...base, CUTIE_PI_DEPLOY_DIR: "srv/cutie-pi" })).toThrow(
+      /CUTIE_PI_DEPLOY_DIR/,
     );
   });
 
   it("refuses a compose path that escapes the deployment directory", () => {
     for (const composeFile of ["/etc/compose.yml", "../../etc/compose.yml", "a/../../b.yml"]) {
-      expect(() => resolveUpdaterConfig({ ...base, RAKAZO_COMPOSE_FILE: composeFile })).toThrow(
-        /RAKAZO_COMPOSE_FILE/,
+      expect(() => resolveUpdaterConfig({ ...base, CUTIE_PI_COMPOSE_FILE: composeFile })).toThrow(
+        /CUTIE_PI_COMPOSE_FILE/,
       );
     }
   });
@@ -67,9 +67,9 @@ describe("resolveUpdaterConfig", () => {
     expect(
       resolveUpdaterConfig({
         ...base,
-        RAKAZO_COMPOSE_FILE: "infra/compose/docker-compose.prod.yml:ops/overlay.yml",
+        CUTIE_PI_COMPOSE_FILE: "infra/compose/docker-compose.prod.yml:ops/overlay.yml",
       }).composeFiles,
-    ).toEqual(["/srv/rakazo/infra/compose/docker-compose.prod.yml", "/srv/rakazo/ops/overlay.yml"]);
+    ).toEqual(["/srv/cutie-pi/infra/compose/docker-compose.prod.yml", "/srv/cutie-pi/ops/overlay.yml"]);
   });
 
   it("honours COMPOSE_PATH_SEPARATOR the way Compose does", () => {
@@ -77,80 +77,80 @@ describe("resolveUpdaterConfig", () => {
       resolveUpdaterConfig({
         ...base,
         COMPOSE_PATH_SEPARATOR: ",",
-        RAKAZO_COMPOSE_FILE: "a.yml,b.yml",
+        CUTIE_PI_COMPOSE_FILE: "a.yml,b.yml",
       }).composeFiles,
-    ).toEqual(["/srv/rakazo/a.yml", "/srv/rakazo/b.yml"]);
+    ).toEqual(["/srv/cutie-pi/a.yml", "/srv/cutie-pi/b.yml"]);
   });
 
   it("checks every entry in a list, not just the first", () => {
     expect(() =>
       resolveUpdaterConfig({
         ...base,
-        RAKAZO_COMPOSE_FILE: "infra/compose/docker-compose.prod.yml:../../etc/compose.yml",
+        CUTIE_PI_COMPOSE_FILE: "infra/compose/docker-compose.prod.yml:../../etc/compose.yml",
       }),
-    ).toThrow(/RAKAZO_COMPOSE_FILE/);
+    ).toThrow(/CUTIE_PI_COMPOSE_FILE/);
     expect(() =>
       resolveUpdaterConfig({
         ...base,
-        RAKAZO_COMPOSE_FILE: "infra/compose/docker-compose.prod.yml:/etc/compose.yml",
+        CUTIE_PI_COMPOSE_FILE: "infra/compose/docker-compose.prod.yml:/etc/compose.yml",
       }),
-    ).toThrow(/RAKAZO_COMPOSE_FILE/);
+    ).toThrow(/CUTIE_PI_COMPOSE_FILE/);
   });
 
   it("refuses a Compose file list that names nothing", () => {
-    expect(() => resolveUpdaterConfig({ ...base, RAKAZO_COMPOSE_FILE: ":  :" })).toThrow(
-      /RAKAZO_COMPOSE_FILE/,
+    expect(() => resolveUpdaterConfig({ ...base, CUTIE_PI_COMPOSE_FILE: ":  :" })).toThrow(
+      /CUTIE_PI_COMPOSE_FILE/,
     );
   });
 
   it("appends the deployment's extra services to the built-in set", () => {
     expect(
-      resolveUpdaterConfig({ ...base, RAKAZO_UPDATE_SERVICES: "supervisor, caddy" }).updateServices,
+      resolveUpdaterConfig({ ...base, CUTIE_PI_UPDATE_SERVICES: "supervisor, caddy" }).updateServices,
     ).toEqual(["api", "worker", "web", "supervisor", "caddy"]);
   });
 
-  it("cannot drop a built-in service, however RAKAZO_UPDATE_SERVICES is written", () => {
+  it("cannot drop a built-in service, however CUTIE_PI_UPDATE_SERVICES is written", () => {
     const services = resolveUpdaterConfig({
       ...base,
-      RAKAZO_UPDATE_SERVICES: "web,supervisor",
+      CUTIE_PI_UPDATE_SERVICES: "web,supervisor",
     }).updateServices;
     expect(services).toEqual(["api", "worker", "web", "supervisor"]);
   });
 
   it("refuses to recreate the updater, which would kill the run mid-flight", () => {
     expect(() =>
-      resolveUpdaterConfig({ ...base, RAKAZO_UPDATE_SERVICES: "supervisor,updater" }),
+      resolveUpdaterConfig({ ...base, CUTIE_PI_UPDATE_SERVICES: "supervisor,updater" }),
     ).toThrow(/updater/);
   });
 
   it("refuses a service name it would not hand to compose as one argument", () => {
     for (const service of ["--build", "a b", "-f", "api;rm"]) {
       expect(() =>
-        resolveUpdaterConfig({ ...base, RAKAZO_UPDATE_SERVICES: `supervisor,${service}` }),
-      ).toThrow(/RAKAZO_UPDATE_SERVICES/);
+        resolveUpdaterConfig({ ...base, CUTIE_PI_UPDATE_SERVICES: `supervisor,${service}` }),
+      ).toThrow(/CUTIE_PI_UPDATE_SERVICES/);
     }
   });
 
   it("refuses an image name it would not be willing to hand to compose", () => {
-    expect(() => resolveUpdaterConfig({ ...base, RAKAZO_IMAGE: "Bad Name" })).toThrow(
-      /RAKAZO_IMAGE/,
+    expect(() => resolveUpdaterConfig({ ...base, CUTIE_PI_IMAGE: "Bad Name" })).toThrow(
+      /CUTIE_PI_IMAGE/,
     );
-    expect(resolveUpdaterConfig({ ...base, RAKAZO_IMAGE: "ghcr.io/me/app" }).image).toBe(
+    expect(resolveUpdaterConfig({ ...base, CUTIE_PI_IMAGE: "ghcr.io/me/app" }).image).toBe(
       "ghcr.io/me/app",
     );
   });
 
   it("refuses a port that is not a port", () => {
-    expect(() => resolveUpdaterConfig({ ...base, RAKAZO_UPDATER_PORT: "0" })).toThrow(/port/);
-    expect(() => resolveUpdaterConfig({ ...base, RAKAZO_UPDATER_PORT: "seven" })).toThrow(/port/);
+    expect(() => resolveUpdaterConfig({ ...base, CUTIE_PI_UPDATER_PORT: "0" })).toThrow(/port/);
+    expect(() => resolveUpdaterConfig({ ...base, CUTIE_PI_UPDATER_PORT: "seven" })).toThrow(/port/);
   });
 });
 
 describe("readEnvAssignment", () => {
   it("reads the last assignment, ignoring comments and blank lines", () => {
-    const contents = ["# RAKAZO_IMAGE_TAG=commented", "", "A=1", "A=2"].join("\n");
+    const contents = ["# CUTIE_PI_IMAGE_TAG=commented", "", "A=1", "A=2"].join("\n");
     expect(readEnvAssignment(contents, "A")).toBe("2");
-    expect(readEnvAssignment(contents, "RAKAZO_IMAGE_TAG")).toBeNull();
+    expect(readEnvAssignment(contents, "CUTIE_PI_IMAGE_TAG")).toBeNull();
   });
 
   it("removes one layer of quoting", () => {
@@ -159,13 +159,13 @@ describe("readEnvAssignment", () => {
   });
 
   it("does not match a key that merely shares a prefix", () => {
-    expect(readEnvAssignment("RAKAZO_IMAGE_TAG_PREVIOUS=v1", "RAKAZO_IMAGE_TAG")).toBeNull();
+    expect(readEnvAssignment("CUTIE_PI_IMAGE_TAG_PREVIOUS=v1", "CUTIE_PI_IMAGE_TAG")).toBeNull();
   });
 });
 
 describe("readTagState", () => {
   it("reads the pinned tag and the rollback tag", () => {
-    const contents = "RAKAZO_IMAGE_TAG=v1.1.0\nRAKAZO_IMAGE_TAG_PREVIOUS=v1.0.0\n";
+    const contents = "CUTIE_PI_IMAGE_TAG=v1.1.0\nCUTIE_PI_IMAGE_TAG_PREVIOUS=v1.0.0\n";
     expect(readTagState(contents)).toEqual({ currentTag: "v1.1.0", previousTag: "v1.0.0" });
   });
 
@@ -174,7 +174,7 @@ describe("readTagState", () => {
   });
 
   it("ignores values in the file that are not usable tags", () => {
-    const contents = "RAKAZO_IMAGE_TAG=-rm\nRAKAZO_IMAGE_TAG_PREVIOUS=$(id)\n";
+    const contents = "CUTIE_PI_IMAGE_TAG=-rm\nCUTIE_PI_IMAGE_TAG_PREVIOUS=$(id)\n";
     expect(readTagState(contents)).toEqual({ currentTag: "local", previousTag: null });
   });
 

@@ -23,7 +23,7 @@ afterEach(async () => {
 
 describe("server update install kind", () => {
   async function tempRoot(withGit: boolean) {
-    const root = await mkdtemp(path.join(tmpdir(), "rakazo-update-"));
+    const root = await mkdtemp(path.join(tmpdir(), "cutie-pi-update-"));
     roots.push(root);
     if (withGit) await mkdir(path.join(root, ".git"));
     return root;
@@ -90,7 +90,7 @@ describe("server update install kind", () => {
       if (href.endsWith("/state")) {
         return new Response(
           JSON.stringify({
-            image: "ghcr.io/elie222/rakazo/app",
+            image: "ghcr.io/elie222/cutie-pi/app",
             currentTag: "sha-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
             previousTag: "sha-bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
             running: false,
@@ -98,7 +98,7 @@ describe("server update install kind", () => {
               present: true,
               commit: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
               branch: "main",
-              remoteUrl: "https://github.com/elie222/rakazo",
+              remoteUrl: "https://github.com/elie222/cutie-pi",
               dirty: false,
               dirtyPaths: [],
             },
@@ -134,7 +134,7 @@ describe("server update install kind", () => {
       fromTag: "sha-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
       toTag: "sha-bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
       strategy: "pull",
-      repoUrl: "https://github.com/elie222/rakazo",
+      repoUrl: "https://github.com/elie222/cutie-pi",
       branch: "main",
       restart: "not-required",
       restartAdvice: "Recreate failed; prior image restored, env pin not restored.",
@@ -149,7 +149,7 @@ describe("server update install kind", () => {
       if (href.endsWith("/state")) {
         return new Response(
           JSON.stringify({
-            image: "ghcr.io/elie222/rakazo/app",
+            image: "ghcr.io/elie222/cutie-pi/app",
             currentTag: "sha-bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
             previousTag: "sha-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
             running: false,
@@ -158,7 +158,7 @@ describe("server update install kind", () => {
               present: true,
               commit: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
               branch: "main",
-              remoteUrl: "https://github.com/elie222/rakazo",
+              remoteUrl: "https://github.com/elie222/cutie-pi",
               dirty: false,
               dirtyPaths: [],
             },
@@ -219,7 +219,7 @@ describe("sidecar proxy auth and no-git-apply", () => {
       }
       return new Response(JSON.stringify({ error: "unexpected" }), { status: 500 });
     });
-    const root = await mkdtemp(path.join(tmpdir(), "rakazo-proxy-"));
+    const root = await mkdtemp(path.join(tmpdir(), "cutie-pi-proxy-"));
     roots.push(root);
     const config: UpdaterProxyConfig = {
       url: URL,

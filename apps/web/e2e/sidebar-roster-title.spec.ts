@@ -30,7 +30,7 @@ async function captureSidebarRoster(
 
 test("sidebar roster shows bot title pill below the name", async ({ page }, testInfo) => {
   const stamp = Date.now();
-  await signup(page, `roster-title-${stamp}@rakazo.test`, "password12", "Roster Title");
+  await signup(page, `roster-title-${stamp}@cutie-pi.test`, "password12", "Roster Title");
   await completeOnboarding(page);
 
   const bot = await rpc<{ id: string; name: string }>(page, "bots/create", {

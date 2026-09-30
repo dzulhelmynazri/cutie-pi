@@ -14,8 +14,8 @@ import type {
   ScreenRequest,
   ScreenSession,
   TerminalRequest,
-} from "@rakazo/adapter-kit";
-import { boundedSandboxCommandTimeoutMs } from "@rakazo/core";
+} from "@cutie-pi/adapter-kit";
+import { boundedSandboxCommandTimeoutMs } from "@cutie-pi/core";
 import { sandboxIdleMs } from "./computer-idle.js";
 import { normalizeWorkspacePath, shellQuote, workspacePath } from "./computer-support.js";
 import {
@@ -24,7 +24,7 @@ import {
 } from "./computer-workspace.js";
 import { LinuxDesktop, PREPARE_LINUX_DESKTOP } from "./linux-desktop.js";
 
-const E2B_WORKSPACE = "/home/user/rakazo-home";
+const E2B_WORKSPACE = "/home/user/cutie-pi-home";
 const E2B_BROWSER_PROFILES = `${E2B_WORKSPACE}/.browser-profiles`;
 
 export interface E2BSandboxSdk {
@@ -37,7 +37,7 @@ export function e2bCreateOptions(botId: string, apiKey: string) {
   return {
     apiKey,
     timeoutMs: sandboxIdleMs(),
-    metadata: { botId, rakazo: "computer" },
+    metadata: { botId, cutie-pi: "computer" },
     resolution: [1280, 800] as [number, number],
     lifecycle: { onTimeout: "pause" as const, autoResume: false },
   };
@@ -490,7 +490,7 @@ function e2bCwd(cwd: string | undefined): string {
     !cwd ||
     cwd === "." ||
     cwd === "/" ||
-    cwd === "/home/rakazo" ||
+    cwd === "/home/cutie-pi" ||
     cwd === "/home/user" ||
     cwd === E2B_WORKSPACE
   ) {
@@ -498,8 +498,8 @@ function e2bCwd(cwd: string | undefined): string {
   }
   const relative = cwd.startsWith(`${E2B_WORKSPACE}/`)
     ? cwd.slice(E2B_WORKSPACE.length + 1)
-    : cwd.startsWith("/home/rakazo/")
-      ? cwd.slice("/home/rakazo/".length)
+    : cwd.startsWith("/home/cutie-pi/")
+      ? cwd.slice("/home/cutie-pi/".length)
       : cwd;
   return workspacePath(E2B_WORKSPACE, relative);
 }

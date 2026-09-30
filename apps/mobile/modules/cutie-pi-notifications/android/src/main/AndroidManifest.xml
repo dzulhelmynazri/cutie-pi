@@ -7,7 +7,7 @@
 
   <application>
     <service
-      android:name=".RakazoNotificationService"
+      android:name=".CutiePiNotificationService"
       android:exported="false"
       android:foregroundServiceType="remoteMessaging" />
   </application>

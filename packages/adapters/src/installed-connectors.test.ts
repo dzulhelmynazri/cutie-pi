@@ -1,4 +1,4 @@
-import { approvalEffectKey } from "@rakazo/core/node/approval-effect-key";
+import { approvalEffectKey } from "@cutie-pi/core/node/approval-effect-key";
 import { describe, expect, it, vi } from "vitest";
 import {
   approvedCatalogReplay,
@@ -178,7 +178,7 @@ describe("OpenAPI connector import", () => {
       signal: new AbortController().signal,
     } as never;
     const execute = (await provider.discoverTools(context))[2]!;
-    const marker = "__rakazoCatalogTool";
+    const marker = "__cutie-piCatalogTool";
     const approvedRequest = catalogApprovalRequest(
       execute.name,
       { id: "api-approved:operation_20", arguments: {} },

@@ -1,6 +1,6 @@
 import { readFile } from "node:fs/promises";
-import type { PortableFile } from "@rakazo/adapter-kit";
-import { FakeSandboxProvider } from "@rakazo/adapters";
+import type { PortableFile } from "@cutie-pi/adapter-kit";
+import { FakeSandboxProvider } from "@cutie-pi/adapters";
 import { describe, expect, it } from "vitest";
 import {
   assertContactsExport,

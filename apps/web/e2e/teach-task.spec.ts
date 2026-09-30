@@ -3,7 +3,7 @@ import { captureScreenshot, completeOnboarding, signup } from "./helpers";
 
 test("teach a task records interaction and saves a draft", async ({ page }, testInfo) => {
   const stamp = Date.now();
-  await signup(page, `teach-${stamp}@rakazo.test`, "password12", "Teach");
+  await signup(page, `teach-${stamp}@cutie-pi.test`, "password12", "Teach");
   await completeOnboarding(page);
 
   await page.getByTitle("Agent computer").click();

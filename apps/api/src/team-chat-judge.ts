@@ -4,7 +4,7 @@ import type {
   AgentRuntime,
   ModelCredentialFailedState,
   ModelCredentialRetireReason,
-} from "@rakazo/adapter-kit";
+} from "@cutie-pi/adapter-kit";
 import {
   type EncryptedSecretStore,
   formatCurrentTimeInstruction,
@@ -12,10 +12,10 @@ import {
   resolveModelAuth,
   serializeModelSecret,
   toOAuthCredential,
-} from "@rakazo/adapters";
-import type { PrismaClient } from "@rakazo/db";
-import { findDefaultModelCredential, findModelCredential, retireModelCredential } from "@rakazo/db";
-import { getLogger } from "@rakazo/logging";
+} from "@cutie-pi/adapters";
+import type { PrismaClient } from "@cutie-pi/db";
+import { findDefaultModelCredential, findModelCredential, retireModelCredential } from "@cutie-pi/db";
+import { getLogger } from "@cutie-pi/logging";
 
 const MAX_RULES_CHARS = 4_000;
 const MAX_MESSAGES = 20;

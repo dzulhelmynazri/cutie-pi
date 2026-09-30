@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { WORKING_AVATAR_DURATIONS_MS } from "@rakazo/core";
+import { WORKING_AVATAR_DURATIONS_MS } from "@cutie-pi/core";
 import { describe, expect, it } from "vitest";
 
 /** CSS `data-shape-family` → expected duration seconds (mirrors styles.css). */
@@ -11,7 +11,7 @@ function workingDurationSecondsForFamily(css: string, family: number): number | 
   // Split on rule closers so a wrong duration cannot match a later family's token.
   for (const chunk of css.split("}")) {
     if (!chunk.includes(`data-shape-family="${family}"]`)) continue;
-    if (!chunk.includes(".rakazo-organic-avatar-body-working")) continue;
+    if (!chunk.includes(".cutie-pi-organic-avatar-body-working")) continue;
     const match = chunk.match(/animation:\s*[^;]*?\s([\d.]+)s\b/);
     if (match?.[1]) return Number(match[1]);
   }

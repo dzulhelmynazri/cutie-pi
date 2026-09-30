@@ -5,7 +5,7 @@ import {
   shellQuote,
   stopBrowserCommand,
   stopExtraScreenCommand,
-} from "@rakazo/core/node/desktop-runtime";
+} from "@cutie-pi/core/node/desktop-runtime";
 
 export {
   browserProfilePathForScreen,
@@ -16,11 +16,11 @@ export {
   stopBrowserCommand,
   stopExtraScreenCommand,
   terminalCommand,
-} from "@rakazo/core/node/desktop-runtime";
+} from "@cutie-pi/core/node/desktop-runtime";
 
 import { timingSafeEqual } from "node:crypto";
 import path from "node:path";
-import { canReleaseScreenLease, canTakeScreenLease } from "@rakazo/core";
+import { canReleaseScreenLease, canTakeScreenLease } from "@cutie-pi/core";
 import { z } from "zod";
 import { type SandboxInput, xdotoolCommand } from "./computer-spec.js";
 
@@ -44,7 +44,7 @@ export const computerActionSchema = z.discriminatedUnion("kind", [
   z.object({ kind: z.literal("launch"), application: z.string(), uri: z.string().optional() }),
 ]);
 
-export { BROWSER_APPLICATIONS as DOCKER_BROWSER_ALIASES } from "@rakazo/core/node/desktop-runtime";
+export { BROWSER_APPLICATIONS as DOCKER_BROWSER_ALIASES } from "@cutie-pi/core/node/desktop-runtime";
 
 export function assertRequestIdentity(
   botId: string | undefined,
@@ -61,8 +61,8 @@ export function hasComputerIdentity(
   botId: string,
   spaceId: string,
 ) {
-  const labeledSpaceId = labels?.["rakazo.spaceId"] ?? labels?.["rakazo.workspaceId"];
-  return labels?.["rakazo.botId"] === botId && labeledSpaceId === spaceId;
+  const labeledSpaceId = labels?.["cutie-pi.spaceId"] ?? labels?.["cutie-pi.workspaceId"];
+  return labels?.["cutie-pi.botId"] === botId && labeledSpaceId === spaceId;
 }
 
 export function hasValidBearerToken(authorization: string | undefined, expectedToken: string) {
@@ -353,7 +353,7 @@ export function containerActionStep(
     argv = [
       "env",
       `DISPLAY=${display}`,
-      ...(browserProfile ? [`RAKAZO_BROWSER_PROFILE=${browserProfile}`] : []),
+      ...(browserProfile ? [`CUTIE_PI_BROWSER_PROFILE=${browserProfile}`] : []),
       "xdg-open",
       target,
     ];
@@ -362,8 +362,8 @@ export function containerActionStep(
     argv = [
       "env",
       `DISPLAY=${display}`,
-      ...(browser && browserProfile ? [`RAKAZO_BROWSER_PROFILE=${browserProfile}`] : []),
-      browser ? "rakazo-browser" : action.application,
+      ...(browser && browserProfile ? [`CUTIE_PI_BROWSER_PROFILE=${browserProfile}`] : []),
+      browser ? "cutie-pi-browser" : action.application,
       ...(action.uri ? [action.uri] : []),
     ];
   }
@@ -388,7 +388,7 @@ export function normalizeWorkspaceRelative(value: string) {
 }
 
 export function workspaceTarget(relative: string) {
-  return relative ? path.posix.join("/home/rakazo", relative) : "/home/rakazo";
+  return relative ? path.posix.join("/home/cutie-pi", relative) : "/home/cutie-pi";
 }
 
 export function sandboxTimeoutCommand(argv: string[], timeoutMs: number, completionMarker: string) {
@@ -484,9 +484,9 @@ export function demuxDockerStream(buffer: Buffer): { stdout: string; stderr: str
 export function computerCommandEnv(layout: { display: string }) {
   return [
     `DISPLAY=${layout.display}`,
-    "HOME=/home/rakazo",
-    "PATH=/home/rakazo/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
-    "NPM_CONFIG_PREFIX=/home/rakazo/.local",
+    "HOME=/home/cutie-pi",
+    "PATH=/home/cutie-pi/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+    "NPM_CONFIG_PREFIX=/home/cutie-pi/.local",
     "PIP_USER=1",
   ];
 }

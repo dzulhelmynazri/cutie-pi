@@ -1,5 +1,5 @@
-import type { ProductEvent, ThreadMessage, ThreadSnapshot } from "@rakazo/contracts";
-import { callIdFromClientNonce, groupVoiceChats, runThreadSubscription } from "@rakazo/core";
+import type { ProductEvent, ThreadMessage, ThreadSnapshot } from "@cutie-pi/contracts";
+import { callIdFromClientNonce, groupVoiceChats, runThreadSubscription } from "@cutie-pi/core";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {
   ECHO_GUARD_MS,
@@ -19,8 +19,8 @@ vi.mock("@lingui/core/macro", () => ({
   t: (strings: TemplateStringsArray, ...values: unknown[]) => String.raw(strings, ...values),
 }));
 
-vi.mock("@rakazo/core", async (importOriginal) => ({
-  ...(await importOriginal<typeof import("@rakazo/core")>()),
+vi.mock("@cutie-pi/core", async (importOriginal) => ({
+  ...(await importOriginal<typeof import("@cutie-pi/core")>()),
   runThreadSubscription: vi.fn(async () => undefined),
 }));
 

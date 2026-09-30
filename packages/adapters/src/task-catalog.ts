@@ -1,5 +1,5 @@
-import type { ConnectorTool } from "@rakazo/adapter-kit";
-import type { PrismaClient } from "@rakazo/db";
+import type { ConnectorTool } from "@cutie-pi/adapter-kit";
+import type { PrismaClient } from "@cutie-pi/db";
 import { listSchedulesFromTool } from "./schedule-tools.js";
 import { listScratchpadItems } from "./scratchpad-tools.js";
 import { listAgentSkillRecords } from "./skill-tools.js";

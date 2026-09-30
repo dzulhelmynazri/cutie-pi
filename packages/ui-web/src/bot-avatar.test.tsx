@@ -1,4 +1,4 @@
-import { ACTIVE_RUN_STATUSES } from "@rakazo/core";
+import { ACTIVE_RUN_STATUSES } from "@cutie-pi/core";
 import { renderToString } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import { AvatarStyleProvider } from "./avatar-style.js";
@@ -137,7 +137,7 @@ describe("BotAvatar", () => {
     );
     expect(robot).not.toEqual(organic);
     expect(robot).toContain("grok-character-eyes");
-    expect(organic).toContain("rakazo-organic-avatar");
+    expect(organic).toContain("cutie-pi-organic-avatar");
     expect(organic).not.toContain("grok-character-eyes");
   });
 
@@ -147,7 +147,7 @@ describe("BotAvatar", () => {
         <BotAvatar color={DEFAULT_GROK_BOT_COLOR} identity="maya" />
       </AvatarStyleProvider>,
     );
-    expect(html).toContain("rakazo-organic-avatar");
+    expect(html).toContain("cutie-pi-organic-avatar");
     expect(html).not.toContain("grok-character-eyes");
   });
 
@@ -156,7 +156,7 @@ describe("BotAvatar", () => {
       <BotAvatar color="data:image/png;base64,abc" identity="maya" variant="organic" />,
     );
     expect(html).toContain("<img");
-    expect(html).not.toContain("rakazo-organic-avatar");
+    expect(html).not.toContain("cutie-pi-organic-avatar");
   });
 
   it("keeps an encoded studio shape when the organic style is preferred", () => {
@@ -164,13 +164,13 @@ describe("BotAvatar", () => {
       <BotAvatar color={`${DEFAULT_GROK_BOT_COLOR}::shape_3`} identity="maya" variant="organic" />,
     );
     expect(html).toContain("grok-character-eyes");
-    expect(html).not.toContain("rakazo-organic-avatar");
+    expect(html).not.toContain("cutie-pi-organic-avatar");
   });
 
   it("fills the organic body with the resolved palette hex when the custom color is invalid", () => {
     const fallback = resolvePersonaColorDef("maya", "#zzzzzz");
     const html = renderToString(<BotAvatar color="#zzzzzz" identity="maya" variant="organic" />);
-    expect(html).toContain("rakazo-organic-avatar");
+    expect(html).toContain("cutie-pi-organic-avatar");
     expect(html).toContain(`fill="${fallback.hex}"`);
     expect(html).not.toContain("#zzzzzz");
   });

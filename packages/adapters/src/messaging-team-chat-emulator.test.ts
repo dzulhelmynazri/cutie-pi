@@ -1,4 +1,4 @@
-import type { AdapterContext, MessagingInboundEvent } from "@rakazo/adapter-kit";
+import type { AdapterContext, MessagingInboundEvent } from "@cutie-pi/adapter-kit";
 import { describe, expect, it, vi } from "vitest";
 import {
   createRecordingMessagingSurface,

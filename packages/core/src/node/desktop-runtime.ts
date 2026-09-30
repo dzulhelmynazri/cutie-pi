@@ -12,7 +12,7 @@ export const BROWSER_APPLICATIONS = new Set([
   "firefox",
   "google-chrome",
   "google-chrome-stable",
-  "rakazo-browser",
+  "cutie-pi-browser",
 ]);
 export interface DesktopEnvironment {
   homeDir: string;
@@ -23,9 +23,9 @@ export interface DesktopEnvironment {
   portStart?: number;
 }
 export const DEFAULT_DESKTOP_ENV: DesktopEnvironment = {
-  homeDir: "/home/rakazo",
-  workspaceDir: "/home/rakazo",
-  browserProfilesDir: "/home/rakazo/.browser-profiles",
+  homeDir: "/home/cutie-pi",
+  workspaceDir: "/home/cutie-pi",
+  browserProfilesDir: "/home/cutie-pi/.browser-profiles",
   displayStart: 1,
   preservePrimaryDisplay: true,
 };
@@ -88,7 +88,7 @@ export function browserProfilePathForScreen(screenId: string, env = DEFAULT_DESK
 }
 
 function browserPidPathForScreen(screenId: string) {
-  return `/tmp/rakazo/browser-pid-${browserKeyForScreen(screenId)}`;
+  return `/tmp/cutie-pi/browser-pid-${browserKeyForScreen(screenId)}`;
 }
 
 function browserRunningFunction(profile: string, pidFile: string) {
@@ -153,7 +153,7 @@ function browserRunningFunction(profile: string, pidFile: string) {
 }
 
 export function browserLauncherPath(displayNumber: number | string) {
-  return `/tmp/rakazo/browser-launch-${displayNumber}`;
+  return `/tmp/cutie-pi/browser-launch-${displayNumber}`;
 }
 
 function browserLauncherCommand(
@@ -169,7 +169,7 @@ function browserLauncherCommand(
       ? // biome-ignore lint/suspicious/noTemplateCurlyInString: generated shell parameter expansion
         ['desktop_display="${0##*-}"', "desktop_debug=$((9221 + desktop_display))"]
       : []),
-    "browser=$(command -v rakazo-browser || command -v google-chrome || command -v google-chrome-stable || command -v chromium || command -v chromium-browser)",
+    "browser=$(command -v cutie-pi-browser || command -v google-chrome || command -v google-chrome-stable || command -v chromium || command -v chromium-browser)",
     `export DISPLAY=${layout.display} HOME=${shellQuote(env.homeDir)}`,
     `exec "$browser" --no-sandbox --no-first-run --no-default-browser-check --disable-dev-shm-usage --password-store=basic --remote-debugging-address=127.0.0.1 --remote-debugging-port=${layout.debugPort} --user-data-dir=${shellQuote(browserProfilePathForScreen(screenId, env))} "$@"`,
   ].join("\n");
@@ -255,14 +255,14 @@ export function stopBrowserProfileCommand(profile: string, pidFile: string) {
 }
 
 function stopProfileDirectoriesCommand(profileList: string) {
-  const placeholder = "RAKAZO_INTERNAL_PROFILE";
+  const placeholder = "CUTIE_PI_INTERNAL_PROFILE";
   const stop = stopBrowserProfileCommand(placeholder, '"$pid_file"')
     .replaceAll(shellQuote(`--user-data-dir=${placeholder}`), '"--user-data-dir=$profile"')
     .replaceAll(shellQuote(placeholder), '"$profile"');
   return [
     "set -eu",
     "failed=0",
-    "mkdir -p /tmp/rakazo",
+    "mkdir -p /tmp/cutie-pi",
     `for profile in ${profileList}; do`,
     '  [ -d "$profile" ] || continue',
     '  case "$profile" in',
@@ -270,7 +270,7 @@ function stopProfileDirectoriesCommand(profileList: string) {
     "    */chromium-bot-*) hash=${profile##*chromium-bot-} ;;",
     '    *) hash=$(basename -- "$profile") ;;',
     "  esac",
-    '  pid_file="/tmp/rakazo/browser-pid-$hash"',
+    '  pid_file="/tmp/cutie-pi/browser-pid-$hash"',
     `  bash -eu -c ${shellQuote(`profile=$1; pid_file=$2;\n${stop}`)} desktop "$profile" "$pid_file" || failed=1`,
     "done",
     '[ "$failed" -eq 0 ] || exit 1',
@@ -316,7 +316,7 @@ export function resetDesktopRuntimeCommand(env = DEFAULT_DESKTOP_ENV) {
     "sleep 0.1",
     `pkill -KILL -f ${shellQuote(gatewayPattern)} || true`,
     stopAllDesktopBrowsersCommand(env),
-    "for marker in /tmp/rakazo/browser-profile-*; do",
+    "for marker in /tmp/cutie-pi/browser-profile-*; do",
     '  [ -f "$marker" ] || continue',
     // biome-ignore lint/suspicious/noTemplateCurlyInString: generated shell parameter expansion
     "  display=${marker##*-}",
@@ -327,11 +327,11 @@ export function resetDesktopRuntimeCommand(env = DEFAULT_DESKTOP_ENV) {
     "done",
     // Retire the default image's legacy primary VNC process too.
     "pkill -f '^([^ ]*/)?x11vnc .* -rfbport 5900( |$)' || true",
-    `rm -f ${TARGETS}/view-* ${TARGETS}/control-* /tmp/rakazo/browser-pid-* /tmp/rakazo/browser-profile-* /tmp/rakazo/browser-launch-*`,
+    `rm -f ${TARGETS}/view-* ${TARGETS}/control-* /tmp/cutie-pi/browser-pid-* /tmp/cutie-pi/browser-profile-* /tmp/cutie-pi/browser-launch-*`,
   ].join("\n");
 }
 
-const TARGETS = "/tmp/rakazo/desktop-targets";
+const TARGETS = "/tmp/cutie-pi/desktop-targets";
 
 // Menu exec strings run through `/bin/sh -c`, where `#` starts a comment; rgb:a/b/c keeps
 // hex colors intact. infra/sandboxes/computer/fluxbox.menu carries the same entry.
@@ -341,11 +341,11 @@ export const TERMINAL_MENU_COMMAND =
 
 // Keep fixed mapping files present: TokenFile may be reading the directory concurrently.
 function revokeTargetCommand(kind: "view" | "control" | "terminal", display: number | string) {
-  return `mkdir -p ${TARGETS}; : >/tmp/rakazo/${kind}-target-next-${display}; mv /tmp/rakazo/${kind}-target-next-${display} ${TARGETS}/${kind}-${display}`;
+  return `mkdir -p ${TARGETS}; : >/tmp/cutie-pi/${kind}-target-next-${display}; mv /tmp/cutie-pi/${kind}-target-next-${display} ${TARGETS}/${kind}-${display}`;
 }
 
 function stopVncCommand(kind: "view" | "control", layout: ReturnType<typeof commandLayout>) {
-  const socketPrefix = `/tmp/rakazo/sockets/${kind}-${layout.displayNumber}-`;
+  const socketPrefix = `/tmp/cutie-pi/sockets/${kind}-${layout.displayNumber}-`;
   const pattern = quoteLayout(`^([^ ]*/)?x11vnc .* -unixsock ${socketPrefix}[^ ]+( |$)`);
   return [
     `pkill -f ${pattern} || true`,
@@ -357,14 +357,14 @@ function stopVncCommand(kind: "view" | "control", layout: ReturnType<typeof comm
   ].join("\n");
 }
 
-const TERMINAL_SERVER = "/tmp/rakazo/rakazo-terminal.py";
+const TERMINAL_SERVER = "/tmp/cutie-pi/cutie-pi-terminal.py";
 
 function terminalServerPattern(socket: string) {
   return `^([^ ]*/)?python[0-9.]* ${TERMINAL_SERVER} ${socket}( |$)`;
 }
 
 function stopTerminalCommand(layout: ReturnType<typeof commandLayout>) {
-  const socketPrefix = `/tmp/rakazo/sockets/terminal-${layout.displayNumber}-`;
+  const socketPrefix = `/tmp/cutie-pi/sockets/terminal-${layout.displayNumber}-`;
   const pattern = quoteLayout(terminalServerPattern(`${socketPrefix}[^ ]+`));
   return [
     revokeTargetCommand("terminal", layout.displayNumber),
@@ -372,7 +372,7 @@ function stopTerminalCommand(layout: ReturnType<typeof commandLayout>) {
     `pkill -f ${pattern} || true`,
     `for i in $(seq 1 10); do pgrep -f ${pattern} >/dev/null || break; sleep 0.1; done`,
     `pkill -KILL -f ${pattern} || true`,
-    `rm -rf ${socketPrefix}* /tmp/rakazo/terminal-state-${layout.displayNumber}`,
+    `rm -rf ${socketPrefix}* /tmp/cutie-pi/terminal-state-${layout.displayNumber}`,
   ].join("\n");
 }
 
@@ -386,13 +386,13 @@ function gatewayCommand(port: string) {
     proxyEnvironmentCommand(),
     `mkdir -p ${TARGETS}`,
     // This lock only covers gateway startup; desktop startup remains independent.
-    `exec 10>/tmp/rakazo/gateway-${port}.lock; flock -w 120 10`,
+    `exec 10>/tmp/cutie-pi/gateway-${port}.lock; flock -w 120 10`,
     `if ! pgrep -f ${gatewayPattern} >/dev/null || ! (echo >/dev/tcp/127.0.0.1/${port}) >/dev/null 2>&1; then`,
     // Older images boot a single-screen gateway on this port. Retire it under the startup lock.
     `  pkill -f ${portPattern} || true`,
     `  for i in $(seq 1 20); do if ! (echo >/dev/tcp/127.0.0.1/${port}) >/dev/null 2>&1; then break; fi; sleep 0.1; done`,
     `  if (echo >/dev/tcp/127.0.0.1/${port}) >/dev/null 2>&1; then echo 'screen gateway port is busy' >&2; exit 1; fi`,
-    `  nohup "$proxy" --heartbeat=30 --web="$web" --token-plugin=TokenFile --token-source=${TARGETS} 0.0.0.0:${port} 8>&- 9>&- 10>&- </dev/null >/tmp/rakazo/gateway-${port}.log 2>&1 &`,
+    `  nohup "$proxy" --heartbeat=30 --web="$web" --token-plugin=TokenFile --token-source=${TARGETS} 0.0.0.0:${port} 8>&- 9>&- 10>&- </dev/null >/tmp/cutie-pi/gateway-${port}.log 2>&1 &`,
     "fi",
     `for i in $(seq 1 50); do (echo >/dev/tcp/127.0.0.1/${port}) >/dev/null 2>&1 && break; sleep 0.1; done`,
     `flock -u 10; exec 10>&-`,
@@ -427,7 +427,7 @@ function renderStopScreenTransportsCommand(index: number | undefined, env = DEFA
     stopVncCommand("view", layout),
     stopVncCommand("control", layout),
     stopTerminalCommand(layout),
-    `rm -f /tmp/rakazo/control-token-${layout.displayNumber}`,
+    `rm -f /tmp/cutie-pi/control-token-${layout.displayNumber}`,
   ].join("\n");
 }
 
@@ -443,7 +443,7 @@ function renderStopExtraScreenCommand(
     // Stop every client before touching browser state or recycling the display.
     renderStopScreenTransportsCommand(index, env),
     stopBrowserCommand(screenId, env),
-    `rm -f /tmp/rakazo/browser-profile-${layout.displayNumber} ${browserLauncherPath(layout.displayNumber)}`,
+    `rm -f /tmp/cutie-pi/browser-profile-${layout.displayNumber} ${browserLauncherPath(layout.displayNumber)}`,
     ...(index === 0 && env.preservePrimaryDisplay
       ? []
       : [
@@ -480,7 +480,7 @@ function renderEnsureScreenCommand(
 ) {
   const layout = commandLayout(index, env);
   const fluxHome = `/tmp/fluxbox-home-${layout.displayNumber}`;
-  const log = `/tmp/rakazo/screen-${layout.displayNumber}`;
+  const log = `/tmp/cutie-pi/screen-${layout.displayNumber}`;
   const profile = browserProfilePathForScreen(screenId, env);
   const pidFile = browserPidPathForScreen(screenId);
   const setupDisplay =
@@ -495,29 +495,29 @@ function renderEnsureScreenCommand(
           `mkdir -p ${fluxHome}/.fluxbox`,
           `printf '[begin] (Desktop)\\n[exec] (Browser) {%s}\\n[exec] (Terminal) {%s}\\n[end]\\n' ${browserLauncherPath(layout.displayNumber)} ${shellQuote(TERMINAL_MENU_COMMAND)} >${fluxHome}/.fluxbox/menu`,
           `if ! xdpyinfo -display ${layout.display} >/dev/null 2>&1; then`,
-          `  mkdir -p /tmp/rakazo ${fluxHome}/.fluxbox /tmp/.X11-unix`,
+          `  mkdir -p /tmp/cutie-pi ${fluxHome}/.fluxbox /tmp/.X11-unix`,
           `  rm -f /tmp/.X${layout.displayNumber}-lock /tmp/.X11-unix/X${layout.displayNumber}`,
           `  nohup Xvfb ${layout.display} -screen 0 1280x800x24 -ac +extension RANDR +render -noreset -nolisten tcp 8>&- 9>&- </dev/null >${log}-xvfb.log 2>&1 &`,
           `  for i in $(seq 1 100); do xdpyinfo -display ${layout.display} >/dev/null 2>&1 && break; sleep 0.1; done`,
           `  xdpyinfo -display ${layout.display} >/dev/null 2>&1 || exit 1`,
-          `  if [ -f /etc/rakazo/fluxbox/init ]; then cp /etc/rakazo/fluxbox/init ${fluxHome}/.fluxbox/init; else printf "session.screen0.toolbar.visible: false\\n" >${fluxHome}/.fluxbox/init; fi`,
-          `  cp /etc/rakazo/fluxbox/apps ${fluxHome}/.fluxbox/apps 2>/dev/null || true`,
+          `  if [ -f /etc/cutie-pi/fluxbox/init ]; then cp /etc/cutie-pi/fluxbox/init ${fluxHome}/.fluxbox/init; else printf "session.screen0.toolbar.visible: false\\n" >${fluxHome}/.fluxbox/init; fi`,
+          `  cp /etc/cutie-pi/fluxbox/apps ${fluxHome}/.fluxbox/apps 2>/dev/null || true`,
           `  printf '\\nsession.menuFile: %s\\n' ${fluxHome}/.fluxbox/menu >>${fluxHome}/.fluxbox/init`,
           `  HOME=${shellQuote(env.homeDir)} CHROME_USER_DATA_DIR=${shellQuote(profile)} BROWSER=${browserLauncherPath(layout.displayNumber)} DISPLAY=${layout.display} nohup fluxbox -rc ${fluxHome}/.fluxbox/init 8>&- 9>&- </dev/null >${log}-fluxbox.log 2>&1 &`,
           "fi",
         ];
   const targetFile = `${TARGETS}/view-${layout.displayNumber}`;
-  const socket = `/tmp/rakazo/sockets/view-${layout.displayNumber}-\${desktop_view_token}`;
+  const socket = `/tmp/cutie-pi/sockets/view-${layout.displayNumber}-\${desktop_view_token}`;
   const setupView = [
-    `mkdir -p ${TARGETS} /tmp/rakazo/sockets`,
+    `mkdir -p ${TARGETS} /tmp/cutie-pi/sockets`,
     `if [ ! -S ${socket} ] || ! pgrep -f ${quoteLayout(`^([^ ]*/)?x11vnc .* -unixsock ${socket}( |$)`)} >/dev/null; then`,
     stopVncCommand("view", layout),
     `  nohup x11vnc -display ${layout.display} -forever -shared -viewonly -nopw -rfbport 0 -unixsock ${socket} -xkb -ncache 0 8>&- 9>&- </dev/null >${log}-x11vnc.log 2>&1 &`,
     "fi",
     `for i in $(seq 1 50); do [ -S ${socket} ] && break; sleep 0.1; done`,
     `[ -S ${socket} ] || exit 1`,
-    `printf '%s: unix_socket:%s\\n' "$desktop_view_token" ${socket} >/tmp/rakazo/view-target-next-${layout.displayNumber}`,
-    `mv /tmp/rakazo/view-target-next-${layout.displayNumber} ${targetFile}`,
+    `printf '%s: unix_socket:%s\\n' "$desktop_view_token" ${socket} >/tmp/cutie-pi/view-target-next-${layout.displayNumber}`,
+    `mv /tmp/cutie-pi/view-target-next-${layout.displayNumber} ${targetFile}`,
     gatewayCommand(layout.viewPort),
   ];
   return [
@@ -526,14 +526,14 @@ function renderEnsureScreenCommand(
     `desktop_view_token=${shellQuote(viewToken)}`,
     '[[ "$desktop_view_token" =~ ^[a-zA-Z0-9_-]{1,64}$ ]] || exit 75',
     proxyEnvironmentCommand(),
-    `mkdir -p /tmp/rakazo`,
+    `mkdir -p /tmp/cutie-pi`,
     `printf %s ${shellQuote(browserLauncherCommand(index, screenId, env))} >${browserLauncherPath(layout.displayNumber)}`,
     `chmod 700 ${browserLauncherPath(layout.displayNumber)}`,
     ...setupDisplay,
     `xdpyinfo -display ${layout.display} >/dev/null 2>&1 || exit 1`,
-    `mkdir -p /tmp/rakazo ${shellQuote(path.posix.dirname(profile))}`,
+    `mkdir -p /tmp/cutie-pi ${shellQuote(path.posix.dirname(profile))}`,
     ...browserRunningFunction(profile, pidFile),
-    `printf %s ${shellQuote(profile)} >/tmp/rakazo/browser-profile-${layout.displayNumber}`,
+    `printf %s ${shellQuote(profile)} >/tmp/cutie-pi/browser-profile-${layout.displayNumber}`,
     "if ! browser_running; then",
     prepareBrowserProfileCommand(screenId, env),
     `  rm -f ${shellQuote(profile)}/SingletonLock ${shellQuote(profile)}/SingletonCookie ${shellQuote(profile)}/SingletonSocket`,
@@ -552,7 +552,7 @@ export function interactiveScreenCommand(
   controlToken?: string,
   layout: ReturnType<typeof commandLayout> = screenPorts(0),
 ) {
-  const tokenFile = `/tmp/rakazo/control-token-${layout.displayNumber}`;
+  const tokenFile = `/tmp/cutie-pi/control-token-${layout.displayNumber}`;
   const targetFile = `${TARGETS}/control-${layout.displayNumber}`;
   const stopProcesses = [
     revokeTargetCommand("control", layout.displayNumber),
@@ -566,22 +566,22 @@ export function interactiveScreenCommand(
     return [
       `if [ -f ${tokenFile} ] && [ "$(cat ${tokenFile})" = ${shellQuote(controlToken)} ]; then`,
       stopProcesses,
-      "printf 'RAKAZO_CONTROL_RELEASED\\n'",
+      "printf 'CUTIE_PI_CONTROL_RELEASED\\n'",
       "fi",
     ].join("\n");
   }
   if (!controlToken) throw new Error("interactive screen requires a control token");
-  const socket = `/tmp/rakazo/sockets/control-${layout.displayNumber}-${browserKeyForScreen(controlToken)}`;
+  const socket = `/tmp/cutie-pi/sockets/control-${layout.displayNumber}-${browserKeyForScreen(controlToken)}`;
   return [
     `[ -f ${tokenFile} ] && [ "$(cat ${tokenFile})" = ${shellQuote(controlToken)} ] && [ -S ${socket} ] && pgrep -f ${quoteLayout(`^([^ ]*/)?x11vnc .* -unixsock ${socket}( |$)`)} >/dev/null && (echo >/dev/tcp/127.0.0.1/${layout.controlPort}) >/dev/null 2>&1 && exit 0 || true`,
     stopProcesses,
-    `mkdir -p ${TARGETS} /tmp/rakazo/sockets`,
+    `mkdir -p ${TARGETS} /tmp/cutie-pi/sockets`,
     `printf %s ${shellQuote(controlToken)} >${tokenFile}`,
-    `nohup x11vnc -display ${layout.display} -forever -shared -nopw -rfbport 0 -unixsock ${socket} -xkb -ncache 0 8>&- 9>&- </dev/null >/tmp/rakazo/x11vnc-control-${layout.displayNumber}.log 2>&1 &`,
+    `nohup x11vnc -display ${layout.display} -forever -shared -nopw -rfbport 0 -unixsock ${socket} -xkb -ncache 0 8>&- 9>&- </dev/null >/tmp/cutie-pi/x11vnc-control-${layout.displayNumber}.log 2>&1 &`,
     `for i in $(seq 1 50); do [ -S ${socket} ] && break; sleep 0.1; done`,
     `[ -S ${socket} ] || exit 1`,
-    `printf '%s: unix_socket:%s\\n' ${shellQuote(controlToken)} ${socket} >/tmp/rakazo/control-target-next-${layout.displayNumber}`,
-    `mv /tmp/rakazo/control-target-next-${layout.displayNumber} ${targetFile}`,
+    `printf '%s: unix_socket:%s\\n' ${shellQuote(controlToken)} ${socket} >/tmp/cutie-pi/control-target-next-${layout.displayNumber}`,
+    `mv /tmp/cutie-pi/control-target-next-${layout.displayNumber} ${targetFile}`,
     gatewayCommand(layout.controlPort),
   ].join("\n");
 }
@@ -615,10 +615,10 @@ export function startTerminalCommand(
 ) {
   if (!/^[A-Za-z0-9_-]{1,64}$/.test(terminalToken)) throw new Error("invalid terminal token");
   const display = layout.displayNumber;
-  const tokenFile = `/tmp/rakazo/control-token-${display}`;
-  const socket = `/tmp/rakazo/sockets/terminal-${display}-${browserKeyForScreen(controlToken)}`;
+  const tokenFile = `/tmp/cutie-pi/control-token-${display}`;
+  const socket = `/tmp/cutie-pi/sockets/terminal-${display}-${browserKeyForScreen(controlToken)}`;
   const target = `${TARGETS}/terminal-${display}`;
-  const next = `/tmp/rakazo/terminal-target-next-${display}`;
+  const next = `/tmp/cutie-pi/terminal-target-next-${display}`;
   const entry = `printf '%s: unix_socket:%s\\n' ${shellQuote(terminalToken)} ${socket}`;
   return [
     // Callers differ (the Docker supervisor runs plain `bash -c`); an unpublished token must
@@ -629,11 +629,11 @@ export function startTerminalCommand(
     `  { cat ${target} 2>/dev/null || true; ${entry}; } >${next}`,
     "else",
     stopTerminalCommand(layout),
-    `  mkdir -p ${TARGETS} /tmp/rakazo/sockets`,
+    `  mkdir -p ${TARGETS} /tmp/cutie-pi/sockets`,
     // Displays share the program file; replace it whole so a starting server never reads half.
     `  printf %s ${shellQuote(TERMINAL_SERVER_PROGRAM)} >${TERMINAL_SERVER}.$$`,
     `  mv ${TERMINAL_SERVER}.$$ ${TERMINAL_SERVER}`,
-    `  HOME=${shellQuote(env.homeDir)} nohup python3 ${TERMINAL_SERVER} ${socket} ${shellQuote(cwd)} /tmp/rakazo/terminal-state-${display} 8>&- 9>&- </dev/null >/tmp/rakazo/terminal-${display}.log 2>&1 &`,
+    `  HOME=${shellQuote(env.homeDir)} nohup python3 ${TERMINAL_SERVER} ${socket} ${shellQuote(cwd)} /tmp/cutie-pi/terminal-state-${display} 8>&- 9>&- </dev/null >/tmp/cutie-pi/terminal-${display}.log 2>&1 &`,
     `  for i in $(seq 1 50); do [ -S ${socket} ] && break; sleep 0.1; done`,
     `  [ -S ${socket} ] || exit 1`,
     `  ${entry} >${next}`,
@@ -642,8 +642,8 @@ export function startTerminalCommand(
   ].join("\n");
 }
 
-const REGISTRY = "/tmp/rakazo/desktop-assignments";
-const TOKEN_PLACEHOLDER = "RAKAZO_INTERNAL_VIEW_TOKEN";
+const REGISTRY = "/tmp/cutie-pi/desktop-assignments";
+const TOKEN_PLACEHOLDER = "CUTIE_PI_INTERNAL_VIEW_TOKEN";
 
 function registryLockCommand(screenId: string) {
   return [
@@ -694,7 +694,7 @@ for slot in pathlib.Path(sys.argv[1]).glob("*.slot"):
         with slot.open() as source: used.add(int(source.readline()))
     except ValueError: pass
 # A damaged assignment must not make a live display available to another bot.
-for marker in pathlib.Path("/tmp/rakazo").glob("browser-profile-*"):
+for marker in pathlib.Path("/tmp/cutie-pi").glob("browser-profile-*"):
     display = marker.name.rsplit("-", 1)[-1]
     if display.isascii() and display.isdigit(): used.add(int(display) - ${env.displayStart})
 index = 0
@@ -711,7 +711,7 @@ print(index)
     'mv "$slot.next" "$slot"',
     "flock -u 9; exec 9>&-",
     `bash -eu -c ${shellQuote(renderEnsureScreenCommand(undefined, screenId, TOKEN_PLACEHOLDER, env).replace(shellQuote(TOKEN_PLACEHOLDER), '"$2"'))} desktop "$index" "$view_token"`,
-    'printf "RAKAZO_DESKTOP=%s:%s\\n" "$index" "$view_token"',
+    'printf "CUTIE_PI_DESKTOP=%s:%s\\n" "$index" "$view_token"',
   ].join("\n");
 }
 
@@ -732,7 +732,7 @@ export function releaseDesktopCommand(
     // lock or removal failure is not read as a browser that is still running.
     // set -e leaves that failure non-zero, and the slot is removed only while
     // the shared registry lock is held.
-    'printf "RAKAZO_DESKTOP_RELEASED=%s\\n" "$index"',
+    'printf "CUTIE_PI_DESKTOP_RELEASED=%s\\n" "$index"',
     'exec 9>"$dir/.lock"',
     "flock -w 120 9",
     'rm -f -- "$slot"',

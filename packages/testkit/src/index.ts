@@ -1,4 +1,4 @@
-export { DestinationEmulator, McpEmulator } from "@rakazo/adapters";
+export { DestinationEmulator, McpEmulator } from "@cutie-pi/adapters";
 
 export function sessionCookieHeader(response: Response) {
   const cookies = response.headers.getSetCookie?.() ?? [];

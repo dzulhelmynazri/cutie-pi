@@ -1,4 +1,4 @@
-import type { BackgroundJobHandlers } from "@rakazo/adapter-kit";
+import type { BackgroundJobHandlers } from "@cutie-pi/adapter-kit";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { InMemoryJobQueue } from "./wakeup.js";
 
@@ -226,10 +226,10 @@ describe("InMemoryJobQueue", () => {
 
   it("unwraps correlation envelopes and restores request traces", async () => {
     const { createLogger, createTestSink, installLogger, runWithLogContext } = await import(
-      "@rakazo/logging"
+      "@cutie-pi/logging"
     );
     const sink = createTestSink();
-    installLogger(createLogger({ service: "rakazo-worker", sinks: [sink] }));
+    installLogger(createLogger({ service: "cutie-pi-worker", sinks: [sink] }));
     const queue = new InMemoryJobQueue();
     const target = handlers();
     await queue.start(target);
@@ -250,8 +250,8 @@ describe("InMemoryJobQueue", () => {
   });
 
   it("keeps wrapped payloads readable by workers that do not unwrap envelopes", async () => {
-    const { wrapJobPayload } = await import("@rakazo/logging");
-    const { parseBackgroundJob } = await import("@rakazo/adapter-kit");
+    const { wrapJobPayload } = await import("@cutie-pi/logging");
+    const { parseBackgroundJob } = await import("@cutie-pi/adapter-kit");
     const wrapped = wrapJobPayload(
       { runId: "run-rollback" },
       { jobId: "job-1", traceId: "a".repeat(32) },

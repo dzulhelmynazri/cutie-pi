@@ -26,7 +26,7 @@ test.describe("marketing homepage", () => {
 
     await expect(selfHost.locator("pre")).toHaveCount(0);
     await expect(selfHost).not.toContainText(
-      /openssl|docker-compose\.images|POSTGRES_PASSWORD|BETTER_AUTH_SECRET|mkdir rakazo/i,
+      /openssl|docker-compose\.images|POSTGRES_PASSWORD|BETTER_AUTH_SECRET|mkdir cutie-pi/i,
     );
 
     await expect(async () => {
@@ -40,7 +40,7 @@ test.describe("marketing homepage", () => {
     await expect(dialog).toBeVisible();
     await expect(dialog.getByRole("heading")).toBeVisible();
     await expect(dialog).not.toContainText(
-      /openssl|docker-compose\.images|POSTGRES_PASSWORD|BETTER_AUTH_SECRET|mkdir rakazo/i,
+      /openssl|docker-compose\.images|POSTGRES_PASSWORD|BETTER_AUTH_SECRET|mkdir cutie-pi/i,
     );
     await captureScreenshot(page, testInfo, "02-marketing-get-started");
   });
@@ -59,7 +59,7 @@ test.describe("marketing homepage", () => {
 
     await expect(selfHost.locator("pre")).toHaveCount(0);
     await expect(selfHost).not.toContainText(
-      /openssl|docker-compose\.images|POSTGRES_PASSWORD|BETTER_AUTH_SECRET|mkdir rakazo/i,
+      /openssl|docker-compose\.images|POSTGRES_PASSWORD|BETTER_AUTH_SECRET|mkdir cutie-pi/i,
     );
 
     await expect(async () => {
@@ -73,7 +73,7 @@ test.describe("marketing homepage", () => {
     await expect(dialog).toBeVisible();
     await expect(dialog.getByRole("heading")).toHaveText("你想如何开始？");
     await expect(dialog).not.toContainText(
-      /openssl|docker-compose\.images|POSTGRES_PASSWORD|BETTER_AUTH_SECRET|mkdir rakazo/i,
+      /openssl|docker-compose\.images|POSTGRES_PASSWORD|BETTER_AUTH_SECRET|mkdir cutie-pi/i,
     );
     await captureScreenshot(page, testInfo, "04-marketing-zh-get-started");
   });

@@ -153,7 +153,7 @@ export class ThirdPartyConnectorEmulator {
           (request.params as Record<string, unknown> | undefined)?.protocolVersion ?? "2025-06-18",
         ),
         capabilities: { tools: {} },
-        serverInfo: { name: "rakazo-third-party-emulator", version: "1.0.0" },
+        serverInfo: { name: "cutie-pi-third-party-emulator", version: "1.0.0" },
       });
     }
     if (method === "tools/list") {

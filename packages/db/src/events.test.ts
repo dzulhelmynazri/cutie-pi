@@ -1,5 +1,5 @@
-import type { RealtimeFanout } from "@rakazo/adapter-kit";
-import { encodeLoginSecret } from "@rakazo/contracts";
+import type { RealtimeFanout } from "@cutie-pi/adapter-kit";
+import { encodeLoginSecret } from "@cutie-pi/contracts";
 import { describe, expect, it, vi } from "vitest";
 import type { PrismaClient } from "./client.js";
 import {

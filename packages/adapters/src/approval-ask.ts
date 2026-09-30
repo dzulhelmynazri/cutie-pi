@@ -1,5 +1,5 @@
-import type { MessageBlock } from "@rakazo/contracts";
-import { redactSecrets } from "@rakazo/core";
+import type { MessageBlock } from "@cutie-pi/contracts";
+import { redactSecrets } from "@cutie-pi/core";
 
 const MAX_APPROVAL_SUMMARY_LENGTH = 500;
 const MAX_APPROVAL_DETAIL_LENGTH = 4_000;

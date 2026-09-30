@@ -1,4 +1,4 @@
-import type { ComputerCommand, ProductEvent } from "@rakazo/contracts";
+import type { ComputerCommand, ProductEvent } from "@cutie-pi/contracts";
 import { describe, expect, it } from "vitest";
 import {
   applyComputerCommandHistory,
@@ -143,9 +143,9 @@ describe("computer terminal feed", () => {
     expect(
       terminalSocketUrl(
         "/novnc/session/control/123.abc/vnc.html?path=novnc%2Fsession%2Fcontrol%2F123.abc%2Fwebsockify",
-        "https://rakazo.example/chat",
+        "https://cutie-pi.example/chat",
       ),
-    ).toBe("wss://rakazo.example/novnc/session/control/123.abc/websockify");
+    ).toBe("wss://cutie-pi.example/novnc/session/control/123.abc/websockify");
     expect(terminalSocketUrl("fake://terminal/computer-1", "http://localhost:5173/")).toBeNull();
   });
 });

@@ -5,7 +5,7 @@ test("account settings language picker includes Simplified Chinese and applies i
   page,
 }, testInfo) => {
   const stamp = Date.now();
-  await signup(page, `ui-locale-zh-cn-${stamp}@rakazo.test`, "password12", "Locale QA");
+  await signup(page, `ui-locale-zh-cn-${stamp}@cutie-pi.test`, "password12", "Locale QA");
   await completeOnboarding(page, testInfo);
 
   const settings = await openUserSettings(page);
@@ -28,7 +28,7 @@ test("account settings language picker includes Korean and applies it", async ({
   page,
 }, testInfo) => {
   const stamp = Date.now();
-  await signup(page, `ui-locale-ko-${stamp}@rakazo.test`, "password12", "Locale QA");
+  await signup(page, `ui-locale-ko-${stamp}@cutie-pi.test`, "password12", "Locale QA");
   await completeOnboarding(page, testInfo);
 
   const settings = await openUserSettings(page);
@@ -51,7 +51,7 @@ test("account settings language picker includes Spanish and applies it", async (
   page,
 }, testInfo) => {
   const stamp = Date.now();
-  await signup(page, `ui-locale-es-${stamp}@rakazo.test`, "password12", "Locale QA");
+  await signup(page, `ui-locale-es-${stamp}@cutie-pi.test`, "password12", "Locale QA");
   await completeOnboarding(page, testInfo);
 
   const settings = await openUserSettings(page);
@@ -74,7 +74,7 @@ test("account settings language picker includes Russian and persists it", async 
   page,
 }, testInfo) => {
   const stamp = Date.now();
-  await signup(page, `ui-locale-ru-${stamp}@rakazo.test`, "password12", "Locale QA");
+  await signup(page, `ui-locale-ru-${stamp}@cutie-pi.test`, "password12", "Locale QA");
   await completeOnboarding(page, testInfo);
 
   await page.getByTestId("user-menu-trigger").click();
@@ -102,7 +102,7 @@ test("account settings language picker includes French and persists it", async (
   page,
 }, testInfo) => {
   const stamp = Date.now();
-  await signup(page, `ui-locale-fr-${stamp}@rakazo.test`, "password12", "Locale QA");
+  await signup(page, `ui-locale-fr-${stamp}@cutie-pi.test`, "password12", "Locale QA");
   await completeOnboarding(page, testInfo);
 
   await page.getByTestId("user-menu-trigger").click();

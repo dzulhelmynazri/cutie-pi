@@ -1,4 +1,4 @@
-import type { AdapterContext } from "@rakazo/adapter-kit";
+import type { AdapterContext } from "@cutie-pi/adapter-kit";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { SupermemoryMemoryProvider } from "./supermemory-memory-provider.js";
 
@@ -38,7 +38,7 @@ describe("SupermemoryMemoryProvider", () => {
     expect(fetchMock).toHaveBeenCalledTimes(2);
     expect(
       fetchMock.mock.calls.map((call) => JSON.parse(String(call[1]?.body)).containerTag),
-    ).toEqual(["rakazo:workspace:workspace-1", "rakazo:bot-1"]);
+    ).toEqual(["cutie-pi:workspace:workspace-1", "cutie-pi:bot-1"]);
   });
 
   it("adds the current history generation only after compaction", async () => {
@@ -63,7 +63,7 @@ describe("SupermemoryMemoryProvider", () => {
 
     expect(
       fetchMock.mock.calls.map((call) => JSON.parse(String(call[1]?.body)).containerTag),
-    ).toEqual(["rakazo:bot-1", "rakazo:bot-1:history:3"]);
+    ).toEqual(["cutie-pi:bot-1", "cutie-pi:bot-1:history:3"]);
   });
 
   it("passes recall limits and cancellation through to the provider client", async () => {
@@ -103,7 +103,7 @@ describe("SupermemoryMemoryProvider", () => {
 
     expect(
       fetchMock.mock.calls.map((call) => JSON.parse(String(call[1]?.body)).containerTag),
-    ).toEqual(["rakazo:workspace:workspace-1", "rakazo:bot-1"]);
+    ).toEqual(["cutie-pi:workspace:workspace-1", "cutie-pi:bot-1"]);
   });
 
   it("purges only requested history generations", async () => {
@@ -113,8 +113,8 @@ describe("SupermemoryMemoryProvider", () => {
     await provider().purgeHistory({ botId: "bot-1", generations: [2, 3, 3] }, context);
 
     expect(fetchMock.mock.calls.map((call) => call[0])).toEqual([
-      "http://localhost:6767/v3/container-tags/rakazo%3Abot-1%3Ahistory%3A2",
-      "http://localhost:6767/v3/container-tags/rakazo%3Abot-1%3Ahistory%3A3",
+      "http://localhost:6767/v3/container-tags/cutie-pi%3Abot-1%3Ahistory%3A2",
+      "http://localhost:6767/v3/container-tags/cutie-pi%3Abot-1%3Ahistory%3A3",
     ]);
   });
 });

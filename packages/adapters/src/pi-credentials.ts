@@ -9,8 +9,8 @@ import type {
   AgentModelOAuthCredential,
   ModelCredentialFailedState,
   ModelCredentialRetireReason,
-} from "@rakazo/adapter-kit";
-import { getLogger } from "@rakazo/logging";
+} from "@cutie-pi/adapter-kit";
+import { getLogger } from "@cutie-pi/logging";
 import {
   OAUTH_ACCOUNT_CHANGED_ERROR,
   oauthCredentialAccountId,
@@ -24,7 +24,7 @@ export function toOAuthCredential(value: AgentModelOAuthCredential): OAuthCreden
 
 /**
  * Request-scoped Pi store for one already-authorized provider. Pi's default
- * in-memory store cannot see Rakazo's encrypted database; refreshes are
+ * in-memory store cannot see CutiePi's encrypted database; refreshes are
  * serialized here and published back for encryption.
  */
 export class PiRuntimeCredentialStore implements CredentialStore {

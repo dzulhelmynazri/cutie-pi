@@ -1,6 +1,6 @@
 import { createHash } from "node:crypto";
 import { isIP } from "node:net";
-import type { DesktopSetup, DesktopStackProbeResponse } from "@rakazo/contracts";
+import type { DesktopSetup, DesktopStackProbeResponse } from "@cutie-pi/contracts";
 
 /** Managed desktop origin; development keeps its usual web/API ports. */
 export const DEFAULT_LOCAL_WEB_URL = "http://127.0.0.1:45173";
@@ -15,9 +15,9 @@ export type StartupTarget =
 const SCHEME = /^[a-zA-Z][a-zA-Z0-9+.-]*:\/\//;
 
 /**
- * Accepts what a person would actually type ("localhost:5173", "rakazo.example.com")
+ * Accepts what a person would actually type ("localhost:5173", "cutie-pi.example.com")
  * and returns a canonical http(s) origin, or null when the input can never
- * securely address a Rakazo server.
+ * securely address a CutiePi server.
  */
 export function normalizeServerUrl(input: string): string | null {
   const trimmed = input.trim();
@@ -42,7 +42,7 @@ export function normalizeServerUrl(input: string): string | null {
   // Public login cookies and API traffic must never cross a cleartext connection.
   if (url.protocol === "http:" && !isLocalNetworkHost(url.hostname)) return null;
 
-  // Rakazo serves its renderer, RPC, and auth routes from one origin. Keeping a
+  // CutiePi serves its renderer, RPC, and auth routes from one origin. Keeping a
   // user-supplied path would make the setup probe and the loaded app disagree.
   return url.origin;
 }
@@ -102,7 +102,7 @@ export function serializeSetup(setup: DesktopSetup): string {
 
 /**
  * Decides between the first-run setup window and the app window. An explicit
- * `RAKAZO_WEB_URL` still wins over saved configuration so test and performance
+ * `CUTIE_PI_WEB_URL` still wins over saved configuration so test and performance
  * harnesses can point the shell anywhere without touching a user's real setup.
  */
 export function resolveStartupTarget(input: {
@@ -152,13 +152,13 @@ export function servesBundledRenderer(targetUrl: string): boolean {
   }
 }
 
-/** Each Rakazo origin gets its own persistent cookie and storage partition. */
+/** Each CutiePi origin gets its own persistent cookie and storage partition. */
 export function sessionPartitionForServerUrl(targetUrl: string): string | null {
   try {
     const url = new URL(targetUrl);
     if (url.protocol !== "http:" && url.protocol !== "https:") return null;
     const digest = createHash("sha256").update(url.origin).digest("hex").slice(0, 24);
-    return `persist:rakazo-${digest}`;
+    return `persist:cutie-pi-${digest}`;
   } catch {
     return null;
   }
@@ -170,7 +170,7 @@ export function safeExternalUrl(targetUrl: string): string | null {
   return new URL(targetUrl).toString();
 }
 
-export function isRakazoHealth(value: unknown): boolean {
+export function isCutiePiHealth(value: unknown): boolean {
   if (typeof value !== "object" || value === null) return false;
   const json = (value as { json?: unknown }).json;
   return (
@@ -259,7 +259,7 @@ export function isLoopbackHost(hostname: string) {
 
 /**
  * Link-local addresses (IPv4 169.254/16, IPv6 fe80::/10) often host cloud
- * metadata endpoints. Cleartext HTTP to them is never a legitimate Rakazo
+ * metadata endpoints. Cleartext HTTP to them is never a legitimate CutiePi
  * deploy target, so they stay out of the private-network HTTP allowlist.
  */
 function isLinkLocalHost(hostname: string) {

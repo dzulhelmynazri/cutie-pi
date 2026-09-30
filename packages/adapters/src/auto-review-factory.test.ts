@@ -1,4 +1,4 @@
-import type { AutoReviewProvider } from "@rakazo/adapter-kit";
+import type { AutoReviewProvider } from "@cutie-pi/adapter-kit";
 import { describe, expect, it } from "vitest";
 import { LlmAutoReviewProvider } from "./auto-review.js";
 import { createAutoReviewProvider } from "./auto-review-factory.js";
@@ -53,17 +53,17 @@ describe("createAutoReviewProvider", () => {
   it("resolves the default kind from options.env instead of process.env", () => {
     expect(
       createAutoReviewProvider(undefined, {
-        env: { RAKAZO_AUTO_REVIEW_PROVIDER: "scripted", AGENT_RUNTIME: "scripted" },
+        env: { CUTIE_PI_AUTO_REVIEW_PROVIDER: "scripted", AGENT_RUNTIME: "scripted" },
       }),
     ).toBeInstanceOf(ScriptedAutoReviewProvider);
     expect(
       createAutoReviewProvider(undefined, {
-        env: { RAKAZO_AUTO_REVIEW_PROVIDER: "jev", TYPESAFE_API_KEY: "ts-key" },
+        env: { CUTIE_PI_AUTO_REVIEW_PROVIDER: "jev", TYPESAFE_API_KEY: "ts-key" },
       }),
     ).toBeInstanceOf(JevAutoReviewProvider);
     expect(
       createAutoReviewProvider("scripted", {
-        env: { RAKAZO_AUTO_REVIEW_PROVIDER: "jev", TYPESAFE_API_KEY: "ts-key" },
+        env: { CUTIE_PI_AUTO_REVIEW_PROVIDER: "jev", TYPESAFE_API_KEY: "ts-key" },
       }),
     ).toBeInstanceOf(ScriptedAutoReviewProvider);
   });

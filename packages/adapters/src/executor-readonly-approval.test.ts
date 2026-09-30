@@ -3,9 +3,9 @@ import type {
   AutoReviewProvider,
   ConnectorCall,
   ConnectorTool,
-} from "@rakazo/adapter-kit";
-import type { ActionApprovalRule } from "@rakazo/core";
-import { approvalEffectKey, toolEffectIdempotencyKey } from "@rakazo/core/node/approval-effect-key";
+} from "@cutie-pi/adapter-kit";
+import type { ActionApprovalRule } from "@cutie-pi/core";
+import { approvalEffectKey, toolEffectIdempotencyKey } from "@cutie-pi/core/node/approval-effect-key";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { isApprovalPausedResult } from "./approval-effect.js";
 import type * as ComputerLifecycleModule from "./computer-lifecycle.js";

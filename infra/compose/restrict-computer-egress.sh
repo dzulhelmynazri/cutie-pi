@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Restricted egress for Rakazo bot computers (SANDBOX_COMPUTER_EGRESS=restricted).
+# Restricted egress for CutiePi bot computers (SANDBOX_COMPUTER_EGRESS=restricted).
 #
 # Computers keep full public-internet egress (browsing, DNS, apt, git over SSH)
 # but can no longer reach:
@@ -10,7 +10,7 @@
 #   - multicast and reserved space.
 #
 # Rules key on the deterministic bridge names the supervisor assigns in
-# restricted mode (rakazo-c<hash>), never on Docker's dynamic subnets — so
+# restricted mode (cutie-pi-c<hash>), never on Docker's dynamic subnets — so
 # computer churn, network recreate, and subnet reuse need no firewall changes.
 #
 # Same-bridge peers stay reachable: the supervisor and web screen proxy join the
@@ -30,13 +30,13 @@
 
 set -Eeuo pipefail
 
-IPTABLES="${RAKAZO_IPTABLES:-iptables}"
-IP6TABLES="${RAKAZO_IP6TABLES:-ip6tables}"
-SYSTEMCTL="${RAKAZO_SYSTEMCTL:-systemctl}"
-IF_INET6="${RAKAZO_IF_INET6:-/proc/net/if_inet6}"
-BRIDGE_PREFIX="rakazo-c"
-INSTALLED_PATH=/usr/local/sbin/rakazo-computer-egress
-UNIT_PATH=/etc/systemd/system/rakazo-computer-egress.service
+IPTABLES="${CUTIE_PI_IPTABLES:-iptables}"
+IP6TABLES="${CUTIE_PI_IP6TABLES:-ip6tables}"
+SYSTEMCTL="${CUTIE_PI_SYSTEMCTL:-systemctl}"
+IF_INET6="${CUTIE_PI_IF_INET6:-/proc/net/if_inet6}"
+BRIDGE_PREFIX="cutie-pi-c"
+INSTALLED_PATH=/usr/local/sbin/cutie-pi-computer-egress
+UNIT_PATH=/etc/systemd/system/cutie-pi-computer-egress.service
 
 usage() {
   cat <<'EOF'
@@ -75,7 +75,7 @@ EOF
 }
 
 # One rule per line: "<chain> <args>". Order matters: same-bridge traffic
-# (-i and -o both rakazo-c*) must be returned to Docker's own chains before the
+# (-i and -o both cutie-pi-c*) must be returned to Docker's own chains before the
 # destination drops, and in INPUT the established accept must precede the
 # catch-all drop so host- and supervisor-initiated connections to the computer
 # (control endpoint, published screen port) keep working while the computer can
@@ -301,12 +301,12 @@ print_family() {
 
 require_root() {
   if ((EUID == 0)); then return 0; fi
-  if [[ "${RAKAZO_EGRESS_SUDOED:-}" == "1" ]]; then
+  if [[ "${CUTIE_PI_EGRESS_SUDOED:-}" == "1" ]]; then
     echo "root privileges required" >&2
     exit 1
   fi
-  export RAKAZO_EGRESS_SUDOED=1
-  exec sudo --preserve-env=RAKAZO_EGRESS_SUDOED bash "$0" "$@"
+  export CUTIE_PI_EGRESS_SUDOED=1
+  exec sudo --preserve-env=CUTIE_PI_EGRESS_SUDOED bash "$0" "$@"
 }
 
 install_persistence() {
@@ -323,7 +323,7 @@ install_persistence() {
   fi
   cat >"$UNIT_PATH" <<EOF
 [Unit]
-Description=Restrict Rakazo bot-computer egress (rakazo-c* bridges)
+Description=Restrict CutiePi bot-computer egress (cutie-pi-c* bridges)
 After=docker.service
 Wants=docker.service
 
@@ -336,12 +336,12 @@ ExecStart=$INSTALLED_PATH --apply
 WantedBy=multi-user.target
 EOF
   "$SYSTEMCTL" daemon-reload
-  "$SYSTEMCTL" enable rakazo-computer-egress.service
+  "$SYSTEMCTL" enable cutie-pi-computer-egress.service
 }
 
 remove_persistence() {
   if command -v "$SYSTEMCTL" >/dev/null 2>&1 && [[ -f "$UNIT_PATH" ]]; then
-    "$SYSTEMCTL" disable --now rakazo-computer-egress.service || true
+    "$SYSTEMCTL" disable --now cutie-pi-computer-egress.service || true
     rm -f "$UNIT_PATH"
     "$SYSTEMCTL" daemon-reload
   fi
@@ -354,7 +354,7 @@ case "$mode" in
     require_root "$@"
     apply_rules
     install_persistence
-    echo "Computer egress restricted: rakazo-c* bridges drop non-public and host-bound traffic."
+    echo "Computer egress restricted: cutie-pi-c* bridges drop non-public and host-bound traffic."
     ;;
   --apply)
     apply_rules

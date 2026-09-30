@@ -1,4 +1,4 @@
-import type { McpServerConfigInput } from "@rakazo/contracts";
+import type { McpServerConfigInput } from "@cutie-pi/contracts";
 
 /** Shape of the encrypted MCP credential blob. `oauth` holds SDK OAuth state
  * (tokens, client registration, PKCE verifier) managed by McpOAuthBroker. */

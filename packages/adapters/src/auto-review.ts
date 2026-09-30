@@ -7,9 +7,9 @@ import type {
   AutoReviewProvider,
   AutoReviewRequest,
   AutoReviewResult,
-} from "@rakazo/adapter-kit";
-import type { AutoReviewJudgeDecision } from "@rakazo/core";
-import { redactSecrets } from "@rakazo/core";
+} from "@cutie-pi/adapter-kit";
+import type { AutoReviewJudgeDecision } from "@cutie-pi/core";
+import { redactSecrets } from "@cutie-pi/core";
 import { formatCurrentTimeInstruction } from "./current-time.js";
 import { resolveDeploymentModel } from "./deployment-model.js";
 import { LOCAL_PROVIDER_ID } from "./pi-local-provider.js";
@@ -42,7 +42,7 @@ function envFlag(env: NodeJS.ProcessEnv, name: string): boolean {
 }
 
 function localModelIds(env: NodeJS.ProcessEnv): string[] {
-  return (env.RAKAZO_LOCAL_MODELS ?? "")
+  return (env.CUTIE_PI_LOCAL_MODELS ?? "")
     .split(",")
     .map((id) => id.trim())
     .filter((id) => id.length > 0);
@@ -50,11 +50,11 @@ function localModelIds(env: NodeJS.ProcessEnv): string[] {
 
 /** Deployment default for the user toggle when no preference row exists. */
 export function deploymentAutoReviewDefault(env: NodeJS.ProcessEnv = process.env): boolean {
-  return envFlag(env, "RAKAZO_AUTO_REVIEW");
+  return envFlag(env, "CUTIE_PI_AUTO_REVIEW");
 }
 
 export function autoReviewTimeoutMs(env: NodeJS.ProcessEnv = process.env): number {
-  const raw = env.RAKAZO_AUTO_REVIEW_TIMEOUT_MS?.trim();
+  const raw = env.CUTIE_PI_AUTO_REVIEW_TIMEOUT_MS?.trim();
   if (!raw) return DEFAULT_TIMEOUT_MS;
   const value = Number(raw);
   if (!Number.isFinite(value) || value < 200 || value > 30_000) return DEFAULT_TIMEOUT_MS;
@@ -68,7 +68,7 @@ export function typesafeApiKey(env: NodeJS.ProcessEnv = process.env): string | u
 }
 
 export function autoReviewMinConfidence(env: NodeJS.ProcessEnv = process.env): number {
-  const raw = env.RAKAZO_AUTO_REVIEW_MIN_CONFIDENCE?.trim();
+  const raw = env.CUTIE_PI_AUTO_REVIEW_MIN_CONFIDENCE?.trim();
   if (!raw) return DEFAULT_AUTO_REVIEW_MIN_CONFIDENCE;
   const value = Number(raw);
   if (!Number.isFinite(value) || value < 0 || value > 1) return DEFAULT_AUTO_REVIEW_MIN_CONFIDENCE;
@@ -81,14 +81,14 @@ function isVerifierKind(value: string | undefined): value is "jev" | "scripted" 
 }
 
 /**
- * `RAKAZO_AUTO_REVIEW_PROVIDER=jev` selects TypeSafe Jev when a key is present;
+ * `CUTIE_PI_AUTO_REVIEW_PROVIDER=jev` selects TypeSafe Jev when a key is present;
  * otherwise the existing LLM checker. `scripted` is the offline test adapter.
  * Any other value remains the LLM provider id (openrouter, anthropic, …).
  */
 export function resolveAutoReviewProviderKind(
   env: NodeJS.ProcessEnv = process.env,
 ): AutoReviewProviderKind {
-  const requested = env.RAKAZO_AUTO_REVIEW_PROVIDER?.trim().toLowerCase();
+  const requested = env.CUTIE_PI_AUTO_REVIEW_PROVIDER?.trim().toLowerCase();
   if (requested === "jev") return typesafeApiKey(env) ? "jev" : "llm";
   if (requested === "scripted" && env.AGENT_RUNTIME === "scripted") return "scripted";
   return "llm";
@@ -105,15 +105,15 @@ export function resolveAutoReviewChecker(
   if (kind === "jev") {
     return {
       provider: JEV_AUTO_REVIEW_PROVIDER,
-      model: env.RAKAZO_AUTO_REVIEW_MODEL?.trim() || DEFAULT_JEV_MODEL,
+      model: env.CUTIE_PI_AUTO_REVIEW_MODEL?.trim() || DEFAULT_JEV_MODEL,
     };
   }
   if (kind === "scripted") {
     return { provider: SCRIPTED_AUTO_REVIEW_PROVIDER, model: "scripted" };
   }
 
-  const overrideProvider = env.RAKAZO_AUTO_REVIEW_PROVIDER?.trim();
-  const overrideModel = env.RAKAZO_AUTO_REVIEW_MODEL?.trim();
+  const overrideProvider = env.CUTIE_PI_AUTO_REVIEW_PROVIDER?.trim();
+  const overrideModel = env.CUTIE_PI_AUTO_REVIEW_MODEL?.trim();
   if (overrideProvider && overrideModel && !isVerifierKind(overrideProvider)) {
     return { provider: overrideProvider, model: overrideModel };
   }

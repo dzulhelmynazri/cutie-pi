@@ -3,11 +3,11 @@ plugins {
   id 'expo-module-gradle-plugin'
 }
 
-group = 'com.rakazo.notifications'
+group = 'com.cutie-pi.notifications'
 version = '0.1.0'
 
 android {
-  namespace 'com.rakazo.notifications'
+  namespace 'com.cutie-pi.notifications'
   defaultConfig {
     versionName '0.1.0'
   }

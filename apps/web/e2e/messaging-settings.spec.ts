@@ -81,7 +81,7 @@ test("Korean messaging settings show linked chat apps, channels, and connections
 
   const stamp = Date.now();
   const userName = `Messenger ${stamp}`;
-  await signup(page, `messaging-${stamp}@rakazo.test`, "password12", userName);
+  await signup(page, `messaging-${stamp}@cutie-pi.test`, "password12", userName);
   await completeOnboarding(page);
 
   await page.getByRole("button", { name: new RegExp(userName) }).click();
@@ -201,7 +201,7 @@ test("team conversation settings open from messaging overlay", async ({ page }, 
 
   const stamp = Date.now();
   const userName = `TeamChat ${stamp}`;
-  await signup(page, `team-chat-${stamp}@rakazo.test`, "password12", userName);
+  await signup(page, `team-chat-${stamp}@cutie-pi.test`, "password12", userName);
   await completeOnboarding(page);
 
   await page.getByRole("button", { name: new RegExp(userName) }).click();

@@ -8,7 +8,7 @@ import type {
   JobPublisher,
   MemoryStore,
   SandboxProvider,
-} from "@rakazo/adapter-kit";
+} from "@cutie-pi/adapter-kit";
 import {
   computerControlExpireJobKey,
   messagingDeliverJob,
@@ -16,7 +16,7 @@ import {
   routineWakeupJob,
   runContinueJob,
   runJobKey,
-} from "@rakazo/adapter-kit";
+} from "@cutie-pi/adapter-kit";
 import type {
   CloudAgentConnection,
   CodexLiveCatalog,
@@ -28,7 +28,7 @@ import type {
   MemoryProviderResolver,
   PiOAuthLogins,
   RemoteConnectorDependencies,
-} from "@rakazo/adapters";
+} from "@cutie-pi/adapters";
 import {
   acquireComputerExecutionLease,
   applyCodexLiveCatalog,
@@ -100,8 +100,8 @@ import {
   validateModelAuthAvailability,
   validateStoredModelAuth,
   verifyMcpInstall,
-} from "@rakazo/adapters";
-import type { Auth } from "@rakazo/auth";
+} from "@cutie-pi/adapters";
+import type { Auth } from "@cutie-pi/auth";
 import type {
   Actor,
   Bot,
@@ -111,7 +111,7 @@ import type {
   Me,
   ProductEvent,
   SpaceNavigation,
-} from "@rakazo/contracts";
+} from "@cutie-pi/contracts";
 import {
   ATTACHMENT_MAX_BYTES,
   appContract,
@@ -120,7 +120,7 @@ import {
   IntegrationProviderIdSchema,
   OPENAI_COMPATIBLE_PROVIDER_ID,
   usableModelId,
-} from "@rakazo/contracts";
+} from "@cutie-pi/contracts";
 import {
   ACTIVE_RUN_STATUSES,
   AttachmentValidationError,
@@ -131,8 +131,8 @@ import {
   hasMixedOneShotSchedule,
   isOneShotRoutineCrons,
   nextCronDateAcrossStrict,
-} from "@rakazo/core";
-import type { PrismaClient, ThreadEvents } from "@rakazo/db";
+} from "@cutie-pi/core";
+import type { PrismaClient, ThreadEvents } from "@cutie-pi/db";
 import {
   appendEventInTransaction,
   BotSectionNameConflictError,
@@ -173,8 +173,8 @@ import {
   selectSpaceModelPreference,
   selectSpaceVoicePreference,
   touchGroupUpdatedAt,
-} from "@rakazo/db";
-import { getLogger } from "@rakazo/logging";
+} from "@cutie-pi/db";
+import { getLogger } from "@cutie-pi/logging";
 import { deleteAgentSecret, listAgentSecrets, putAgentSecret } from "./agent-secrets.js";
 import { createAgentSkillsService } from "./agent-skills.js";
 import { aiConsentStatus, allowAiConsent } from "./ai-consent.js";

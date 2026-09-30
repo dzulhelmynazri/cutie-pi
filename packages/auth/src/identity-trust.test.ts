@@ -1,5 +1,5 @@
-import type { TransactionalEmail } from "@rakazo/adapter-kit";
-import { bootstrapUserSpace } from "@rakazo/db";
+import type { TransactionalEmail } from "@cutie-pi/adapter-kit";
+import { bootstrapUserSpace } from "@cutie-pi/db";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { createAuth } from "./index.js";
 
@@ -12,7 +12,7 @@ vi.mock("better-auth/adapters/prisma", async () => {
       memoryAdapter(prisma.authData),
   };
 });
-vi.mock("@rakazo/db", () => ({ bootstrapUserSpace: vi.fn(async () => ({ spaceId: "space-1" })) }));
+vi.mock("@cutie-pi/db", () => ({ bootstrapUserSpace: vi.fn(async () => ({ spaceId: "space-1" })) }));
 
 function fixture({
   allowlist = "",

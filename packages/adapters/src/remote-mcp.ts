@@ -3,8 +3,8 @@ import type { LookupFunction } from "node:net";
 import { isIP } from "node:net";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { StreamableHTTPClientTransport } from "@modelcontextprotocol/sdk/client/streamableHttp.js";
-import type { ConnectorTool } from "@rakazo/adapter-kit";
-import { isCloudMetadataHost, isLocalMcpHost, isPrivateNetworkHost } from "@rakazo/contracts";
+import type { ConnectorTool } from "@cutie-pi/adapter-kit";
+import { isCloudMetadataHost, isLocalMcpHost, isPrivateNetworkHost } from "@cutie-pi/contracts";
 import { Agent, fetch as undiciFetch } from "undici";
 import { combineSignals } from "./connector-safety.js";
 import {
@@ -118,7 +118,7 @@ async function withRemoteMcpClient<T>(
     },
     fetch: safeFetch,
   });
-  const client = new Client({ name: "rakazo", version: "0.1.0" }, { capabilities: {} });
+  const client = new Client({ name: "cutie-pi", version: "0.1.0" }, { capabilities: {} });
   try {
     await client.connect(transport, { signal, timeout: MCP_TIMEOUT_MS });
     return await run(client, signal);

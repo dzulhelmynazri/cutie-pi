@@ -2,7 +2,7 @@ import type * as NodeFsPromises from "node:fs/promises";
 import http from "node:http";
 import path from "node:path";
 import { Readable } from "node:stream";
-import { resolveSupervisorToken } from "@rakazo/core";
+import { resolveSupervisorToken } from "@cutie-pi/core";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {
   COMPUTER_IMAGE,
@@ -48,7 +48,7 @@ beforeEach(async () => {
   vi.resetModules();
   vi.resetAllMocks();
   vi.stubEnv("HOSTNAME", "");
-  vi.stubEnv("DATA_DIR", "/tmp/rakazo-loopback-test");
+  vi.stubEnv("DATA_DIR", "/tmp/cutie-pi-loopback-test");
   vi.stubEnv("SANDBOX_SCREEN_NETWORK", "published");
   vi.stubEnv("SANDBOX_SCREEN_HOST", "127.0.0.1");
   screen = http.createServer((_req, res) => res.end("ok"));
@@ -79,8 +79,8 @@ describe("computer loopback provision lifecycle", () => {
       method: "POST",
       headers: {
         authorization: `Bearer ${resolveSupervisorToken(process.env)}`,
-        "x-rakazo-bot-id": "bot",
-        "x-rakazo-space-id": "space",
+        "x-cutie-pi-bot-id": "bot",
+        "x-cutie-pi-space-id": "space",
       },
     });
     expect(response.status).toBe(status);
@@ -93,7 +93,7 @@ describe("computer loopback provision lifecycle", () => {
     const container = {
       inspect: vi.fn().mockResolvedValue({
         Config: {
-          Labels: { "rakazo.managed": "true", "rakazo.botId": "other", "rakazo.spaceId": "other" },
+          Labels: { "cutie-pi.managed": "true", "cutie-pi.botId": "other", "cutie-pi.spaceId": "other" },
         },
       }),
       stop: vi.fn(),
@@ -104,8 +104,8 @@ describe("computer loopback provision lifecycle", () => {
       method: "POST",
       headers: {
         authorization: `Bearer ${resolveSupervisorToken(process.env)}`,
-        "x-rakazo-bot-id": "bot",
-        "x-rakazo-space-id": "space",
+        "x-cutie-pi-bot-id": "bot",
+        "x-cutie-pi-space-id": "space",
       },
     });
     expect(response.status).toBe(403);
@@ -127,7 +127,7 @@ describe("computer loopback provision lifecycle", () => {
     const container = {
       inspect: vi.fn(async () => ({
         Config: {
-          Labels: { "rakazo.managed": "true", "rakazo.botId": "bot", "rakazo.spaceId": "space" },
+          Labels: { "cutie-pi.managed": "true", "cutie-pi.botId": "bot", "cutie-pi.spaceId": "space" },
         },
         State: { Running: running },
       })),
@@ -147,8 +147,8 @@ describe("computer loopback provision lifecycle", () => {
         method: "POST",
         headers: {
           authorization: `Bearer ${resolveSupervisorToken(process.env)}`,
-          "x-rakazo-bot-id": "bot",
-          "x-rakazo-space-id": "space",
+          "x-cutie-pi-bot-id": "bot",
+          "x-cutie-pi-space-id": "space",
         },
       });
     const first = stop();
@@ -167,7 +167,7 @@ describe("computer loopback provision lifecycle", () => {
     const container = {
       inspect: vi.fn(async () => ({
         Config: {
-          Labels: { "rakazo.managed": "true", "rakazo.botId": "bot", "rakazo.spaceId": "space" },
+          Labels: { "cutie-pi.managed": "true", "cutie-pi.botId": "bot", "cutie-pi.spaceId": "space" },
         },
         State: { Running: true },
       })),
@@ -182,8 +182,8 @@ describe("computer loopback provision lifecycle", () => {
       method: "POST",
       headers: {
         authorization: `Bearer ${resolveSupervisorToken(process.env)}`,
-        "x-rakazo-bot-id": "bot",
-        "x-rakazo-space-id": "space",
+        "x-cutie-pi-bot-id": "bot",
+        "x-cutie-pi-space-id": "space",
       },
     });
     expect(response.status).toBe(500);
@@ -195,7 +195,7 @@ describe("computer loopback provision lifecycle", () => {
     const container = {
       inspect: vi.fn(async () => ({
         Config: {
-          Labels: { "rakazo.managed": "true", "rakazo.botId": "bot", "rakazo.spaceId": "space" },
+          Labels: { "cutie-pi.managed": "true", "cutie-pi.botId": "bot", "cutie-pi.spaceId": "space" },
         },
         State: { Running: true },
       })),
@@ -210,8 +210,8 @@ describe("computer loopback provision lifecycle", () => {
       method: "POST",
       headers: {
         authorization: `Bearer ${resolveSupervisorToken(process.env)}`,
-        "x-rakazo-bot-id": "bot",
-        "x-rakazo-space-id": "space",
+        "x-cutie-pi-bot-id": "bot",
+        "x-cutie-pi-space-id": "space",
       },
     });
     expect(response.status).toBe(200);
@@ -241,7 +241,7 @@ describe("computer loopback provision lifecycle", () => {
       Image: "test-image-id",
       Config: {
         User: hostComputerUser(),
-        Labels: { "rakazo.managed": "true", "rakazo.botId": "bot", "rakazo.spaceId": "space" },
+        Labels: { "cutie-pi.managed": "true", "cutie-pi.botId": "bot", "cutie-pi.spaceId": "space" },
       },
       HostConfig: {
         NetworkMode: computerNetworkNameFor("bot"),
@@ -277,8 +277,8 @@ describe("computer loopback provision lifecycle", () => {
       headers: {
         authorization: `Bearer ${resolveSupervisorToken(process.env)}`,
         "content-type": "application/json",
-        "x-rakazo-bot-id": "bot",
-        "x-rakazo-space-id": "space",
+        "x-cutie-pi-bot-id": "bot",
+        "x-cutie-pi-space-id": "space",
       },
       body: JSON.stringify({ botId: "bot", spaceId: "space", homePath }),
     });
@@ -299,9 +299,9 @@ describe("computer loopback provision lifecycle", () => {
       expect(options.HostConfig.PortBindings["7070/tcp"]).toEqual(
         enabled ? [{ HostIp: "127.0.0.1", HostPort: "0" }] : undefined,
       );
-      expect(options.HostConfig.Binds).toEqual([`${homePath}:/home/rakazo`]);
+      expect(options.HostConfig.Binds).toEqual([`${homePath}:/home/cutie-pi`]);
       expect(options.Env).toContainEqual(
-        expect.stringMatching(/^RAKAZO_COMPUTER_CONTROL_TOKEN=.+/),
+        expect.stringMatching(/^CUTIE_PI_COMPUTER_CONTROL_TOKEN=.+/),
       );
     }
   });
@@ -329,8 +329,8 @@ describe("provisioning network rollback", () => {
       headers: {
         authorization: `Bearer ${resolveSupervisorToken(process.env)}`,
         "content-type": "application/json",
-        "x-rakazo-bot-id": "bot",
-        "x-rakazo-space-id": "space",
+        "x-cutie-pi-bot-id": "bot",
+        "x-cutie-pi-space-id": "space",
       },
       body: JSON.stringify({ botId: "bot", spaceId: "space", homePath }),
     });
@@ -371,7 +371,7 @@ describe("provisioning network rollback", () => {
                 expect.objectContaining({
                   Type: "volume",
                   Source: "example_appdata",
-                  Target: "/home/rakazo",
+                  Target: "/home/cutie-pi",
                   VolumeOptions: { NoCopy: true, Subpath: "homes/bot" },
                 }),
               ],
@@ -431,7 +431,7 @@ describe("provisioning network rollback", () => {
       inspect: vi.fn().mockResolvedValue({
         Image: "old-image",
         Config: {
-          Labels: { "rakazo.managed": "true", "rakazo.botId": "bot", "rakazo.spaceId": "space" },
+          Labels: { "cutie-pi.managed": "true", "cutie-pi.botId": "bot", "cutie-pi.spaceId": "space" },
         },
         HostConfig: { PortBindings: {} },
       }),
@@ -492,7 +492,7 @@ describe("restricted egress rekeying", () => {
       Image: "test-image-id",
       Config: {
         User: hostComputerUser(),
-        Labels: { "rakazo.managed": "true", "rakazo.botId": "bot", "rakazo.spaceId": "space" },
+        Labels: { "cutie-pi.managed": "true", "cutie-pi.botId": "bot", "cutie-pi.spaceId": "space" },
       },
       HostConfig: { NetworkMode: botNet, PortBindings: {} },
       State: { Running: false },
@@ -530,8 +530,8 @@ describe("restricted egress rekeying", () => {
       headers: {
         authorization: `Bearer ${resolveSupervisorToken(process.env)}`,
         "content-type": "application/json",
-        "x-rakazo-bot-id": "bot",
-        "x-rakazo-space-id": "space",
+        "x-cutie-pi-bot-id": "bot",
+        "x-cutie-pi-space-id": "space",
       },
       body: JSON.stringify({ botId: "bot", spaceId: "space", homePath }),
     });
@@ -588,7 +588,7 @@ describe("restricted egress rekeying", () => {
     const kill = vi.fn().mockResolvedValue(undefined);
     Object.assign(existing, { stop, kill });
     const peer = {
-      inspect: vi.fn().mockResolvedValue({ Config: { Labels: { "rakazo.botId": "other" } } }),
+      inspect: vi.fn().mockResolvedValue({ Config: { Labels: { "cutie-pi.botId": "other" } } }),
       stop: vi.fn().mockResolvedValue(undefined),
       kill: vi.fn().mockResolvedValue(undefined),
     };
@@ -635,7 +635,7 @@ describe("restricted egress rekeying", () => {
     const kill = vi.fn().mockResolvedValue(undefined);
     Object.assign(existing, { stop, kill });
     const peer = {
-      inspect: vi.fn().mockResolvedValue({ Config: { Labels: { "rakazo.botId": "other" } } }),
+      inspect: vi.fn().mockResolvedValue({ Config: { Labels: { "cutie-pi.botId": "other" } } }),
       stop: vi.fn().mockResolvedValue(undefined),
       kill: vi.fn().mockResolvedValue(undefined),
     };
@@ -690,8 +690,8 @@ describe("space computer limit enforcement", () => {
       headers: {
         authorization: `Bearer ${resolveSupervisorToken(process.env)}`,
         "content-type": "application/json",
-        "x-rakazo-bot-id": botId,
-        "x-rakazo-space-id": spaceId,
+        "x-cutie-pi-bot-id": botId,
+        "x-cutie-pi-space-id": spaceId,
       },
       body: JSON.stringify({ botId, spaceId, homePath }),
     });
@@ -705,13 +705,13 @@ describe("space computer limit enforcement", () => {
       async (opts?: { filters?: { label?: string[] } }) => {
         const labels = opts?.filters?.label ?? [];
         // For findBotContainer check
-        if (labels.some((l: string) => l.startsWith("rakazo.botId="))) {
+        if (labels.some((l: string) => l.startsWith("cutie-pi.botId="))) {
           return [];
         }
         // For countSpaceContainers
         return [
-          { Id: "c1", Labels: { "rakazo.managed": "true", "rakazo.spaceId": "space-1" } },
-          { Id: "c2", Labels: { "rakazo.managed": "true", "rakazo.spaceId": "space-1" } },
+          { Id: "c1", Labels: { "cutie-pi.managed": "true", "cutie-pi.spaceId": "space-1" } },
+          { Id: "c2", Labels: { "cutie-pi.managed": "true", "cutie-pi.spaceId": "space-1" } },
         ];
       },
     );
@@ -731,10 +731,10 @@ describe("space computer limit enforcement", () => {
     mocks.docker.listContainers.mockImplementation(
       async (opts?: { filters?: { label?: string[] } }) => {
         const labels = opts?.filters?.label ?? [];
-        if (labels.some((l: string) => l.startsWith("rakazo.botId="))) {
+        if (labels.some((l: string) => l.startsWith("cutie-pi.botId="))) {
           return [];
         }
-        return [{ Id: "c1", Labels: { "rakazo.managed": "true", "rakazo.spaceId": "space-1" } }];
+        return [{ Id: "c1", Labels: { "cutie-pi.managed": "true", "cutie-pi.spaceId": "space-1" } }];
       },
     );
 
@@ -757,9 +757,9 @@ describe("space computer limit enforcement", () => {
         Config: {
           User: hostComputerUser(process.getuid?.(), process.getgid?.()),
           Labels: {
-            "rakazo.managed": "true",
-            "rakazo.botId": "bot-existing",
-            "rakazo.spaceId": "space-1",
+            "cutie-pi.managed": "true",
+            "cutie-pi.botId": "bot-existing",
+            "cutie-pi.spaceId": "space-1",
           },
         },
         State: { Running: true },
@@ -777,20 +777,20 @@ describe("space computer limit enforcement", () => {
     mocks.docker.listContainers.mockImplementation(
       async (opts?: { filters?: { label?: string[] } }) => {
         const labels = opts?.filters?.label ?? [];
-        if (labels.some((l: string) => l === "rakazo.botId=bot-existing")) {
+        if (labels.some((l: string) => l === "cutie-pi.botId=bot-existing")) {
           return [
             {
               Id: existing.id,
               Labels: {
-                "rakazo.managed": "true",
-                "rakazo.botId": "bot-existing",
-                "rakazo.spaceId": "space-1",
+                "cutie-pi.managed": "true",
+                "cutie-pi.botId": "bot-existing",
+                "cutie-pi.spaceId": "space-1",
               },
             },
           ];
         }
         return [
-          { Id: existing.id, Labels: { "rakazo.managed": "true", "rakazo.spaceId": "space-1" } },
+          { Id: existing.id, Labels: { "cutie-pi.managed": "true", "cutie-pi.spaceId": "space-1" } },
         ];
       },
     );
@@ -818,9 +818,9 @@ describe("space computer limit enforcement", () => {
         Config: {
           User: hostComputerUser(process.getuid?.(), process.getgid?.()),
           Labels: {
-            "rakazo.managed": "true",
-            "rakazo.botId": "bot-detached",
-            "rakazo.spaceId": "space-1",
+            "cutie-pi.managed": "true",
+            "cutie-pi.botId": "bot-detached",
+            "cutie-pi.spaceId": "space-1",
           },
         },
         State: { Running: true },
@@ -839,14 +839,14 @@ describe("space computer limit enforcement", () => {
     mocks.docker.listContainers.mockImplementation(
       async (opts?: { filters?: { label?: string[] } }) => {
         const labels = opts?.filters?.label ?? [];
-        if (labels.some((l: string) => l === "rakazo.botId=bot-detached")) {
+        if (labels.some((l: string) => l === "cutie-pi.botId=bot-detached")) {
           return [
             {
               Id: existing.id,
               Labels: {
-                "rakazo.managed": "true",
-                "rakazo.botId": "bot-detached",
-                "rakazo.spaceId": "space-1",
+                "cutie-pi.managed": "true",
+                "cutie-pi.botId": "bot-detached",
+                "cutie-pi.spaceId": "space-1",
               },
             },
           ];
@@ -872,15 +872,15 @@ describe("space computer limit enforcement", () => {
     mocks.docker.listContainers.mockImplementation(
       async (opts?: { filters?: { label?: string[] } }) => {
         const labels = opts?.filters?.label ?? [];
-        if (labels.some((l: string) => l.startsWith("rakazo.botId="))) {
+        if (labels.some((l: string) => l.startsWith("cutie-pi.botId="))) {
           return [];
         }
-        // Legacy managed computer: COMPUTER_IMAGE + workspaceId, no rakazo.managed.
+        // Legacy managed computer: COMPUTER_IMAGE + workspaceId, no cutie-pi.managed.
         return [
           {
             Id: "legacy",
             Image: COMPUTER_IMAGE,
-            Labels: { "rakazo.workspaceId": "space-1", "rakazo.botId": "legacy-bot" },
+            Labels: { "cutie-pi.workspaceId": "space-1", "cutie-pi.botId": "legacy-bot" },
           },
         ];
       },
@@ -902,12 +902,12 @@ describe("space computer limit enforcement", () => {
     mocks.docker.listContainers.mockImplementation(
       async (opts?: { filters?: { label?: string[] } }) => {
         const labels = opts?.filters?.label ?? [];
-        if (labels.some((l: string) => l.startsWith("rakazo.botId="))) {
+        if (labels.some((l: string) => l.startsWith("cutie-pi.botId="))) {
           return [];
         }
         return Array.from({ length: created }, (_, index) => ({
           Id: `c${index}`,
-          Labels: { "rakazo.managed": "true", "rakazo.spaceId": "space-1" },
+          Labels: { "cutie-pi.managed": "true", "cutie-pi.spaceId": "space-1" },
         }));
       },
     );
@@ -945,9 +945,9 @@ describe("space computer limit enforcement", () => {
         Config: {
           User: hostComputerUser(process.getuid?.(), process.getgid?.()),
           Labels: {
-            "rakazo.managed": "true",
-            "rakazo.botId": "bot-existing",
-            "rakazo.spaceId": "space-1",
+            "cutie-pi.managed": "true",
+            "cutie-pi.botId": "bot-existing",
+            "cutie-pi.spaceId": "space-1",
           },
         },
         State: { Running: true },
@@ -970,26 +970,26 @@ describe("space computer limit enforcement", () => {
     mocks.docker.listContainers.mockImplementation(
       async (opts?: { filters?: { label?: string[] } }) => {
         const labels = opts?.filters?.label ?? [];
-        if (labels.some((l: string) => l === "rakazo.botId=bot-existing")) {
+        if (labels.some((l: string) => l === "cutie-pi.botId=bot-existing")) {
           return present.has(existing.id)
             ? [
                 {
                   Id: existing.id,
                   Labels: {
-                    "rakazo.managed": "true",
-                    "rakazo.botId": "bot-existing",
-                    "rakazo.spaceId": "space-1",
+                    "cutie-pi.managed": "true",
+                    "cutie-pi.botId": "bot-existing",
+                    "cutie-pi.spaceId": "space-1",
                   },
                 },
               ]
             : [];
         }
-        if (labels.some((l: string) => l.startsWith("rakazo.botId="))) {
+        if (labels.some((l: string) => l.startsWith("cutie-pi.botId="))) {
           return [];
         }
         return [...present].map((Id) => ({
           Id,
-          Labels: { "rakazo.managed": "true", "rakazo.spaceId": "space-1" },
+          Labels: { "cutie-pi.managed": "true", "cutie-pi.spaceId": "space-1" },
         }));
       },
     );
@@ -1020,16 +1020,16 @@ describe("screen release status", () => {
   const headers = {
     authorization: `Bearer ${resolveSupervisorToken(process.env)}`,
     "content-type": "application/json",
-    "x-rakazo-bot-id": "bot",
-    "x-rakazo-space-id": "space",
-    "x-rakazo-screen-id": "writer",
+    "x-cutie-pi-bot-id": "bot",
+    "x-cutie-pi-space-id": "space",
+    "x-cutie-pi-screen-id": "writer",
   };
 
   function managedContainer(exec?: ReturnType<typeof vi.fn>) {
     return {
       inspect: vi.fn(async () => ({
         Config: {
-          Labels: { "rakazo.managed": "true", "rakazo.botId": "bot", "rakazo.spaceId": "space" },
+          Labels: { "cutie-pi.managed": "true", "cutie-pi.botId": "bot", "cutie-pi.spaceId": "space" },
         },
         HostConfig: { NetworkMode: computerNetworkNameFor("bot") },
         State: { Running: true },
@@ -1067,7 +1067,7 @@ describe("screen release status", () => {
     const container = {
       inspect: vi.fn().mockResolvedValue({
         Config: {
-          Labels: { "rakazo.managed": "true", "rakazo.botId": "other", "rakazo.spaceId": "other" },
+          Labels: { "cutie-pi.managed": "true", "cutie-pi.botId": "other", "cutie-pi.spaceId": "other" },
         },
       }),
       exec: vi.fn(),
@@ -1106,7 +1106,7 @@ describe("screen release status", () => {
     failStop = true;
     const released = await supervisorApp.request("/computers/release-failed/screen", {
       method: "DELETE",
-      headers: { ...headers, "x-rakazo-screen-lease-id": "run-1:1" },
+      headers: { ...headers, "x-cutie-pi-screen-lease-id": "run-1:1" },
     });
     expect(released.status).toBe(500);
     await expect(released.json()).resolves.toEqual({ error: "computer screen failed to stop" });
@@ -1136,7 +1136,7 @@ describe("screen release status", () => {
     failStart = true;
     const released = await supervisorApp.request("/computers/exec-start-404/screen", {
       method: "DELETE",
-      headers: { ...headers, "x-rakazo-screen-lease-id": "run-1:1" },
+      headers: { ...headers, "x-cutie-pi-screen-lease-id": "run-1:1" },
     });
     expect(released.status).toBe(500);
     await expect(released.json()).resolves.toEqual({ error: "no such exec" });
@@ -1150,7 +1150,7 @@ describe("screen registry across run boundaries", () => {
     const container = {
       inspect: vi.fn().mockResolvedValue({
         Config: {
-          Labels: { "rakazo.managed": "true", "rakazo.botId": "bot", "rakazo.spaceId": "space" },
+          Labels: { "cutie-pi.managed": "true", "cutie-pi.botId": "bot", "cutie-pi.spaceId": "space" },
         },
         HostConfig: { NetworkMode: computerNetworkNameFor("bot") },
         State: { Running: true },
@@ -1167,9 +1167,9 @@ describe("screen registry across run boundaries", () => {
     const headers = {
       authorization: `Bearer ${resolveSupervisorToken(process.env)}`,
       "content-type": "application/json",
-      "x-rakazo-bot-id": "bot",
-      "x-rakazo-space-id": "space",
-      "x-rakazo-screen-id": "writer",
+      "x-cutie-pi-bot-id": "bot",
+      "x-cutie-pi-space-id": "space",
+      "x-cutie-pi-screen-id": "writer",
     };
     const view = () =>
       supervisorApp.request("/computers/registry/screen-mode", {
@@ -1178,14 +1178,14 @@ describe("screen registry across run boundaries", () => {
         body: JSON.stringify({ interactive: false, revokeControl: false }),
       });
     const resets = () =>
-      commands.filter((command) => command.includes("for marker in /tmp/rakazo/browser-profile-*"))
+      commands.filter((command) => command.includes("for marker in /tmp/cutie-pi/browser-profile-*"))
         .length;
 
     expect((await view()).status).toBe(200);
     expect(resets()).toBe(1);
     const released = await supervisorApp.request("/computers/registry/screen", {
       method: "DELETE",
-      headers: { ...headers, "x-rakazo-screen-lease-id": "run-1:1" },
+      headers: { ...headers, "x-cutie-pi-screen-lease-id": "run-1:1" },
     });
     expect(released.status).toBe(200);
     expect((await view()).status).toBe(200);

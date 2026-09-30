@@ -148,7 +148,7 @@ describe("Dictation recorder fallback", () => {
   });
 
   it("keeps transcription in the space where recording started", async () => {
-    const store = new Map<string, string>([["rakazo:space-id", "space-support"]]);
+    const store = new Map<string, string>([["cutie-pi:space-id", "space-support"]]);
     const localStorage = {
       getItem: (key: string) => store.get(key) ?? null,
       setItem: (key: string, value: string) => {
@@ -191,7 +191,7 @@ describe("Dictation recorder fallback", () => {
     const onFinal = vi.fn();
     const dictation = new Dictation();
     await dictation.listen({ mode: "hold", transcribe: true, onFinal });
-    store.set("rakazo:space-id", "space-other");
+    store.set("cutie-pi:space-id", "space-other");
     dictation.submitHold();
     await vi.waitFor(() => expect(onFinal).toHaveBeenCalledWith("hello"));
 
@@ -200,7 +200,7 @@ describe("Dictation recorder fallback", () => {
       expect.objectContaining({ credentials: "include" }),
     );
     const headers = new Headers(fetchMock.mock.calls[0]?.[1]?.headers);
-    expect(headers.get("x-rakazo-space-id")).toBe("space-support");
+    expect(headers.get("x-cutie-pi-space-id")).toBe("space-support");
     expect(headers.get("content-type")).toBe("application/json");
   });
 
@@ -596,7 +596,7 @@ describe("dictation engine choice", () => {
   it("treats Electron as having no usable Web Speech", () => {
     vi.stubGlobal("window", {
       webkitSpeechRecognition: class {},
-      rakazoDesktop: { platform: "darwin" },
+      cutie-piDesktop: { platform: "darwin" },
     });
     expect(webSpeechAvailable()).toBe(false);
   });
@@ -762,7 +762,7 @@ describe("Dictation web speech", () => {
     }
     vi.stubGlobal("window", {
       webkitSpeechRecognition: FakeRecognition,
-      rakazoDesktop: { platform: "darwin" },
+      cutie-piDesktop: { platform: "darwin" },
     });
     const fetchMock = vi.fn(async () => Response.json({ text: "from fish" }));
     stubRecorderFallback(fetchMock);

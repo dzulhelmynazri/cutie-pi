@@ -3,7 +3,7 @@ import {
   ComputerCommandSchema,
   foldComputerCommands,
   type ProductEvent,
-} from "@rakazo/contracts";
+} from "@cutie-pi/contracts";
 
 type Listener = (botId: string, command: ComputerCommand) => void;
 

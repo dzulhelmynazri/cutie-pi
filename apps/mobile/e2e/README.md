@@ -2,12 +2,12 @@
 
 This opt-in [Maestro](https://maestro.mobile.dev/) flow exercises sign-in, bot creation,
 thread messaging, and computer takeover/release on a real Android emulator or iOS simulator. It
-expects a running Rakazo stack and deliberately stays out of ordinary pull-request CI.
+expects a running CutiePi stack and deliberately stays out of ordinary pull-request CI.
 
 ## Prerequisites
 
 1. Install the Maestro CLI and start an Android emulator or iOS simulator.
-2. Start Rakazo's database, API, worker, and sandbox supervisor. The computer portion requires a
+2. Start CutiePi's database, API, worker, and sandbox supervisor. The computer portion requires a
    working sandbox provider (the normal local Docker provider is sufficient).
 3. Create a disposable test account through the mobile or web sign-up screen. Never use a
    production account or put credentials in this repository.
@@ -16,7 +16,7 @@ expects a running Rakazo stack and deliberately stays out of ordinary pull-reque
    simulator. For example:
 
    ```sh
-   EXPO_PUBLIC_API_URL=http://10.0.2.2:3100 pnpm --filter @rakazo/mobile android
+   EXPO_PUBLIC_API_URL=http://10.0.2.2:3100 pnpm --filter @cutie-pi/mobile android
    ```
 
 ## Run
@@ -24,11 +24,11 @@ expects a running Rakazo stack and deliberately stays out of ordinary pull-reque
 Pass all fixture values at invocation time so credentials never land in source control:
 
 ```sh
-pnpm --filter @rakazo/mobile test:e2e -- \
-  -e RAKAZO_E2E_EMAIL=mobile-smoke@example.test \
-  -e RAKAZO_E2E_PASSWORD='replace-with-the-disposable-password' \
-  -e RAKAZO_E2E_BOT_NAME=MaestroSmoke-001 \
-  -e RAKAZO_E2E_MESSAGE=mobile-smoke-message
+pnpm --filter @cutie-pi/mobile test:e2e -- \
+  -e CUTIE_PI_E2E_EMAIL=mobile-smoke@example.test \
+  -e CUTIE_PI_E2E_PASSWORD='replace-with-the-disposable-password' \
+  -e CUTIE_PI_E2E_BOT_NAME=MaestroSmoke-001 \
+  -e CUTIE_PI_E2E_MESSAGE=mobile-smoke-message
 ```
 
 Use a new bot name for each run if the backing database is persistent. `clearState` resets the app's

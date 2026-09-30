@@ -13,7 +13,7 @@ import {
 import net from "node:net";
 import { tmpdir } from "node:os";
 import path from "node:path";
-import { encodeTerminalInput, encodeTerminalResize } from "@rakazo/contracts";
+import { encodeTerminalInput, encodeTerminalResize } from "@cutie-pi/contracts";
 import { afterEach, describe, expect, it } from "vitest";
 import { interactiveScreenCommand, screenPorts, startTerminalCommand } from "./desktop-runtime.js";
 import { TERMINAL_SERVER_PROGRAM } from "./terminal-server.js";
@@ -102,7 +102,7 @@ describe("terminal server", () => {
     const { socket, state } = await startServer({ uid: 501, gid: 20 });
     const { client, waitFor } = connect(socket);
     client.write(encodeTerminalInput("echo who-$(whoami)-$USER\n"));
-    await expect(waitFor(/who-rakazo-rakazo/)).resolves.toContain("who-rakazo-rakazo");
+    await expect(waitFor(/who-cutie-pi-cutie-pi/)).resolves.toContain("who-cutie-pi-cutie-pi");
     expect(readdirSync(state)).toHaveLength(2);
     // Stopping the terminal signals every session; each removes its identity files.
     spawnSync("pkill", ["-TERM", "-f", socket]);
@@ -113,24 +113,24 @@ describe("terminal server", () => {
   });
 });
 
-// Runs the real start script against /tmp/rakazo on a display no computer uses.
+// Runs the real start script against /tmp/cutie-pi on a display no computer uses.
 const canRunScript =
   process.platform === "linux" && spawnSync("sh", ["-c", "command -v pgrep"]).status === 0;
 describe.skipIf(!canRunScript)("terminal start script", () => {
   const layout = screenPorts(4000);
   const display = layout.displayNumber;
-  const target = `/tmp/rakazo/desktop-targets/terminal-${display}`;
+  const target = `/tmp/cutie-pi/desktop-targets/terminal-${display}`;
   const stop = () => {
-    spawnSync("pkill", ["-KILL", "-f", `/tmp/rakazo/sockets/terminal-${display}-`]);
-    rmSync(`/tmp/rakazo/control-token-${display}`, { force: true });
+    spawnSync("pkill", ["-KILL", "-f", `/tmp/cutie-pi/sockets/terminal-${display}-`]);
+    rmSync(`/tmp/cutie-pi/control-token-${display}`, { force: true });
     rmSync(target, { recursive: true, force: true });
-    rmSync(`/tmp/rakazo/terminal-state-${display}`, { recursive: true, force: true });
-    rmSync(`/tmp/rakazo/terminal-target-next-${display}`, { recursive: true, force: true });
+    rmSync(`/tmp/cutie-pi/terminal-state-${display}`, { recursive: true, force: true });
+    rmSync(`/tmp/cutie-pi/terminal-target-next-${display}`, { recursive: true, force: true });
   };
   afterEach(stop);
 
   const start = (lease: string, token: string, cwd: string) => {
-    writeFileSync(`/tmp/rakazo/control-token-${display}`, lease);
+    writeFileSync(`/tmp/cutie-pi/control-token-${display}`, lease);
     return spawnSync(
       "bash",
       ["-eu", "-c", startTerminalCommand(lease, token, cwd, undefined, layout)],
@@ -147,12 +147,12 @@ describe.skipIf(!canRunScript)("terminal start script", () => {
 
   it("stops before the gateway when the token cannot be published", () => {
     stop();
-    mkdirSync("/tmp/rakazo", { recursive: true });
+    mkdirSync("/tmp/cutie-pi", { recursive: true });
     const cwd = mkdtempSync(path.join(tmpdir(), "terminal-cwd-"));
     cleanup.push(() => rmSync(cwd, { recursive: true, force: true }));
-    writeFileSync(`/tmp/rakazo/control-token-${display}`, "lease-a");
+    writeFileSync(`/tmp/cutie-pi/control-token-${display}`, "lease-a");
     // A directory where the target file is staged makes publishing fail.
-    mkdirSync(`/tmp/rakazo/terminal-target-next-${display}`);
+    mkdirSync(`/tmp/cutie-pi/terminal-target-next-${display}`);
     // The Docker supervisor runs the script with plain `bash -c`, without -e.
     const script = `${startTerminalCommand("lease-a", "tab-1", cwd, undefined, layout)}\necho reached-gateway`;
     const result = spawnSync("bash", ["-c", script], { encoding: "utf8" });
@@ -162,7 +162,7 @@ describe.skipIf(!canRunScript)("terminal start script", () => {
 
   it("keeps open shells when another tab joins, and replaces the server for a new lease", async () => {
     stop();
-    mkdirSync("/tmp/rakazo", { recursive: true });
+    mkdirSync("/tmp/cutie-pi", { recursive: true });
     const cwd = mkdtempSync(path.join(tmpdir(), "terminal-cwd-"));
     cleanup.push(() => rmSync(cwd, { recursive: true, force: true }));
 
@@ -198,12 +198,12 @@ describe.skipIf(!canRunScript)("terminal start script", () => {
     expect(release("lease-a").status).toBe(0);
     current.client.write(encodeTerminalInput("echo alive-$((40 + 5))\n"));
     await current.waitFor(/alive-45/);
-    expect(release("lease-b").stdout).toContain("RAKAZO_CONTROL_RELEASED");
+    expect(release("lease-b").stdout).toContain("CUTIE_PI_CONTROL_RELEASED");
     await expect(current.closed).resolves.toBeDefined();
     expect(readFileSync(target, "utf8")).toBe("");
 
     expect(start("lease-c", "tab-4", cwd).status).toBe(0);
-    writeFileSync(`/tmp/rakazo/control-token-${display}`, "lease-d");
+    writeFileSync(`/tmp/cutie-pi/control-token-${display}`, "lease-d");
     const stale = spawnSync(
       "bash",
       ["-eu", "-c", startTerminalCommand("lease-c", "tab-5", cwd, undefined, layout)],

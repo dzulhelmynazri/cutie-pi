@@ -1,5 +1,5 @@
-import { AgentSecretInputSchema } from "@rakazo/contracts";
-import { redactSecrets } from "@rakazo/core";
+import { AgentSecretInputSchema } from "@cutie-pi/contracts";
+import { redactSecrets } from "@cutie-pi/core";
 
 type EncryptedAgentSecret = {
   name: string;

@@ -46,7 +46,7 @@ async function captureSidebarSearchSelected(
 
 test("account settings appearance control switches to light mode", async ({ page }, testInfo) => {
   const stamp = Date.now();
-  await signup(page, `ui-appearance-${stamp}@rakazo.test`, "password12", "Appearance QA");
+  await signup(page, `ui-appearance-${stamp}@cutie-pi.test`, "password12", "Appearance QA");
   await completeOnboarding(page, testInfo);
 
   await page.getByTestId("user-menu-trigger").click();
@@ -99,7 +99,7 @@ test("sidebar bot rows hover with the same tone as the integrations row", async 
   page,
 }, testInfo) => {
   const stamp = Date.now();
-  await signup(page, `ui-hover-${stamp}@rakazo.test`, "password12", "Hover QA");
+  await signup(page, `ui-hover-${stamp}@cutie-pi.test`, "password12", "Hover QA");
   await completeOnboarding(page, testInfo);
   await createNamedBot(page, "Second Bot");
 

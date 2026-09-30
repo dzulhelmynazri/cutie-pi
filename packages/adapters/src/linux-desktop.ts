@@ -8,7 +8,7 @@ import type {
   ScreenRequest,
   ScreenSession,
   TerminalRequest,
-} from "@rakazo/adapter-kit";
+} from "@cutie-pi/adapter-kit";
 import {
   BROWSER_APPLICATIONS,
   browserLauncherPath,
@@ -22,7 +22,7 @@ import {
   screenPorts,
   shellQuote,
   stopAllDesktopBrowsersCommand,
-} from "@rakazo/core/node/desktop-runtime";
+} from "@cutie-pi/core/node/desktop-runtime";
 import {
   BrowserStoppedReleaseError,
   ComputerScreenUnavailableError,
@@ -71,7 +71,7 @@ export class LinuxDesktop {
       managedDesktopCommand(key, context.screenLeaseId, env, randomUUID()),
       context,
     );
-    const match = output.match(/RAKAZO_DESKTOP=(\d+):([a-zA-Z0-9_-]+)/);
+    const match = output.match(/CUTIE_PI_DESKTOP=(\d+):([a-zA-Z0-9_-]+)/);
     if (!match) throw new ComputerScreenUnavailableError();
     const index = Number(match[1]);
     const ports = screenPorts(index, env);
@@ -213,7 +213,7 @@ export class LinuxDesktop {
       releaseDesktopCommand(screenSessionKey(context), context.screenLeaseId, env),
       context,
     );
-    if (result.stdout.includes("RAKAZO_DESKTOP_RELEASED=")) {
+    if (result.stdout.includes("CUTIE_PI_DESKTOP_RELEASED=")) {
       if (result.code !== 0 && result.code !== 75) throw new BrowserStoppedReleaseError();
       return;
     }
@@ -234,7 +234,7 @@ function browserActionCommand(
         ? (action.uri ?? "about:blank")
         : undefined;
   if (browser !== undefined) {
-    return `nohup ${browserLauncherPath(layout.displayNumber)} ${shellQuote(browser)} </dev/null >/tmp/rakazo/browser-open-${layout.displayNumber}.log 2>&1 &`;
+    return `nohup ${browserLauncherPath(layout.displayNumber)} ${shellQuote(browser)} </dev/null >/tmp/cutie-pi/browser-open-${layout.displayNumber}.log 2>&1 &`;
   }
   const workspace = env.workspaceDir;
   return `cd ${shellQuote(workspace)}\n${extraDisplayActionCommand(layout, action.kind === "open" ? { ...action, path: workspacePath(workspace, action.path) } : action)}`;

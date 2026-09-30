@@ -1,9 +1,9 @@
-import type * as db from "@rakazo/db";
+import type * as db from "@cutie-pi/db";
 import { describe, expect, it, vi } from "vitest";
 import { chooseFocus, markAppConnected } from "./onboarding.js";
 
 const posted = vi.hoisted(() => [] as Array<{ blocks: unknown[] }>);
-vi.mock("@rakazo/db", async (original) => ({
+vi.mock("@cutie-pi/db", async (original) => ({
   ...(await original<typeof db>()),
   createThreadMessageInTransaction: vi.fn(async (_tx, input) => {
     posted.push(input);
@@ -31,7 +31,7 @@ function fixture(catalog: unknown[]) {
   const actor = {
     userId: "user",
     spaceId: "space",
-    email: "user@rakazo.test",
+    email: "user@cutie-pi.test",
     isDeploymentOwner: true,
   };
   return { deps, actor, tx };

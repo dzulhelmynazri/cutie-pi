@@ -1,9 +1,9 @@
 {
   "expo": {
-    "name": "Rakazo",
-    "slug": "rakazo",
+    "name": "CutiePi",
+    "slug": "cutie-pi",
     "owner": "inbox-zero",
-    "scheme": "rakazo",
+    "scheme": "cutie-pi",
     "version": "1.0.3",
     "orientation": "default",
     "userInterfaceStyle": "dark",
@@ -23,14 +23,14 @@
         "expo-audio",
         {
           "enableBackgroundPlayback": false,
-          "microphonePermission": "Rakazo uses the microphone for voice calls with your bots."
+          "microphonePermission": "CutiePi uses the microphone for voice calls with your bots."
         }
       ],
       [
         "expo-speech-recognition",
         {
-          "speechRecognitionPermission": "Rakazo turns your speech into messages during voice calls.",
-          "microphonePermission": "Rakazo uses the microphone for voice calls with your bots."
+          "speechRecognitionPermission": "CutiePi turns your speech into messages during voice calls.",
+          "microphonePermission": "CutiePi uses the microphone for voice calls with your bots."
         }
       ],
       "expo-localization",
@@ -46,8 +46,8 @@
       [
         "expo-image-picker",
         {
-          "photosPermission": "Rakazo uses your photo library so you can attach images to a bot message.",
-          "cameraPermission": "Rakazo uses the camera so you can attach photos to a bot message.",
+          "photosPermission": "CutiePi uses your photo library so you can attach images to a bot message.",
+          "cameraPermission": "CutiePi uses the camera so you can attach photos to a bot message.",
           "microphonePermission": false
         }
       ],
@@ -56,24 +56,24 @@
       "./plugins/with-scene-lifecycle"
     ],
     "ios": {
-      "bundleIdentifier": "com.rakazo.app",
+      "bundleIdentifier": "com.cutie-pi.app",
       "buildNumber": "1",
       "supportsTablet": false,
-      "icon": "../../packages/ui-tokens/assets/Rakazo.icon",
+      "icon": "../../packages/ui-tokens/assets/CutiePi.icon",
       "config": {
         "usesNonExemptEncryption": false
       },
       "infoPlist": {
-        "NSCameraUsageDescription": "Rakazo uses the camera so you can attach photos to a bot message.",
-        "NSPhotoLibraryUsageDescription": "Rakazo uses your photo library so you can attach images to a bot message.",
-        "NSLocalNetworkUsageDescription": "Rakazo connects to a self-hosted Rakazo server on your local network.",
+        "NSCameraUsageDescription": "CutiePi uses the camera so you can attach photos to a bot message.",
+        "NSPhotoLibraryUsageDescription": "CutiePi uses your photo library so you can attach images to a bot message.",
+        "NSLocalNetworkUsageDescription": "CutiePi connects to a self-hosted CutiePi server on your local network.",
         "NSAppTransportSecurity": {
           "NSAllowsLocalNetworking": true
         }
       }
     },
     "android": {
-      "package": "com.rakazo.app",
+      "package": "com.cutie-pi.app",
       "versionCode": 10,
       "softwareKeyboardLayoutMode": "resize",
       "icon": "./assets/icon.png",

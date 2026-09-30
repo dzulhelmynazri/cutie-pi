@@ -4,10 +4,10 @@ import { tmpdir } from "node:os";
 import path from "node:path";
 import { type ElectronApplication, _electron as electron, expect, test } from "@playwright/test";
 
-const APP_MARKER = "Local Rakazo stack ready";
+const APP_MARKER = "Local CutiePi stack ready";
 const IMAGE_TAG = "v9.9.9";
-const STACK_PROBE_PATH = "/.well-known/rakazo-desktop-stack";
-const STACK_TOKEN_HEADER = "x-rakazo-desktop-stack-token";
+const STACK_PROBE_PATH = "/.well-known/cutie-pi-desktop-stack";
+const STACK_TOKEN_HEADER = "x-cutie-pi-desktop-stack-token";
 const COMPOSE_DIR = path.resolve(import.meta.dirname, "..", "..", "..", "infra", "compose");
 
 type FakeDockerMode =
@@ -43,7 +43,7 @@ test.beforeAll(async () => {
     if (request.url === "/api/desktop-settings/rpc/integrationSetup/get") {
       const expected = await readFile(path.join(userData, "stack", ".desktop-stack-token"), "utf8");
       if (
-        request.headers["x-rakazo-local-settings-token"] !== expected.trim() ||
+        request.headers["x-cutie-pi-local-settings-token"] !== expected.trim() ||
         request.headers.cookie
       ) {
         response.writeHead(401).end();
@@ -60,7 +60,7 @@ test.beforeAll(async () => {
     }
     response.writeHead(200, { "content-type": "text/html; charset=utf-8" });
     response.end(
-      `<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Rakazo</title></head><body><main>${APP_MARKER}</main></body></html>`,
+      `<!doctype html><html lang="en"><head><meta charset="utf-8"><title>CutiePi</title></head><body><main>${APP_MARKER}</main></body></html>`,
     );
   });
   await new Promise<void>((resolve) => server.listen(0, "127.0.0.1", resolve));
@@ -77,7 +77,7 @@ test.afterAll(async () => {
 
 test.beforeEach(async () => {
   // The fake docker logs $PWD, which is the resolved path (macOS /var is a symlink).
-  userData = await realpath(await mkdtemp(path.join(tmpdir(), "rakazo-desktop-stack-")));
+  userData = await realpath(await mkdtemp(path.join(tmpdir(), "cutie-pi-desktop-stack-")));
 });
 
 test.afterEach(async () => {
@@ -91,23 +91,23 @@ function fakeDockerLog() {
 }
 
 /**
- * Stands in for the docker CLI: records `cwd | RAKAZO_IMAGE_TAG | argv` for every call and
+ * Stands in for the docker CLI: records `cwd | CUTIE_PI_IMAGE_TAG | argv` for every call and
  * answers the handful of commands the app issues. The log path and mode are baked into the
  * script because the app passes docker an allowlisted environment.
  */
 async function writeFakeDocker(mode: FakeDockerMode) {
   const script = path.join(userData, "fake-docker.sh");
-  let up = '  up) echo "Container rakazo-web-1 Started"; exit 0 ;;';
+  let up = '  up) echo "Container cutie-pi-web-1 Started"; exit 0 ;;';
   if (mode === "pool-exhausted") {
     up = '  up) echo "all predefined address pools have been fully subnetted" >&2; exit 1 ;;';
   } else if (mode === "ports-exhausted") {
     up = '  up) echo "port is already allocated" >&2; exit 1 ;;';
   } else if (mode === "port-conflict") {
-    up = `  up) if [ ! -f '${path.join(userData, "port-conflict")}' ]; then touch '${path.join(userData, "port-conflict")}'; echo "port is already allocated" >&2; exit 1; fi; echo "Container rakazo-web-1 Started"; exit 0 ;;`;
+    up = `  up) if [ ! -f '${path.join(userData, "port-conflict")}' ]; then touch '${path.join(userData, "port-conflict")}'; echo "port is already allocated" >&2; exit 1; fi; echo "Container cutie-pi-web-1 Started"; exit 0 ;;`;
   }
   const lines = [
     "#!/bin/sh",
-    `printf '%s | %s | %s\\n' "$PWD" "$RAKAZO_IMAGE_TAG" "$*" >> '${fakeDockerLog()}'`,
+    `printf '%s | %s | %s\\n' "$PWD" "$CUTIE_PI_IMAGE_TAG" "$*" >> '${fakeDockerLog()}'`,
     'case "$1 $2" in',
     '  "compose version") echo "2.29.0"; exit 0 ;;',
     '  "info --format")',
@@ -115,7 +115,7 @@ async function writeFakeDocker(mode: FakeDockerMode) {
       ? '    echo "Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?" >&2; exit 1 ;;'
       : '    echo "27.1.1"; exit 0 ;;',
     "esac",
-    "# compose --env-file .env -f docker-compose.images.yml --project-name rakazo-desktop <command> ...",
+    "# compose --env-file .env -f docker-compose.images.yml --project-name cutie-pi-desktop <command> ...",
     'case "$8" in',
     "  pull)",
     mode === "pull-fails"
@@ -132,18 +132,18 @@ async function writeFakeDocker(mode: FakeDockerMode) {
 }
 
 async function launch(mode: FakeDockerMode | "missing") {
-  const env: NodeJS.ProcessEnv = { ...process.env, RAKAZO_PERFORMANCE_USER_DATA: userData };
-  // A stale RAKAZO_WEB_URL from the developer's shell would bypass setup entirely.
-  delete env.RAKAZO_WEB_URL;
+  const env: NodeJS.ProcessEnv = { ...process.env, CUTIE_PI_PERFORMANCE_USER_DATA: userData };
+  // A stale CUTIE_PI_WEB_URL from the developer's shell would bypass setup entirely.
+  delete env.CUTIE_PI_WEB_URL;
   return electron.launch({
     args: ["."],
     cwd: path.resolve(import.meta.dirname, ".."),
     env: {
       ...env,
-      RAKAZO_DOCKER_BINARY:
+      CUTIE_PI_DOCKER_BINARY:
         mode === "missing" ? "/nonexistent/docker" : await writeFakeDocker(mode),
-      RAKAZO_LOCAL_WEB_URL: serverUrl,
-      RAKAZO_IMAGE_TAG: IMAGE_TAG,
+      CUTIE_PI_LOCAL_WEB_URL: serverUrl,
+      CUTIE_PI_IMAGE_TAG: IMAGE_TAG,
     },
   });
 }
@@ -177,7 +177,7 @@ test("This computer installs and starts the stack, then opens the app", async ()
 
   const appWindowPromise = app.waitForEvent("window");
   await setup.getByRole("button", { name: "Continue" }).click();
-  await expect(setup.locator("#stack-phase")).toHaveText("Downloading Rakazo…");
+  await expect(setup.locator("#stack-phase")).toHaveText("Downloading CutiePi…");
   await expect(setup.getByRole("button", { name: "Continue" })).toBeDisabled();
   // Docker output stays behind the details toggle; the phase, the bar, and the size show by default.
   await expect(setup.locator("#stack-detail")).toHaveText("412 MB downloaded");
@@ -204,14 +204,14 @@ test("This computer installs and starts the stack, then opens the app", async ()
   const env = await readFile(envFile, "utf8");
   expect(env).toMatch(/^POSTGRES_PASSWORD=[0-9a-f]{32}$/m);
   expect(env).toMatch(/^BETTER_AUTH_SECRET=[0-9a-f]{64}$/m);
-  expect(env).not.toContain("RAKAZO_IMAGE_TAG=");
-  expect(env).not.toContain("RAKAZO_COMPUTER_IMAGE_TAG=");
+  expect(env).not.toContain("CUTIE_PI_IMAGE_TAG=");
+  expect(env).not.toContain("CUTIE_PI_COMPUTER_IMAGE_TAG=");
   await expect(readFile(path.join(stackDir, "docker-compose.images.yml"), "utf8")).resolves.toBe(
     await readFile(path.join(COMPOSE_DIR, "docker-compose.images.yml"), "utf8"),
   );
 
   const compose =
-    "compose --env-file .env -f docker-compose.images.yml --project-name rakazo-desktop";
+    "compose --env-file .env -f docker-compose.images.yml --project-name cutie-pi-desktop";
   expect(await readLog()).toEqual([
     `${stackDir} | ${IMAGE_TAG} | compose version --short`,
     `${stackDir} | ${IMAGE_TAG} | info --format {{.ServerVersion}}`,
@@ -249,7 +249,7 @@ test("switching to Existing instance while the stack starts keeps that choice", 
   const setup = await app.firstWindow();
 
   await setup.getByRole("button", { name: "Continue" }).click();
-  await expect(setup.locator("#stack-phase")).toHaveText("Downloading Rakazo…");
+  await expect(setup.locator("#stack-phase")).toHaveText("Downloading CutiePi…");
 
   // Fake docker sleeps during pull; leave This computer before ready so followStack must not save.
   await setup.getByRole("radio", { name: /Existing instance/ }).check();
@@ -480,7 +480,7 @@ test("the native settings menu opens an isolated logged-out settings capability"
   await expect.poll(savedSetup).toEqual({ mode: "new", serverUrl });
   const denied = await main.evaluate(async () => {
     try {
-      await window.rakazoDesktop?.localSettings?.request(
+      await window.cutie-piDesktop?.localSettings?.request(
         "/api/desktop-settings/rpc/integrationSetup/get",
         "{}",
       );
@@ -499,7 +499,7 @@ test("the native settings menu opens an isolated logged-out settings capability"
   const settings = await settingsOpened;
   await expect(settings).toHaveURL(`${serverUrl}/desktop-settings`);
   const result = await settings.evaluate(() =>
-    window.rakazoDesktop?.localSettings?.request(
+    window.cutie-piDesktop?.localSettings?.request(
       "/api/desktop-settings/rpc/integrationSetup/get",
       "{}",
     ),

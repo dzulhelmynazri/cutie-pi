@@ -1,8 +1,8 @@
 const OAUTH_POPUP_NAMES = new Set([
-  "rakazo-app-connect",
-  "rakazo-mcp-oauth",
-  "rakazo-model-oauth",
-  "rakazo-plugin-connect",
+  "cutie-pi-app-connect",
+  "cutie-pi-mcp-oauth",
+  "cutie-pi-model-oauth",
+  "cutie-pi-plugin-connect",
 ]);
 
 export function shouldOpenInAppPopup(

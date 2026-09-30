@@ -1,12 +1,12 @@
-import type { ConnectorRegistry } from "@rakazo/adapters";
-import type { Actor, MessageBlock } from "@rakazo/contracts";
-import { featuredConnectorProvidersMatch } from "@rakazo/core";
-import type { Prisma, PrismaClient, ThreadEvents } from "@rakazo/db";
+import type { ConnectorRegistry } from "@cutie-pi/adapters";
+import type { Actor, MessageBlock } from "@cutie-pi/contracts";
+import { featuredConnectorProvidersMatch } from "@cutie-pi/core";
+import type { Prisma, PrismaClient, ThreadEvents } from "@cutie-pi/db";
 import {
   appendEventInTransaction,
   createThreadMessageInTransaction,
   IsolationError,
-} from "@rakazo/db";
+} from "@cutie-pi/db";
 import { requireBotThread, updateBlocks } from "./bot-thread.js";
 
 /**

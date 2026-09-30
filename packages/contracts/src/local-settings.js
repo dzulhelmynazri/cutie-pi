@@ -1,7 +1,7 @@
 /** Local host capability: limited to server configuration and its owner's model settings. */
 export const LOCAL_SETTINGS_PAGE = "/desktop-settings";
 export const LOCAL_SETTINGS_RPC = "/api/desktop-settings/rpc";
-export const LOCAL_SETTINGS_TOKEN_HEADER = "x-rakazo-local-settings-token";
+export const LOCAL_SETTINGS_TOKEN_HEADER = "x-cutie-pi-local-settings-token";
 
 const procedures = new Set([
   "me",

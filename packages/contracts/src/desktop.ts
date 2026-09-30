@@ -23,7 +23,7 @@ export interface DesktopUpdateState {
   checkedAt: string | null;
 }
 
-export interface RakazoDesktopUpdate {
+export interface CutiePiDesktopUpdate {
   state: () => Promise<DesktopUpdateState>;
   check: () => Promise<DesktopUpdateState>;
   download: () => Promise<DesktopUpdateState>;
@@ -31,12 +31,12 @@ export interface RakazoDesktopUpdate {
   install: () => Promise<DesktopUpdateState>;
 }
 
-export interface RakazoDesktopOAuthCallback {
+export interface CutiePiDesktopOAuthCallback {
   code: string;
   state?: string;
 }
 
-export interface RakazoDesktop {
+export interface CutiePiDesktop {
   /** Only the isolated local settings window is authorized to call this bridge. */
   localSettings?: {
     request: (pathname: string, body: string) => Promise<{ status: number; body: string }>;
@@ -48,7 +48,7 @@ export interface RakazoDesktop {
     toggleMaximize: () => Promise<void>;
     state: () => Promise<{ minimized: boolean; maximized: boolean; fullScreen: boolean }>;
   };
-  update: RakazoDesktopUpdate;
+  update: CutiePiDesktopUpdate;
   oauth: {
     /**
      * Open system-browser auth. A redirect_uri must be HTTP loopback with state;
@@ -60,12 +60,12 @@ export interface RakazoDesktop {
      * Authorization codes captured from the system browser or a legacy popup.
      * Returns an unsubscribe function.
      */
-    onCallback: (listener: (callback: RakazoDesktopOAuthCallback) => void) => () => void;
+    onCallback: (listener: (callback: CutiePiDesktopOAuthCallback) => void) => () => void;
   };
 }
 
 /**
- * How the desktop app was pointed at a Rakazo server during first-run setup.
+ * How the desktop app was pointed at a CutiePi server during first-run setup.
  * `new` is the Docker Compose stack this app installs and runs on the same computer.
  */
 export type DesktopInstanceMode = "new" | "existing";
@@ -129,9 +129,9 @@ export type DesktopSetupLink = "docker-desktop" | "orbstack" | "docker-engine";
 
 /**
  * Bridge exposed only to the first-run setup window. The app window keeps the
- * narrower `rakazoDesktop` bridge so a connected server can never re-point the app.
+ * narrower `cutie-piDesktop` bridge so a connected server can never re-point the app.
  */
-export interface RakazoSetup {
+export interface CutiePiSetup {
   /** Used only to reserve space for native window controls in the local setup UI. */
   platform: string;
   state: () => Promise<DesktopSetupState>;

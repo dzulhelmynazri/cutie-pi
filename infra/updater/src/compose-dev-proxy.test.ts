@@ -49,11 +49,11 @@ describe("source-checkout compose postgres hardening", () => {
     expect(postgres?.environment?.POSTGRES_PASSWORD).toBe(
       "${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}",
     );
-    expect(postgres?.environment?.POSTGRES_USER).toBe("${POSTGRES_USER:-rakazo}");
-    expect(postgres?.environment?.POSTGRES_DB).toBe("${POSTGRES_DB:-rakazo}");
+    expect(postgres?.environment?.POSTGRES_USER).toBe("${POSTGRES_USER:-cutie-pi}");
+    expect(postgres?.environment?.POSTGRES_DB).toBe("${POSTGRES_DB:-cutie-pi}");
     for (const name of ["api", "worker"] as const) {
       expect(compose.services[name]?.environment?.DATABASE_URL).toBe(
-        "postgres://${POSTGRES_USER:-rakazo}:${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}@postgres:5432/${POSTGRES_DB:-rakazo}",
+        "postgres://${POSTGRES_USER:-cutie-pi}:${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}@postgres:5432/${POSTGRES_DB:-cutie-pi}",
       );
     }
   });

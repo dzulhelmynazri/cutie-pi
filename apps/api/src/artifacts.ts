@@ -1,16 +1,16 @@
 import { createHash } from "node:crypto";
-import type { ArtifactStore } from "@rakazo/adapter-kit";
-import type { Actor } from "@rakazo/contracts";
-import { ATTACHMENT_MAX_COUNT } from "@rakazo/contracts";
+import type { ArtifactStore } from "@cutie-pi/adapter-kit";
+import type { Actor } from "@cutie-pi/contracts";
+import { ATTACHMENT_MAX_COUNT } from "@cutie-pi/contracts";
 import {
   AttachmentValidationError,
   decodeAttachmentBase64,
   messageBlockForArtifact,
   promptTextForAttachments,
   validateAttachmentMimeType,
-} from "@rakazo/core";
-import type { PrismaClient } from "@rakazo/db";
-import { IsolationError, Prisma, withResolvedArtifactVersion } from "@rakazo/db";
+} from "@cutie-pi/core";
+import type { PrismaClient } from "@cutie-pi/db";
+import { IsolationError, Prisma, withResolvedArtifactVersion } from "@cutie-pi/db";
 
 function adapterContext(actor: Actor, botId: string, operationId: string) {
   return {

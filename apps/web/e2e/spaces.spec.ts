@@ -5,7 +5,7 @@ test("spaces stay invisible by default and chat creation requires approval", asy
   page,
 }, testInfo) => {
   const stamp = Date.now();
-  await signup(page, `spaces-${stamp}@rakazo.test`, "password12", "Space Owner");
+  await signup(page, `spaces-${stamp}@cutie-pi.test`, "password12", "Space Owner");
   await completeOnboarding(page);
 
   const sidebar = page.locator("aside").first();
@@ -47,7 +47,7 @@ test("spaces stay invisible by default and chat creation requires approval", asy
   await supportSpace.getByRole("button", { name: "Open Customer support" }).click();
   await page.waitForURL(/\/(onboarding|app)/);
   await expect
-    .poll(() => page.evaluate(() => window.localStorage.getItem("rakazo:space-id")))
+    .poll(() => page.evaluate(() => window.localStorage.getItem("cutie-pi:space-id")))
     .toBe(supportSpaceId);
   await completeOnboarding(page);
 
@@ -65,7 +65,7 @@ test("spaces stay invisible by default and chat creation requires approval", asy
   await personalSpace.getByRole("button", { name: /^Chief/ }).click();
   await page.waitForURL(/\/app\/[^/]+$/);
   await expect
-    .poll(() => page.evaluate(() => window.localStorage.getItem("rakazo:space-id")))
+    .poll(() => page.evaluate(() => window.localStorage.getItem("cutie-pi:space-id")))
     .toBe(personalSpaceId);
   await expect(sidebar.getByText("Customer support", { exact: true })).toBeVisible();
 });
@@ -74,7 +74,7 @@ test("a new space auto-completes onboarding and can be deleted from its menu", a
   page,
 }, testInfo) => {
   const stamp = Date.now();
-  await signup(page, `spaces-delete-${stamp}@rakazo.test`, "password12", "Space Owner");
+  await signup(page, `spaces-delete-${stamp}@cutie-pi.test`, "password12", "Space Owner");
   await completeOnboarding(page);
 
   const sidebar = page.locator("aside").first();
@@ -126,7 +126,7 @@ test("a new space auto-completes onboarding and can be deleted from its menu", a
 
 test("deleting the last bot in a space stays in the app after first use", async ({ page }) => {
   const stamp = Date.now();
-  await signup(page, `spaces-empty-${stamp}@rakazo.test`, "password12", "Space Owner");
+  await signup(page, `spaces-empty-${stamp}@cutie-pi.test`, "password12", "Space Owner");
   await completeOnboarding(page);
   const [chief] = await rpc<Array<{ id: string }>>(page, "bots/list", {});
   expect(chief).toBeTruthy();

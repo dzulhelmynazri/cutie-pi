@@ -6,12 +6,12 @@ import {
   desktopOAuthCode,
   oauthStateOf,
   onDesktopOAuthCallback,
-  type RakazoDesktop,
-  type RakazoDesktopOAuthCallback,
+  type CutiePiDesktop,
+  type CutiePiDesktopOAuthCallback,
   windowChromeKind,
 } from "./desktop.js";
 
-function desktop(platform: string): RakazoDesktop {
+function desktop(platform: string): CutiePiDesktop {
   const updateState = {
     phase: "unsupported" as const,
     currentVersion: "0.1.0",
@@ -99,20 +99,20 @@ describe("attempt correlation", () => {
   afterEach(() => vi.unstubAllGlobals());
 
   function bridgeEmitting() {
-    let emit: (callback: RakazoDesktopOAuthCallback) => void = () => undefined;
+    let emit: (callback: CutiePiDesktopOAuthCallback) => void = () => undefined;
     const unsubscribe = vi.fn();
     vi.stubGlobal("window", {
-      rakazoDesktop: {
+      cutie-piDesktop: {
         ...desktop("linux"),
         oauth: {
-          onCallback: (listener: (callback: RakazoDesktopOAuthCallback) => void) => {
+          onCallback: (listener: (callback: CutiePiDesktopOAuthCallback) => void) => {
             emit = listener;
             return unsubscribe;
           },
         },
       },
     });
-    return { emit: (c: RakazoDesktopOAuthCallback) => emit(c), unsubscribe };
+    return { emit: (c: CutiePiDesktopOAuthCallback) => emit(c), unsubscribe };
   }
 
   it("reads the attempt state out of the authorize URL", () => {

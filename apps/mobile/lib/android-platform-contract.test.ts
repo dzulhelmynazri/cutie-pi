@@ -37,10 +37,10 @@ describe("Android mobile platform contract", () => {
   it("requests live-update promotion and exposes its Android settings", () => {
     const nativeRoot = resolve(
       mobileRoot,
-      "modules/rakazo-notifications/android/src/main/java/com/rakazo/notifications",
+      "modules/cutie-pi-notifications/android/src/main/java/com/cutie-pi/notifications",
     );
-    const service = readFileSync(resolve(nativeRoot, "RakazoNotificationService.kt"), "utf8");
-    const module = readFileSync(resolve(nativeRoot, "RakazoNotificationsModule.kt"), "utf8");
+    const service = readFileSync(resolve(nativeRoot, "CutiePiNotificationService.kt"), "utf8");
+    const module = readFileSync(resolve(nativeRoot, "CutiePiNotificationsModule.kt"), "utf8");
     const allowlist = readFileSync(resolve(nativeRoot, "EndpointAllowlist.kt"), "utf8");
     const live = readFileSync(resolve(mobileRoot, "lib/live-notifications.ts"), "utf8");
     const thread = readFileSync(resolve(mobileRoot, "app/thread.tsx"), "utf8");
@@ -54,7 +54,7 @@ describe("Android mobile platform contract", () => {
     expect(service).toContain("if (!isAllowedNotificationEndpoint(endpoint)) throw IOException");
     expect(module).toContain("android.settings.APP_NOTIFICATION_PROMOTION_SETTINGS");
     expect(module).not.toContain("settings.copy(liveConnection = false)");
-    expect(module).toContain("RakazoNotificationService.clearSession(context)");
+    expect(module).toContain("CutiePiNotificationService.clearSession(context)");
     expect(module).toContain("isAllowedNotificationEndpoint(endpoint)");
     expect(module).toContain("storage.spaceId = spaceId");
     expect(allowlist).toContain("isAllowedNotificationEndpoint");
@@ -64,7 +64,7 @@ describe("Android mobile platform contract", () => {
     expect(live).toMatch(
       /export async function resumeLiveNotifications[\s\S]*normalizeApiBase\(endpoint\)[\s\S]*nativeNotifications\.resume\(parsed\.url/,
     );
-    expect(service).toContain('connection.setRequestProperty("x-rakazo-space-id", spaceId)');
+    expect(service).toContain('connection.setRequestProperty("x-cutie-pi-space-id", spaceId)');
     expect(service).toContain("storage.spaceId.isBlank()");
     expect(service).toContain("private fun prepareHistorySpace(");
     expect(service).toContain("knownCompleted.clear()");
@@ -98,9 +98,9 @@ describe("Android mobile platform contract", () => {
       "fun clearSession(context: Context) {\n      synchronized(sessionLock)",
     );
     expect(service).not.toContain("private fun postCompletion(");
-    expect(service).toContain('"rakazo://group-thread?groupId=');
+    expect(service).toContain('"cutie-pi://group-thread?groupId=');
     expect(service).toMatch(/&spaceId=\$\{Uri\.encode\(run\.spaceId\)\}/);
-    expect(service).toContain('putString("rakazo.spaceId", run.spaceId)');
+    expect(service).toContain('putString("cutie-pi.spaceId", run.spaceId)');
     expect(thread).toContain("export default function ThreadRoute()");
     expect(thread).toContain("selectSpace(requestedSpaceId)");
     expect(thread).toContain("routeMatchesSelectedSpace) return <Thread />");
@@ -114,7 +114,7 @@ describe("Android mobile platform contract", () => {
     const service = readFileSync(
       resolve(
         mobileRoot,
-        "modules/rakazo-notifications/android/src/main/java/com/rakazo/notifications/RakazoNotificationService.kt",
+        "modules/cutie-pi-notifications/android/src/main/java/com/cutie-pi/notifications/CutiePiNotificationService.kt",
       ),
       "utf8",
     );
@@ -127,7 +127,7 @@ describe("Android mobile platform contract", () => {
     expect(service).toMatch(
       /private fun showLive\(active: List<RunRecord>[\s\S]*val primary = active\.first\(\)/,
     );
-    expect(service).toContain('putString("rakazo.botId", run.botId)');
+    expect(service).toContain('putString("cutie-pi.botId", run.botId)');
     expect(service).toMatch(/if \(working\.isEmpty\(\)\) \{[\s\S]*stop\(\)[\s\S]*return[\s\S]*\}/);
   });
 

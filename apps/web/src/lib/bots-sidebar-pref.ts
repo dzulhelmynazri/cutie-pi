@@ -1,4 +1,4 @@
-const STORAGE_PREFIX = "rakazo:bots-sidebar-collapsed:";
+const STORAGE_PREFIX = "cutie-pi:bots-sidebar-collapsed:";
 
 export function botsSidebarCollapsedStorageKey(userId: string | null | undefined): string | null {
   if (!userId) return null;

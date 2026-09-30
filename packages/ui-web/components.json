@@ -13,11 +13,11 @@
   "iconLibrary": "lucide",
   "rtl": false,
   "aliases": {
-    "components": "@rakazo/ui-web/components",
-    "utils": "@rakazo/ui-web/lib/utils",
-    "ui": "@rakazo/ui-web/components/ui",
-    "lib": "@rakazo/ui-web/lib",
-    "hooks": "@rakazo/ui-web/hooks"
+    "components": "@cutie-pi/ui-web/components",
+    "utils": "@cutie-pi/ui-web/lib/utils",
+    "ui": "@cutie-pi/ui-web/components/ui",
+    "lib": "@cutie-pi/ui-web/lib",
+    "hooks": "@cutie-pi/ui-web/hooks"
   },
   "menuColor": "default",
   "menuAccent": "subtle",

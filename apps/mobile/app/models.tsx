@@ -1,4 +1,4 @@
-import type { ModelOAuthBegin, ThinkingLevel } from "@rakazo/contracts";
+import type { ModelOAuthBegin, ThinkingLevel } from "@cutie-pi/contracts";
 import {
   DEFAULT_MODEL_CONTEXT_WINDOW,
   DEFAULT_MODEL_MAX_TOKENS,
@@ -10,8 +10,8 @@ import {
   parseModelContextWindow,
   parseModelMaxImagesPerPrompt,
   parseModelMaxTokens,
-} from "@rakazo/contracts";
-import { createModelProbe, featuredModelProviders, initialModelProbeState } from "@rakazo/core";
+} from "@cutie-pi/contracts";
+import { createModelProbe, featuredModelProviders, initialModelProbeState } from "@cutie-pi/core";
 import { useFocusEffect } from "expo-router";
 import { useCallback, useMemo, useRef, useState } from "react";
 import {
@@ -979,7 +979,7 @@ export default function Models() {
             {selected.auth === "oauth" && !subscriptionSignIn ? (
               <Text style={styles.secondary}>
                 {t(
-                  "This subscription sign-in is not available in Rakazo yet. Use a deployment credential or choose another provider.",
+                  "This subscription sign-in is not available in CutiePi yet. Use a deployment credential or choose another provider.",
                 )}
               </Text>
             ) : null}

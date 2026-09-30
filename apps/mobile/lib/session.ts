@@ -1,7 +1,7 @@
 import * as SecureStore from "expo-secure-store";
 import { stopLiveNotifications } from "./live-notifications";
 
-const SESSION_KEY = "rakazo.session_token";
+const SESSION_KEY = "cutie-pi.session_token";
 
 /** In-memory gate so a failed SecureStore wipe cannot keep sending the old bearer. */
 let sessionInvalidated = false;

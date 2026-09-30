@@ -39,7 +39,7 @@ async function captureActivitySidebar(
 
 test("sidebar Now and Recent surface active and terminal runs", async ({ page }, testInfo) => {
   const stamp = Date.now();
-  await signup(page, `activity-${stamp}@rakazo.test`, "password12", "Activity");
+  await signup(page, `activity-${stamp}@cutie-pi.test`, "password12", "Activity");
   await completeOnboarding(page);
 
   const aside = page.locator("aside").first();

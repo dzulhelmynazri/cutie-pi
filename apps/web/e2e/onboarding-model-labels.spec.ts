@@ -21,7 +21,7 @@ test("onboarding uses compact model selects without misleading latest labels", a
   });
 
   const stamp = Date.now();
-  await signup(page, `model-labels-${stamp}@rakazo.test`, "password12", `Model labels ${stamp}`);
+  await signup(page, `model-labels-${stamp}@cutie-pi.test`, "password12", `Model labels ${stamp}`);
   await expect(page.getByRole("heading", { name: "Connect a model" })).toBeVisible({
     timeout: 20_000,
   });

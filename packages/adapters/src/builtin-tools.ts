@@ -1,10 +1,10 @@
-import type { ConnectorTool } from "@rakazo/adapter-kit";
+import type { ConnectorTool } from "@cutie-pi/adapter-kit";
 import {
   BotSecretName,
   botSecretDestinationSchema,
   SecretAskPurpose,
   SecretHttpRequest,
-} from "@rakazo/contracts";
+} from "@cutie-pi/contracts";
 import { z } from "zod";
 import { allowPrivateHttpSecretOrigins } from "./bot-secrets.js";
 

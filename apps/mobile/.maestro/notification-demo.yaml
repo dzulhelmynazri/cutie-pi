@@ -1,4 +1,4 @@
-appId: com.rakazo.app
+appId: com.cutie-pi.app
 name: Android live working status demonstration
 ---
 - launchApp:
@@ -7,7 +7,7 @@ name: Android live working status demonstration
       notifications: allow
 # A cold API 34 emulator can show a launcher ANR over the healthy app.
 - extendedWaitUntil:
-    visible: "Sign up for Rakazo|Pixel Launcher isn't responding"
+    visible: "Sign up for CutiePi|Pixel Launcher isn't responding"
     timeout: 30000
 - runFlow:
     when:
@@ -15,13 +15,13 @@ name: Android live working status demonstration
     commands:
       - tapOn: "Close app"
 - extendedWaitUntil:
-    visible: "Sign up for Rakazo"
+    visible: "Sign up for CutiePi"
     timeout: 30000
 - tapOn: "Sign in"
 - tapOn: "Email"
-- inputText: ${RAKAZO_SCREENSHOT_EMAIL}
+- inputText: ${CUTIE_PI_SCREENSHOT_EMAIL}
 - tapOn: "Password"
-- inputText: ${RAKAZO_SCREENSHOT_PASSWORD}
+- inputText: ${CUTIE_PI_SCREENSHOT_PASSWORD}
 - hideKeyboard
 - tapOn: "Sign in"
 - extendedWaitUntil:
@@ -29,13 +29,13 @@ name: Android live working status demonstration
     timeout: 30000
 
 # Only the public demo is recorded; sign-in uses disposable fixture credentials.
-- startRecording: ${RAKAZO_NOTIFICATION_VIDEO}
-- openLink: "rakazo:///account"
+- startRecording: ${CUTIE_PI_NOTIFICATION_VIDEO}
+- openLink: "cutie-pi:///account"
 - scrollUntilVisible:
     element: "Live working status"
     direction: DOWN
 - tapOn: "Live working status"
-- openLink: "rakazo:///thread?botId=${RAKAZO_SCREENSHOT_BOT_ID}&name=Researcher"
+- openLink: "cutie-pi:///thread?botId=${CUTIE_PI_SCREENSHOT_BOT_ID}&name=Researcher"
 - extendedWaitUntil:
     visible: "Message Researcher"
     timeout: 10000
@@ -53,7 +53,7 @@ name: Android live working status demonstration
     while:
       notVisible: "Researcher is working"
     commands:
-      - evalScript: ${output.expandNotifications = http.get(RAKAZO_EXPAND_NOTIFICATIONS_URL)}
+      - evalScript: ${output.expandNotifications = http.get(CUTIE_PI_EXPAND_NOTIFICATIONS_URL)}
       - assertTrue: ${output.expandNotifications.ok}
       - waitForAnimationToEnd:
           timeout: 2000
@@ -69,13 +69,13 @@ name: Android live working status demonstration
 - extendedWaitUntil:
     notVisible: "Stop"
     timeout: 30000
-- openLink: "rakazo:///account"
+- openLink: "cutie-pi:///account"
 - scrollUntilVisible:
     element: "Live working status"
     direction: DOWN
 - tapOn: "Live working status"
 - pressKey: HOME
-- evalScript: ${output.expandNotifications = http.get(RAKAZO_EXPAND_NOTIFICATIONS_URL)}
+- evalScript: ${output.expandNotifications = http.get(CUTIE_PI_EXPAND_NOTIFICATIONS_URL)}
 - assertTrue: ${output.expandNotifications.ok}
 - waitForAnimationToEnd:
     timeout: 2000

@@ -9,15 +9,15 @@
 # The base file alone keeps the remote-provider (E2B) topology. Adding this file
 # flips the default SANDBOX_PROVIDER to docker and adds the in-stack supervisor,
 # matching docker-compose.images.yml. When the `updater` profile is enabled too,
-# mirror the file list into RAKAZO_COMPOSE_FILE and add supervisor to
-# RAKAZO_UPDATE_SERVICES (see docs/self-host.md).
+# mirror the file list into CUTIE_PI_COMPOSE_FILE and add supervisor to
+# CUTIE_PI_UPDATE_SERVICES (see docs/self-host.md).
 
 services:
   # One-shot stub whose build produces the image the supervisor launches bot
   # computers from. pull_policy build means Compose builds it and a registry is
   # never contacted for the `local` tag.
   computer:
-    image: ${RAKAZO_COMPUTER_IMAGE:-rakazo/computer}:${RAKAZO_COMPUTER_IMAGE_TAG:-local}
+    image: ${CUTIE_PI_COMPUTER_IMAGE:-cutie-pi/computer}:${CUTIE_PI_COMPUTER_IMAGE_TAG:-local}
     build:
       context: ../sandboxes/computer
     pull_policy: build
@@ -39,14 +39,14 @@ services:
   # container with the project, which is how it finds the `web` screen proxy to
   # join each bot network.
   supervisor:
-    image: ${RAKAZO_IMAGE:-ghcr.io/elie222/rakazo/app}:${RAKAZO_IMAGE_TAG:-local}
+    image: ${CUTIE_PI_IMAGE:-ghcr.io/elie222/cutie-pi/app}:${CUTIE_PI_IMAGE_TAG:-local}
     build:
       context: ../..
       dockerfile: infra/compose/Dockerfile
       args:
         GIT_SHA: ${GIT_SHA:-}
     restart: unless-stopped
-    command: ["pnpm", "--filter", "@rakazo/sandbox-supervisor", "start"]
+    command: ["pnpm", "--filter", "@cutie-pi/sandbox-supervisor", "start"]
     init: true
     user: root
     security_opt:
@@ -64,10 +64,10 @@ services:
       SUPERVISOR_HOST: "0.0.0.0"
       SUPERVISOR_PORT: "7091"
       DOCKER_SOCKET: /var/run/docker.sock
-      RAKAZO_COMPUTER_IMAGE: ${RAKAZO_COMPUTER_IMAGE:-rakazo/computer}:${RAKAZO_COMPUTER_IMAGE_TAG:-local}
-      RAKAZO_COMPUTER_MEMORY: ${RAKAZO_COMPUTER_MEMORY:-2g}
-      RAKAZO_COMPUTER_CPUS: ${RAKAZO_COMPUTER_CPUS:-2}
-      RAKAZO_COMPUTER_PIDS_LIMIT: ${RAKAZO_COMPUTER_PIDS_LIMIT:-2048}
+      CUTIE_PI_COMPUTER_IMAGE: ${CUTIE_PI_COMPUTER_IMAGE:-cutie-pi/computer}:${CUTIE_PI_COMPUTER_IMAGE_TAG:-local}
+      CUTIE_PI_COMPUTER_MEMORY: ${CUTIE_PI_COMPUTER_MEMORY:-2g}
+      CUTIE_PI_COMPUTER_CPUS: ${CUTIE_PI_COMPUTER_CPUS:-2}
+      CUTIE_PI_COMPUTER_PIDS_LIMIT: ${CUTIE_PI_COMPUTER_PIDS_LIMIT:-2048}
       SANDBOX_COMMAND_TIMEOUT_MS: ${SANDBOX_COMMAND_TIMEOUT_MS:-300000}
       SANDBOX_TEAM_SCREEN_LIMIT: ${SANDBOX_TEAM_SCREEN_LIMIT:-0}
       SANDBOX_MAX_COMPUTERS_PER_SPACE: ${SANDBOX_MAX_COMPUTERS_PER_SPACE:-0}

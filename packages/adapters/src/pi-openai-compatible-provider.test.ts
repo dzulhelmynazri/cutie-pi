@@ -1,5 +1,5 @@
 import { builtinModels } from "@earendil-works/pi-ai/providers/all";
-import { OPENAI_COMPATIBLE_PROVIDER_ID } from "@rakazo/contracts";
+import { OPENAI_COMPATIBLE_PROVIDER_ID } from "@cutie-pi/contracts";
 import { describe, expect, it } from "vitest";
 import { buildModelConnectPlaintext } from "./model-connect.js";
 import { listPiCatalog } from "./pi-models.js";
@@ -61,8 +61,8 @@ describe("model connect", () => {
   });
 
   it("rejects public http openai-compatible connects when an API key is set", () => {
-    const previous = process.env.RAKAZO_OPENAI_COMPAT_ALLOW_PUBLIC;
-    process.env.RAKAZO_OPENAI_COMPAT_ALLOW_PUBLIC = "1";
+    const previous = process.env.CUTIE_PI_OPENAI_COMPAT_ALLOW_PUBLIC;
+    process.env.CUTIE_PI_OPENAI_COMPAT_ALLOW_PUBLIC = "1";
     try {
       expect(() =>
         prepareOpenAiCompatibleConnect({
@@ -81,14 +81,14 @@ describe("model connect", () => {
         }),
       ).toThrow(/must use HTTPS/);
     } finally {
-      if (previous === undefined) delete process.env.RAKAZO_OPENAI_COMPAT_ALLOW_PUBLIC;
-      else process.env.RAKAZO_OPENAI_COMPAT_ALLOW_PUBLIC = previous;
+      if (previous === undefined) delete process.env.CUTIE_PI_OPENAI_COMPAT_ALLOW_PUBLIC;
+      else process.env.CUTIE_PI_OPENAI_COMPAT_ALLOW_PUBLIC = previous;
     }
   });
 
   it("allows public https openai-compatible connects when an API key is set", () => {
-    const previous = process.env.RAKAZO_OPENAI_COMPAT_ALLOW_PUBLIC;
-    process.env.RAKAZO_OPENAI_COMPAT_ALLOW_PUBLIC = "1";
+    const previous = process.env.CUTIE_PI_OPENAI_COMPAT_ALLOW_PUBLIC;
+    process.env.CUTIE_PI_OPENAI_COMPAT_ALLOW_PUBLIC = "1";
     try {
       const prepared = prepareOpenAiCompatibleConnect({
         provider: OPENAI_COMPATIBLE_PROVIDER_ID,
@@ -102,16 +102,16 @@ describe("model connect", () => {
         apiKey: "secret-key",
       });
     } finally {
-      if (previous === undefined) delete process.env.RAKAZO_OPENAI_COMPAT_ALLOW_PUBLIC;
-      else process.env.RAKAZO_OPENAI_COMPAT_ALLOW_PUBLIC = previous;
+      if (previous === undefined) delete process.env.CUTIE_PI_OPENAI_COMPAT_ALLOW_PUBLIC;
+      else process.env.CUTIE_PI_OPENAI_COMPAT_ALLOW_PUBLIC = previous;
     }
   });
 });
 
 describe("openai-compatible provider", () => {
   it("does not treat replaced Request Authorization as keyed for public http", async () => {
-    const previous = process.env.RAKAZO_OPENAI_COMPAT_ALLOW_PUBLIC;
-    process.env.RAKAZO_OPENAI_COMPAT_ALLOW_PUBLIC = "1";
+    const previous = process.env.CUTIE_PI_OPENAI_COMPAT_ALLOW_PUBLIC;
+    process.env.CUTIE_PI_OPENAI_COMPAT_ALLOW_PUBLIC = "1";
     try {
       const request = new Request("http://api.example.com/v1/models", {
         headers: { Authorization: "Bearer secret" },
@@ -123,16 +123,16 @@ describe("openai-compatible provider", () => {
         safeFetch(request, { headers: { Accept: "application/json" } }),
       ).resolves.toMatchObject({ status: 200 });
     } finally {
-      if (previous === undefined) delete process.env.RAKAZO_OPENAI_COMPAT_ALLOW_PUBLIC;
-      else process.env.RAKAZO_OPENAI_COMPAT_ALLOW_PUBLIC = previous;
+      if (previous === undefined) delete process.env.CUTIE_PI_OPENAI_COMPAT_ALLOW_PUBLIC;
+      else process.env.CUTIE_PI_OPENAI_COMPAT_ALLOW_PUBLIC = previous;
     }
   });
 
   it("drives the guarded dispatcher with a fetch from the same undici", async () => {
     // See remote-mcp.test: failing inside the lookup proves the request was
     // dispatched through the Agent rather than rejected by a mismatched fetch.
-    const previous = process.env.RAKAZO_OPENAI_COMPAT_ALLOW_PUBLIC;
-    process.env.RAKAZO_OPENAI_COMPAT_ALLOW_PUBLIC = "1";
+    const previous = process.env.CUTIE_PI_OPENAI_COMPAT_ALLOW_PUBLIC;
+    process.env.CUTIE_PI_OPENAI_COMPAT_ALLOW_PUBLIC = "1";
     try {
       const safeFetch = createOpenAiCompatibleFetch(undefined, async () => {
         throw new Error("lookup reached");
@@ -141,16 +141,16 @@ describe("openai-compatible provider", () => {
         cause: { message: "lookup reached" },
       });
     } finally {
-      if (previous === undefined) delete process.env.RAKAZO_OPENAI_COMPAT_ALLOW_PUBLIC;
-      else process.env.RAKAZO_OPENAI_COMPAT_ALLOW_PUBLIC = previous;
+      if (previous === undefined) delete process.env.CUTIE_PI_OPENAI_COMPAT_ALLOW_PUBLIC;
+      else process.env.CUTIE_PI_OPENAI_COMPAT_ALLOW_PUBLIC = previous;
     }
   });
 
   it("flattens a global Request so the package fetch can dispatch it", async () => {
     // undici's fetch reads a foreign Request as "[object Request]"; reaching
     // the lookup proves the request was dispatched with its URL instead.
-    const previous = process.env.RAKAZO_OPENAI_COMPAT_ALLOW_PUBLIC;
-    process.env.RAKAZO_OPENAI_COMPAT_ALLOW_PUBLIC = "1";
+    const previous = process.env.CUTIE_PI_OPENAI_COMPAT_ALLOW_PUBLIC;
+    process.env.CUTIE_PI_OPENAI_COMPAT_ALLOW_PUBLIC = "1";
     try {
       const safeFetch = createOpenAiCompatibleFetch(undefined, async () => {
         throw new Error("lookup reached");
@@ -164,8 +164,8 @@ describe("openai-compatible provider", () => {
         cause: { message: "lookup reached" },
       });
     } finally {
-      if (previous === undefined) delete process.env.RAKAZO_OPENAI_COMPAT_ALLOW_PUBLIC;
-      else process.env.RAKAZO_OPENAI_COMPAT_ALLOW_PUBLIC = previous;
+      if (previous === undefined) delete process.env.CUTIE_PI_OPENAI_COMPAT_ALLOW_PUBLIC;
+      else process.env.CUTIE_PI_OPENAI_COMPAT_ALLOW_PUBLIC = previous;
     }
   });
 
@@ -361,8 +361,8 @@ describe("openai-compatible provider", () => {
     ).rejects.toMatchObject({ name: "AbortError" });
   });
 
-  it("lists openai-compatible in the catalog even without RAKAZO_LOCAL_MODELS", () => {
-    delete process.env.RAKAZO_LOCAL_MODELS;
+  it("lists openai-compatible in the catalog even without CUTIE_PI_LOCAL_MODELS", () => {
+    delete process.env.CUTIE_PI_LOCAL_MODELS;
     const entries = listPiCatalog().filter(
       (entry) => entry.provider === OPENAI_COMPATIBLE_PROVIDER_ID,
     );

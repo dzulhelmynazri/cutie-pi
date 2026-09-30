@@ -10,7 +10,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   && rm -rf /var/lib/apt/lists/*
 WORKDIR /build
 COPY xcapture.c .
-RUN cc -O3 -fPIC -shared -Wall -Wextra -Werror -o librakazo-xcapture.so xcapture.c \
+RUN cc -O3 -fPIC -shared -Wall -Wextra -Werror -o libcutie-pi-xcapture.so xcapture.c \
     -lX11 -lXext -lXdamage -lXfixes -lXtst -lpng
 
 FROM debian:bookworm-slim@sha256:3783cc01769c7b2b1b83a5c5ad96c815348e28ed7da68e2e3687004faa906251
@@ -50,9 +50,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     xclip \
     xsel \
   && rm -rf /var/lib/apt/lists/* \
-  && groupadd --gid 1000 rakazo \
-  && useradd --uid 1000 --gid rakazo --create-home --shell /bin/bash rakazo \
-  && mkdir -p /etc/rakazo/fluxbox \
+  && groupadd --gid 1000 cutie-pi \
+  && useradd --uid 1000 --gid cutie-pi --create-home --shell /bin/bash cutie-pi \
+  && mkdir -p /etc/cutie-pi/fluxbox \
   && printf '%s\n' '#!/bin/sh' 'exec xsetroot -solid "#111113" "$@"' > /usr/bin/fbsetbg \
   && chmod +x /usr/bin/fbsetbg \
   && ln -sfn /bin/true /usr/bin/xmessage
@@ -86,39 +86,39 @@ RUN set -eux; \
   rm -f "$archive"; \
   gh --version
 ENV DISPLAY=:1
-ENV HOME=/home/rakazo
+ENV HOME=/home/cutie-pi
 # Keep UTF-8 explicit (an empty LANG broke non-ASCII file handling in the
 # file chooser for CJK-market users) and generate zh_CN.UTF-8 so deployments
 # that override the computer environment can opt in to a Chinese locale.
 RUN sed -i 's/^# zh_CN.UTF-8 UTF-8/zh_CN.UTF-8 UTF-8/' /etc/locale.gen && locale-gen
 ENV LANG=C.UTF-8
-ENV UV_TOOL_DIR=/home/rakazo/.local/share/uv/tools \
-    UV_TOOL_BIN_DIR=/home/rakazo/.local/bin \
-    UV_PYTHON_INSTALL_DIR=/home/rakazo/.local/share/uv/python \
-    UV_CACHE_DIR=/home/rakazo/.cache/uv
-WORKDIR /home/rakazo
+ENV UV_TOOL_DIR=/home/cutie-pi/.local/share/uv/tools \
+    UV_TOOL_BIN_DIR=/home/cutie-pi/.local/bin \
+    UV_PYTHON_INSTALL_DIR=/home/cutie-pi/.local/share/uv/python \
+    UV_CACHE_DIR=/home/cutie-pi/.cache/uv
+WORKDIR /home/cutie-pi
 # --chmod normalizes modes: a restrictive host umask (e.g. 077 on hardened hosts) would
 # otherwise leave these files unreadable to USER 1000 at runtime.
-COPY --chmod=755 start.sh /usr/local/bin/rakazo-computer
-COPY --chmod=755 control.py /usr/local/bin/rakazo-computer-control
-COPY --from=capture-builder /build/librakazo-xcapture.so /usr/local/lib/librakazo-xcapture.so
-COPY --chmod=755 rakazo-browser /usr/local/bin/rakazo-browser
-COPY --chmod=755 rakazo-page-browser /usr/local/bin/rakazo-page-browser
-COPY --chmod=644 rakazo-browser.desktop /usr/share/applications/rakazo-browser.desktop
-COPY --chmod=644 fluxbox.init /etc/rakazo/fluxbox/init
-COPY --chmod=644 fluxbox.apps /etc/rakazo/fluxbox/apps
-COPY --chmod=644 fluxbox.menu /etc/rakazo/fluxbox/menu
+COPY --chmod=755 start.sh /usr/local/bin/cutie-pi-computer
+COPY --chmod=755 control.py /usr/local/bin/cutie-pi-computer-control
+COPY --from=capture-builder /build/libcutie-pi-xcapture.so /usr/local/lib/libcutie-pi-xcapture.so
+COPY --chmod=755 cutie-pi-browser /usr/local/bin/cutie-pi-browser
+COPY --chmod=755 cutie-pi-page-browser /usr/local/bin/cutie-pi-page-browser
+COPY --chmod=644 cutie-pi-browser.desktop /usr/share/applications/cutie-pi-browser.desktop
+COPY --chmod=644 fluxbox.init /etc/cutie-pi/fluxbox/init
+COPY --chmod=644 fluxbox.apps /etc/cutie-pi/fluxbox/apps
+COPY --chmod=644 fluxbox.menu /etc/cutie-pi/fluxbox/menu
 COPY --chmod=644 embed.html /usr/share/novnc/embed.html
 COPY --chmod=644 clipboard-bridge.js /usr/share/novnc/clipboard-bridge.js
 COPY --chmod=644 mobile-keyboard.js /usr/share/novnc/mobile-keyboard.js
 # Login shells source this after Debian's /etc/profile resets PATH. The home
 # volume hides /etc/skel, so ~/.local/bin has to be restored from the image.
-COPY --chmod=644 rakazo-local-bin.sh /etc/profile.d/rakazo-local-bin.sh
+COPY --chmod=644 cutie-pi-local-bin.sh /etc/profile.d/cutie-pi-local-bin.sh
 # Strip CR so shebangs work even if the build context came from a CRLF checkout.
 RUN ldconfig \
-  && sed -i 's/\r$//' /usr/local/bin/rakazo-computer /usr/local/bin/rakazo-computer-control /usr/local/bin/rakazo-browser /usr/local/bin/rakazo-page-browser \
-    /etc/rakazo/fluxbox/init /etc/rakazo/fluxbox/apps /etc/rakazo/fluxbox/menu \
-    /etc/profile.d/rakazo-local-bin.sh
+  && sed -i 's/\r$//' /usr/local/bin/cutie-pi-computer /usr/local/bin/cutie-pi-computer-control /usr/local/bin/cutie-pi-browser /usr/local/bin/cutie-pi-page-browser \
+    /etc/cutie-pi/fluxbox/init /etc/cutie-pi/fluxbox/apps /etc/cutie-pi/fluxbox/menu \
+    /etc/profile.d/cutie-pi-local-bin.sh
 EXPOSE 7070 6080 6081 6082 6083 6084 6085 6086 6087 6088 6089 6090 6091 6092 6093 6094 6095
 USER 1000:1000
-CMD ["/usr/local/bin/rakazo-computer"]
+CMD ["/usr/local/bin/cutie-pi-computer"]

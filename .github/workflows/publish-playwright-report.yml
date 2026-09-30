@@ -172,7 +172,7 @@ jobs:
                 "$review_path" \
                 "$changed_paths_file"
           )"
-          marker="<!-- rakazo-playwright-screenshots -->"
+          marker="<!-- cutie-pi-playwright-screenshots -->"
           comment_id="$(gh api --paginate --slurp \
             "repos/${GITHUB_REPOSITORY}/issues/${PR_NUMBER}/comments?per_page=100" | \
             jq -r --arg marker "$marker" \

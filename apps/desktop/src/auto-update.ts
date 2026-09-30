@@ -1,4 +1,4 @@
-import type { DesktopUpdateState } from "@rakazo/contracts";
+import type { DesktopUpdateState } from "@cutie-pi/contracts";
 
 /** Long enough that a cold launch is never competing with the update feed for bandwidth. */
 export const LAUNCH_CHECK_DELAY_MS = 8_000;
@@ -73,7 +73,7 @@ export function classifyUpdaterFailure(error: unknown): UpdaterFailure {
   if (SIGNATURE.some((needle) => text.includes(needle))) {
     return {
       kind: "signature",
-      message: "This update could not be verified. Reinstall Rakazo from a trusted download.",
+      message: "This update could not be verified. Reinstall CutiePi from a trusted download.",
     };
   }
   return {

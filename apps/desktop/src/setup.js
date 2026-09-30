@@ -1,5 +1,5 @@
 (() => {
-  const bridge = window.rakazoSetup;
+  const bridge = window.cutie-piSetup;
   document.documentElement.dataset.platform = bridge?.platform ?? "browser";
 
   const form = document.getElementById("setup");
@@ -23,10 +23,10 @@
   const PHASE_LABELS = {
     "checking-docker": "Getting ready…",
     preparing: "Getting ready…",
-    pulling: "Downloading Rakazo…",
-    starting: "Starting Rakazo…",
+    pulling: "Downloading CutiePi…",
+    starting: "Starting CutiePi…",
     "waiting-healthy": "Almost ready…",
-    ready: "Rakazo is ready.",
+    ready: "CutiePi is ready.",
   };
   const TERMINAL_PHASES = new Set([
     "idle",
@@ -266,7 +266,7 @@
       const result = await bridge.test(value);
       if (result.ok) {
         serverUrl.value = result.url;
-        setStatus(`Rakazo answered at ${result.url}.`, "ok");
+        setStatus(`CutiePi answered at ${result.url}.`, "ok");
       } else {
         setStatus(result.error ?? "Could not reach that address.", "error");
       }
@@ -362,7 +362,7 @@
         continueButton.focus();
       }
     } catch {
-      setStatus("Setup could not start. Quit Rakazo and try again.", "error");
+      setStatus("Setup could not start. Quit CutiePi and try again.", "error");
       setBusy(true);
     }
   }

@@ -1,5 +1,5 @@
 {
-  "name": "@rakazo/updater",
+  "name": "@cutie-pi/updater",
   "version": "0.1.0",
   "private": true,
   "license": "Apache-2.0",
@@ -12,9 +12,9 @@
   },
   "dependencies": {
     "@hono/node-server": "2.1.1",
-    "@rakazo/contracts": "workspace:*",
-    "@rakazo/core": "workspace:*",
-    "@rakazo/logging": "workspace:*",
+    "@cutie-pi/contracts": "workspace:*",
+    "@cutie-pi/core": "workspace:*",
+    "@cutie-pi/logging": "workspace:*",
     "hono": "4.13.7",
     "tsx": "4.23.13"
   },

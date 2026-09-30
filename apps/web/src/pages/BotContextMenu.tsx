@@ -1,5 +1,5 @@
 import { useLingui } from "@lingui/react/macro";
-import type { Bot, BotSection } from "@rakazo/contracts";
+import type { Bot, BotSection } from "@cutie-pi/contracts";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,7 +9,7 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
-} from "@rakazo/ui-web";
+} from "@cutie-pi/ui-web";
 import {
   Archive,
   Bell,

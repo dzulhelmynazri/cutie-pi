@@ -6,7 +6,7 @@ import type {
   OAuthCredential,
 } from "@earendil-works/pi-ai";
 import { builtinModels } from "@earendil-works/pi-ai/providers/all";
-import type { ModelCredentialFailedState, ModelCredentialRetireReason } from "@rakazo/adapter-kit";
+import type { ModelCredentialFailedState, ModelCredentialRetireReason } from "@cutie-pi/adapter-kit";
 import {
   MAX_MODEL_CONTEXT_WINDOW,
   MAX_MODEL_MAX_TOKENS,
@@ -14,9 +14,9 @@ import {
   type ModelOAuthSignInMode,
   type ThinkingLevel,
   ThinkingLevelSchema,
-} from "@rakazo/contracts";
-import type { PrismaClient } from "@rakazo/db";
-import { getLogger } from "@rakazo/logging";
+} from "@cutie-pi/contracts";
+import type { PrismaClient } from "@cutie-pi/db";
+import { getLogger } from "@cutie-pi/logging";
 import { createManualAnthropicOAuthLogin } from "./pi-anthropic-oauth.js";
 import type { EncryptedSecretStore } from "./secrets.js";
 
@@ -34,19 +34,19 @@ export const SUBSCRIPTION_SIGN_IN_PROVIDERS: Record<
     loginLabel: "Sign in with ChatGPT Plus/Pro",
     hint: "ChatGPT Plus/Pro",
     billing:
-      "Sign in with ChatGPT Plus or Pro. Uses your OpenAI subscription. Rakazo does not pay.",
+      "Sign in with ChatGPT Plus or Pro. Uses your OpenAI subscription. CutiePi does not pay.",
   },
   [COPILOT_OAUTH_PROVIDER]: {
     mode: "device-code",
     loginLabel: "Sign in with GitHub Copilot",
     hint: "Copilot",
-    billing: "Sign in with GitHub Copilot. Uses your Copilot subscription. Rakazo does not pay.",
+    billing: "Sign in with GitHub Copilot. Uses your Copilot subscription. CutiePi does not pay.",
   },
   [XAI_OAUTH_PROVIDER]: {
     mode: "device-code",
     loginLabel: "Sign in with SuperGrok or X Premium",
     hint: "SuperGrok / key",
-    billing: "Sign in with SuperGrok or X Premium, or paste an xAI API key. Rakazo does not pay.",
+    billing: "Sign in with SuperGrok or X Premium, or paste an xAI API key. CutiePi does not pay.",
   },
   [ANTHROPIC_OAUTH_PROVIDER]: {
     mode: "auth-url",

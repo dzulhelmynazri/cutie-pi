@@ -3,9 +3,9 @@ import type {
   BackgroundJob,
   JobPublisher,
   SandboxProvider,
-} from "@rakazo/adapter-kit";
-import type { PrismaClient, ThreadEvents } from "@rakazo/db";
-import { createLogger, createTestSink, installLogger } from "@rakazo/logging";
+} from "@cutie-pi/adapter-kit";
+import type { PrismaClient, ThreadEvents } from "@cutie-pi/db";
+import { createLogger, createTestSink, installLogger } from "@cutie-pi/logging";
 import { describe, expect, it, vi } from "vitest";
 import {
   clearInactiveUserComputerControl,
@@ -140,14 +140,14 @@ describe("computer control leases", () => {
     const enqueueError = new Error("job broker unavailable");
     const harness = controlHarness({ waitingRunId: "run-1", enqueueError });
     const sink = createTestSink();
-    installLogger(createLogger({ service: "rakazo-worker", sinks: [sink] }));
+    installLogger(createLogger({ service: "cutie-pi-worker", sinks: [sink] }));
 
     await expect(expireComputerControl(harness.deps, "computer-id", "lease-1")).resolves.toBe(true);
 
     expect(sink.events.some((event) => event.message === "takeover continuation enqueue")).toBe(
       true,
     );
-    installLogger(createLogger({ service: "rakazo-worker", level: "off", sinks: [] }));
+    installLogger(createLogger({ service: "cutie-pi-worker", level: "off", sinks: [] }));
   });
 
   it("keeps the denied lease retryable when provider revocation fails", async () => {
@@ -395,13 +395,13 @@ describe("computer control leases", () => {
       enqueueError: new Error("queue unavailable"),
     });
     const sink = createTestSink();
-    installLogger(createLogger({ service: "rakazo-worker", sinks: [sink] }));
+    installLogger(createLogger({ service: "cutie-pi-worker", sinks: [sink] }));
     await expect(expireComputerControl(harness.deps, "computer-id", "lease-1")).resolves.toBe(
       false,
     );
     expect(harness.prisma.computer.updateMany).not.toHaveBeenCalled();
     expect(sink.events.length).toBeGreaterThan(0);
-    installLogger(createLogger({ service: "rakazo-worker", level: "off", sinks: [] }));
+    installLogger(createLogger({ service: "cutie-pi-worker", level: "off", sinks: [] }));
   });
 });
 

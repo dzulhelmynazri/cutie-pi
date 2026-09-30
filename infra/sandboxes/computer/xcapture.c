@@ -97,7 +97,7 @@ static int allocate_image(XCapture *capture, int width, int height) {
   return capture->rgb ? 0 : -1;
 }
 
-void *rakazo_xcapture_open(const char *display_name) {
+void *cutie-pi_xcapture_open(const char *display_name) {
   XCapture *capture = calloc(1, sizeof(*capture));
   if (!capture) return NULL;
   capture->display = XOpenDisplay(display_name);
@@ -113,7 +113,7 @@ void *rakazo_xcapture_open(const char *display_name) {
   return capture;
 }
 
-int rakazo_xcapture_copy(void *context, const unsigned char **rgb, int *width, int *height) {
+int cutie-pi_xcapture_copy(void *context, const unsigned char **rgb, int *width, int *height) {
   XCapture *capture = context;
   if (!capture || !rgb || !width || !height) return -1;
   XWindowAttributes attributes;
@@ -137,12 +137,12 @@ int rakazo_xcapture_copy(void *context, const unsigned char **rgb, int *width, i
   return 0;
 }
 
-int rakazo_xcapture_png(void *context, const unsigned char **png_bytes, size_t *png_size,
+int cutie-pi_xcapture_png(void *context, const unsigned char **png_bytes, size_t *png_size,
     int *width, int *height) {
   XCapture *capture = context;
   if (!png_bytes || !png_size) return -1;
   const unsigned char *rgb = NULL;
-  if (rakazo_xcapture_copy(context, &rgb, width, height)) return -1;
+  if (cutie-pi_xcapture_copy(context, &rgb, width, height)) return -1;
   png_structp png = png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
   if (!png) return -1;
   png_infop info = png_create_info_struct(png);
@@ -169,7 +169,7 @@ int rakazo_xcapture_png(void *context, const unsigned char **png_bytes, size_t *
   return 0;
 }
 
-int rakazo_xcapture_damage(void *context, int *x, int *y, int *width, int *height) {
+int cutie-pi_xcapture_damage(void *context, int *x, int *y, int *width, int *height) {
   XCapture *capture = context;
   if (!capture || !capture->damage_supported || !capture->damage) return 0;
   XserverRegion region = XFixesCreateRegion(capture->display, NULL, 0);
@@ -197,7 +197,7 @@ int rakazo_xcapture_damage(void *context, int *x, int *y, int *width, int *heigh
   return 1;
 }
 
-void rakazo_xcapture_close(void *context) {
+void cutie-pi_xcapture_close(void *context) {
   XCapture *capture = context;
   if (!capture) return;
   if (capture->damage) XDamageDestroy(capture->display, capture->damage);
@@ -216,7 +216,7 @@ static KeySym key_symbol(const char *name) {
   return XStringToKeysym(name);
 }
 
-int rakazo_xinput_argv(void *context, int argc, const char *const *argv) {
+int cutie-pi_xinput_argv(void *context, int argc, const char *const *argv) {
   XCapture *capture = context;
   if (!capture || argc < 4 || strcmp(argv[0], "env") || strncmp(argv[1], "DISPLAY=", 8) || strcmp(argv[2], "xdotool")) return 0;
   if (!XTestQueryExtension(capture->display, &(int){0}, &(int){0}, &(int){0}, &(int){0})) return -1;

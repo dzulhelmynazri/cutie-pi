@@ -181,11 +181,11 @@ describe("secrets-guard", () => {
   it("requires the updater to use a dedicated token", () => {
     expect(() =>
       resolveUpdaterToken({ NODE_ENV: "test", BETTER_AUTH_SECRET: "custom-auth" }),
-    ).toThrow(/RAKAZO_UPDATER_TOKEN/);
+    ).toThrow(/CUTIE_PI_UPDATER_TOKEN/);
     expect(
       resolveUpdaterToken({
         NODE_ENV: "test",
-        RAKAZO_UPDATER_TOKEN: "updater-only",
+        CUTIE_PI_UPDATER_TOKEN: "updater-only",
         SANDBOX_SUPERVISOR_TOKEN: "supervisor-only",
         BETTER_AUTH_SECRET: "custom-auth",
       }),
@@ -193,28 +193,28 @@ describe("secrets-guard", () => {
     expect(() =>
       resolveUpdaterToken({
         NODE_ENV: "test",
-        RAKAZO_UPDATER_TOKEN: "custom-auth",
+        CUTIE_PI_UPDATER_TOKEN: "custom-auth",
         BETTER_AUTH_SECRET: "custom-auth",
       }),
     ).toThrow(/must differ/);
     expect(() =>
       resolveUpdaterToken({
         NODE_ENV: "test",
-        RAKAZO_UPDATER_TOKEN: "supervisor-only",
+        CUTIE_PI_UPDATER_TOKEN: "supervisor-only",
         SANDBOX_SUPERVISOR_TOKEN: "supervisor-only",
       }),
     ).toThrow(/must differ/);
     expect(() =>
       resolveUpdaterToken({
         NODE_ENV: "test",
-        RAKAZO_UPDATER_TOKEN: "screen-only",
+        CUTIE_PI_UPDATER_TOKEN: "screen-only",
         SCREEN_PROXY_SECRET: "screen-only",
       }),
     ).toThrow(/must differ/);
     expect(() =>
       resolveUpdaterToken({
         NODE_ENV: "production",
-        RAKAZO_UPDATER_TOKEN: "too-short",
+        CUTIE_PI_UPDATER_TOKEN: "too-short",
       }),
     ).toThrow(/at least 32 characters/);
   });

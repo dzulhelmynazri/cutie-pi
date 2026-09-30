@@ -24,7 +24,7 @@ afterEach(async () => {
 
 describe("computer home ownership", () => {
   it("rejects a missing home instead of creating it as root", async () => {
-    const parent = await mkdtemp(path.join(tmpdir(), "rakazo-home-missing-"));
+    const parent = await mkdtemp(path.join(tmpdir(), "cutie-pi-home-missing-"));
     roots.push(parent);
 
     await expect(
@@ -33,7 +33,7 @@ describe("computer home ownership", () => {
   });
 
   it("rejects a symlink as the home root", async () => {
-    const parent = await mkdtemp(path.join(tmpdir(), "rakazo-home-root-link-"));
+    const parent = await mkdtemp(path.join(tmpdir(), "cutie-pi-home-root-link-"));
     roots.push(parent);
     const outside = path.join(parent, "outside");
     const home = path.join(parent, "home");
@@ -44,7 +44,7 @@ describe("computer home ownership", () => {
   });
 
   it("rejects a writable regular file as the home root", async () => {
-    const parent = await mkdtemp(path.join(tmpdir(), "rakazo-home-file-root-"));
+    const parent = await mkdtemp(path.join(tmpdir(), "cutie-pi-home-file-root-"));
     roots.push(parent);
     const home = path.join(parent, "home");
     await writeFile(home, "{}");
@@ -57,7 +57,7 @@ describe("computer home ownership", () => {
   });
 
   it("rejects an existing entry that the host-run computer cannot write", async () => {
-    const parent = await mkdtemp(path.join(tmpdir(), "rakazo-home-writable-"));
+    const parent = await mkdtemp(path.join(tmpdir(), "cutie-pi-home-writable-"));
     roots.push(parent);
     const home = path.join(parent, "home");
     const file = path.join(home, "profile.json");
@@ -73,7 +73,7 @@ describe("computer home ownership", () => {
   });
 
   it("accepts writable files owned by the sandbox user", async () => {
-    const parent = await mkdtemp(path.join(tmpdir(), "rakazo-home-writable-file-"));
+    const parent = await mkdtemp(path.join(tmpdir(), "cutie-pi-home-writable-file-"));
     roots.push(parent);
     const home = path.join(parent, "home");
     const file = path.join(home, "profile.json");
@@ -86,7 +86,7 @@ describe("computer home ownership", () => {
   });
 
   it("accepts sandbox-owned read-only git object files", async () => {
-    const parent = await mkdtemp(path.join(tmpdir(), "rakazo-home-git-object-"));
+    const parent = await mkdtemp(path.join(tmpdir(), "cutie-pi-home-git-object-"));
     roots.push(parent);
     const home = path.join(parent, "home");
     const object = path.join(home, "repo", ".git", "objects", "ab", "cdef");
@@ -99,7 +99,7 @@ describe("computer home ownership", () => {
   });
 
   it("rejects a read-only file owned by someone else", async () => {
-    const parent = await mkdtemp(path.join(tmpdir(), "rakazo-home-foreign-readonly-"));
+    const parent = await mkdtemp(path.join(tmpdir(), "cutie-pi-home-foreign-readonly-"));
     roots.push(parent);
     const home = path.join(parent, "home");
     const file = path.join(home, "object");
@@ -115,7 +115,7 @@ describe("computer home ownership", () => {
   });
 
   it("rejects an owner-owned file the owner cannot read", async () => {
-    const parent = await mkdtemp(path.join(tmpdir(), "rakazo-home-unreadable-"));
+    const parent = await mkdtemp(path.join(tmpdir(), "cutie-pi-home-unreadable-"));
     roots.push(parent);
     const home = path.join(parent, "home");
     const file = path.join(home, "profile.json");
@@ -128,7 +128,7 @@ describe("computer home ownership", () => {
   });
 
   it("rejects an owner-owned world-writable file the owner cannot write", async () => {
-    const parent = await mkdtemp(path.join(tmpdir(), "rakazo-home-world-writable-"));
+    const parent = await mkdtemp(path.join(tmpdir(), "cutie-pi-home-world-writable-"));
     roots.push(parent);
     const home = path.join(parent, "home");
     const file = path.join(home, "profile.json");
@@ -141,7 +141,7 @@ describe("computer home ownership", () => {
   });
 
   it("rejects an owner-owned directory that is not writable", async () => {
-    const parent = await mkdtemp(path.join(tmpdir(), "rakazo-home-dir-mode-"));
+    const parent = await mkdtemp(path.join(tmpdir(), "cutie-pi-home-dir-mode-"));
     roots.push(parent);
     const home = path.join(parent, "home");
     await mkdir(home);
@@ -152,7 +152,7 @@ describe("computer home ownership", () => {
   });
 
   it("does not follow symlinks while checking host-run compatibility", async () => {
-    const parent = await mkdtemp(path.join(tmpdir(), "rakazo-home-writable-link-"));
+    const parent = await mkdtemp(path.join(tmpdir(), "cutie-pi-home-writable-link-"));
     roots.push(parent);
     const home = path.join(parent, "home");
     const outside = path.join(parent, "outside");
@@ -168,7 +168,7 @@ describe("computer home ownership", () => {
   it.skipIf(process.platform !== "linux")(
     "rejects an opened directory that was moved outside the home",
     async () => {
-      const parent = await mkdtemp(path.join(tmpdir(), "rakazo-home-moved-"));
+      const parent = await mkdtemp(path.join(tmpdir(), "cutie-pi-home-moved-"));
       roots.push(parent);
       const home = path.join(parent, "home");
       const outside = path.join(parent, "outside");

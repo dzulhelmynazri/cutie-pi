@@ -1,5 +1,5 @@
-import type { DurableMemoryScope, SemanticMemoryProvider } from "@rakazo/adapter-kit";
-import type { PrismaClient } from "@rakazo/db";
+import type { DurableMemoryScope, SemanticMemoryProvider } from "@cutie-pi/adapter-kit";
+import type { PrismaClient } from "@cutie-pi/db";
 import type { EncryptedSecretStore } from "./secrets.js";
 import {
   classifySerenityConnectionSettings,

@@ -1,4 +1,4 @@
-import type { MessageBlock } from "@rakazo/contracts";
+import type { MessageBlock } from "@cutie-pi/contracts";
 
 type PresentableMessage = {
   runId?: string;

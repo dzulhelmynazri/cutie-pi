@@ -1,4 +1,4 @@
-package com.rakazo.notifications
+package com.cutie-pi.notifications
 
 import java.net.URI
 

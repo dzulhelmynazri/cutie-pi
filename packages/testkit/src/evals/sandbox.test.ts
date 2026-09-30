@@ -1,4 +1,4 @@
-import type { AdapterContext, ProcessEvent } from "@rakazo/adapter-kit";
+import type { AdapterContext, ProcessEvent } from "@cutie-pi/adapter-kit";
 import { describe, expect, it } from "vitest";
 import { EvalSandboxProvider } from "./sandbox.js";
 
@@ -22,7 +22,7 @@ describe("honest offline eval shell results", () => {
           "bash",
           "-c",
           "wrapper",
-          "rakazo-background-launch",
+          "cutie-pi-background-launch",
           "computer",
           "run",
           "call",

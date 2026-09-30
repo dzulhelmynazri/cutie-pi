@@ -3,7 +3,7 @@ import { captureScreenshot, completeOnboarding, signup } from "./helpers";
 
 async function openComposer(page: Page) {
   const stamp = Date.now();
-  await signup(page, `composer-paste-${stamp}@rakazo.test`, "password12", "Paste Test");
+  await signup(page, `composer-paste-${stamp}@cutie-pi.test`, "password12", "Paste Test");
   await completeOnboarding(page);
   await page.goto("/app");
   await page.waitForURL(/\/app\/[^/]+$/);

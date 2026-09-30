@@ -167,6 +167,6 @@ function isAllowedTargetName(hostname: string) {
     /^100\.(?:6[4-9]|[7-9]\d|1(?:[01]\d|2[0-7]))\.(?:\d{1,3})\.\d{1,3}$/.test(hostname) ||
     /^172\.(?:1[6-9]|2\d|3[01])\.(?:\d{1,3})\.\d{1,3}$/.test(hostname) ||
     /^192\.168\.(?:\d{1,3})\.\d{1,3}$/.test(hostname) ||
-    /^rakazo-bot-[a-zA-Z0-9_.-]+$/.test(hostname)
+    /^cutie-pi-bot-[a-zA-Z0-9_.-]+$/.test(hostname)
   );
 }

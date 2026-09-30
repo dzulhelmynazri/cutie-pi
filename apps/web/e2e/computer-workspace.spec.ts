@@ -33,7 +33,7 @@ async function openComputer(page: Page) {
 test("the computer workspace browses, uploads, and downloads files over the screen", async ({
   page,
 }, testInfo) => {
-  await signup(page, `workspace-${Date.now()}@rakazo.test`, "password12", "Workspace");
+  await signup(page, `workspace-${Date.now()}@cutie-pi.test`, "password12", "Workspace");
   await completeOnboarding(page);
   const botId = activeBotId(page);
   await rpc(page, "computer/boot", { botId });
@@ -154,7 +154,7 @@ test("the computer workspace browses, uploads, and downloads files over the scre
 test("the terminal shows the bot's shell commands and file actions live and after reopening", async ({
   page,
 }, testInfo) => {
-  await signup(page, `terminal-feed-${Date.now()}@rakazo.test`, "password12", "Terminal Feed");
+  await signup(page, `terminal-feed-${Date.now()}@cutie-pi.test`, "password12", "Terminal Feed");
   await completeOnboarding(page);
   const botId = activeBotId(page);
   await rpc(page, "computer/boot", { botId });

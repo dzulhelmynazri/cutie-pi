@@ -5,7 +5,7 @@ test.describe.configure({ mode: "serial" });
 
 test("approval input resumes durable work", async ({ page }, testInfo) => {
   const stamp = Date.now();
-  await signup(page, `approval-${stamp}@rakazo.test`, "password12", "Approval");
+  await signup(page, `approval-${stamp}@cutie-pi.test`, "password12", "Approval");
   await completeOnboarding(page);
 
   const composer = page.getByPlaceholder(/Message/);

@@ -1,17 +1,17 @@
-import { ChatMarkdown, LinkifiedText } from "@rakazo/chat-ui/native";
+import { ChatMarkdown, LinkifiedText } from "@cutie-pi/chat-ui/native";
 import type {
   AgentSkillCatalogEntry,
   Connection,
   ConnectionCatalogItem,
   MessageBlock,
   Routine,
-} from "@rakazo/contracts";
+} from "@cutie-pi/contracts";
 import {
   canReactToThreadMessage,
   MESSAGE_REACTIONS,
   type MessageReaction,
-} from "@rakazo/contracts";
-import type { ThreadItem } from "@rakazo/core";
+} from "@cutie-pi/contracts";
+import type { ThreadItem } from "@cutie-pi/core";
 import {
   abortableDelay,
   attachmentsForThread,
@@ -34,7 +34,7 @@ import {
   truncateSlashDescription,
   userVisibleMessages,
   withLiveStreamingProgress,
-} from "@rakazo/core";
+} from "@cutie-pi/core";
 import * as Clipboard from "expo-clipboard";
 import { useFocusEffect, useLocalSearchParams, useNavigation, useRouter } from "expo-router";
 import { useHeaderHeight } from "expo-router/react-navigation";

@@ -3,11 +3,11 @@ import { mkdirSync, mkdtempSync, symlinkSync, unlinkSync, writeFileSync } from "
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { promisify } from "node:util";
-import type { ComputerRef, PortableFile, ProcessEvent } from "@rakazo/adapter-kit";
+import type { ComputerRef, PortableFile, ProcessEvent } from "@cutie-pi/adapter-kit";
 import {
   browserProfilePathForScreen,
   DEFAULT_DESKTOP_ENV,
-} from "@rakazo/core/node/desktop-runtime";
+} from "@cutie-pi/core/node/desktop-runtime";
 import { describe, expect, it, vi } from "vitest";
 import {
   CHROME_OWNS_DEBUG_PORT_SCRIPT,
@@ -199,7 +199,7 @@ const computer: ComputerRef = {
 function createosBotProfile(botId: string) {
   return browserProfilePathForScreen(botId, {
     ...DEFAULT_DESKTOP_ENV,
-    browserProfilesDir: "/home/desktop/rakazo-home/.browser-profiles",
+    browserProfilesDir: "/home/desktop/cutie-pi-home/.browser-profiles",
   });
 }
 
@@ -263,7 +263,7 @@ describe("CreateOSSandboxProvider", () => {
       { type: "exit", code: 0 },
     ]);
     const command = fixture.execs.at(-1)?.command ?? "";
-    expect(command).toContain("cd '/home/desktop/rakazo-home/notes'");
+    expect(command).toContain("cd '/home/desktop/cutie-pi-home/notes'");
     expect(command).toContain("TEST_VALUE='works'");
   });
 
@@ -713,10 +713,10 @@ describe("CreateOSSandboxProvider", () => {
       if ((init?.method ?? "GET") === "POST" && url.pathname.endsWith("/exec")) {
         const command = (JSON.parse(String(init?.body)) as { args: string[] }).args[3] ?? "";
         if (command.includes("os.listdir")) {
-          const listing = command.includes("/.rakazo")
+          const listing = command.includes("/.cutie-pi")
             ? JSON.stringify([{ name: "screens.json", kind: "file", size: 2 }])
             : JSON.stringify([
-                { name: ".rakazo", kind: "dir", size: 0 },
+                { name: ".cutie-pi", kind: "dir", size: 0 },
                 { name: "notes.txt", kind: "file", size: 5 },
               ]);
           return jsonResponse({ result: { stdout: listing, exit_code: 0 } });

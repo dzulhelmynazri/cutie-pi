@@ -1,6 +1,6 @@
 import { rpc } from "./rpc";
 
-export const MCP_OAUTH_CHANNEL = "rakazo-mcp-oauth";
+export const MCP_OAUTH_CHANNEL = "cutie-pi-mcp-oauth";
 const MCP_OAUTH_TIMEOUT_MS = 2 * 60 * 1000;
 
 export type McpOauthResult =

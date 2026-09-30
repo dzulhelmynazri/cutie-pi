@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/test";
-import type { Routine } from "@rakazo/contracts";
+import type { Routine } from "@cutie-pi/contracts";
 import { activeBotId, captureScreenshot, completeOnboarding, rpc, signup } from "./helpers";
 
 test("Slack message trigger uses the mounted messaging provider and persists", async ({
@@ -14,7 +14,7 @@ test("Slack message trigger uses the mounted messaging provider and persists", a
     }),
   );
   const stamp = Date.now();
-  await signup(page, `routine-slack-${stamp}@rakazo.test`, "password12", "Slack Routine");
+  await signup(page, `routine-slack-${stamp}@cutie-pi.test`, "password12", "Slack Routine");
   await completeOnboarding(page);
   const botId = activeBotId(page);
 
@@ -53,7 +53,7 @@ test("GitHub event trigger exposes signed delivery settings and persists", async
   page,
 }, testInfo) => {
   const stamp = Date.now();
-  await signup(page, `routine-github-${stamp}@rakazo.test`, "password12", "GitHub Routine");
+  await signup(page, `routine-github-${stamp}@cutie-pi.test`, "password12", "GitHub Routine");
   await completeOnboarding(page);
   const botId = activeBotId(page);
 
@@ -92,7 +92,7 @@ test("Korean webhook routine keeps technical field labels in English", async ({
 }, testInfo) => {
   const stamp = Date.now();
   const userName = `Korean Routine ${stamp}`;
-  await signup(page, `routine-ko-${stamp}@rakazo.test`, "password12", userName);
+  await signup(page, `routine-ko-${stamp}@cutie-pi.test`, "password12", userName);
   await completeOnboarding(page);
 
   await page.getByRole("button", { name: new RegExp(userName) }).click();
@@ -120,7 +120,7 @@ test("Korean webhook routine keeps technical field labels in English", async ({
 
 test("routine test-run completes and survives reload", async ({ page }, testInfo) => {
   const stamp = Date.now();
-  await signup(page, `routine-${stamp}@rakazo.test`, "password12", "Routine");
+  await signup(page, `routine-${stamp}@cutie-pi.test`, "password12", "Routine");
   await completeOnboarding(page);
 
   await page.getByTitle("Agent computer").click();

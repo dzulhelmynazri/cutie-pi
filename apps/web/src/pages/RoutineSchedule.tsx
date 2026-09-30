@@ -6,8 +6,8 @@ import {
   type CronPreset,
   type CronUnit,
   cronFromPreset,
-} from "@rakazo/core";
-import { Input, NativeSelect, NativeSelectOption } from "@rakazo/ui-web";
+} from "@cutie-pi/core";
+import { Input, NativeSelect, NativeSelectOption } from "@cutie-pi/ui-web";
 import { Clock } from "lucide-react";
 
 const UNITS: CronUnit[] = ["minutes", "hours", "days"];

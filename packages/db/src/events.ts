@@ -1,4 +1,4 @@
-import type { RealtimeFanout } from "@rakazo/adapter-kit";
+import type { RealtimeFanout } from "@cutie-pi/adapter-kit";
 import {
   type BotSecretDestination,
   encodeLoginSecret,
@@ -6,7 +6,7 @@ import {
   type MessageBlock,
   MessageBlock as MessageBlockSchema,
   type ProductEvent,
-} from "@rakazo/contracts";
+} from "@cutie-pi/contracts";
 import {
   blocksToAgentHistoryText,
   callIdFromClientNonce,
@@ -16,8 +16,8 @@ import {
   messagingChannelId,
   resolveAskChoice,
   sanitizeJsonValue,
-} from "@rakazo/core";
-import { getLogger } from "@rakazo/logging";
+} from "@cutie-pi/core";
+import { getLogger } from "@cutie-pi/logging";
 import { cancelRunsInTransaction } from "./cancel-runs.js";
 import type { Prisma, PrismaClient } from "./client.js";
 import { expireComputerExecutionLeases } from "./computers.js";

@@ -6,7 +6,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: @lingui/cli\n"
 "Language: de\n"
-"Project-Id-Version: rakazo-web\n"
+"Project-Id-Version: cutie-pi-web\n"
 "Report-Msgid-Bugs-To: \n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
@@ -746,8 +746,8 @@ msgid "Choose file"
 msgstr "Datei wählen"
 
 #: src/pages/ModelSettingsOverlay.tsx
-msgid "Choose which connected model Rakazo uses."
-msgstr "Wähle das verbundene Modell aus, das Rakazo verwendet."
+msgid "Choose which connected model CutiePi uses."
+msgstr "Wähle das verbundene Modell aus, das CutiePi verwendet."
 
 #: src/pages/shell/dialogs.tsx
 msgid "Clear"
@@ -1464,8 +1464,8 @@ msgid "Create space"
 msgstr ""
 
 #: src/pages/Auth.tsx
-msgid "Create your Rakazo"
-msgstr "Dein Rakazo erstellen"
+msgid "Create your CutiePi"
+msgstr "Dein CutiePi erstellen"
 
 #: src/components/AskCard.tsx
 msgid "Created"
@@ -2816,8 +2816,8 @@ msgid "Paste a replacement key"
 msgstr "Ersatzschlüssel einfügen"
 
 #: src/pages/ModelSettingsOverlay.tsx
-msgid "Paste the OpenAI-compatible address from your server. Rakazo adds /v1 if needed."
-msgstr "Füge die OpenAI-kompatible Adresse deines Servers ein. Rakazo ergänzt /v1 bei Bedarf."
+msgid "Paste the OpenAI-compatible address from your server. CutiePi adds /v1 if needed."
+msgstr "Füge die OpenAI-kompatible Adresse deines Servers ein. CutiePi ergänzt /v1 bei Bedarf."
 
 #: src/pages/VoiceSettingsOverlay.tsx
 msgid "Paste your API key"
@@ -3142,8 +3142,8 @@ msgid "Retry screen"
 msgstr ""
 
 #: src/pages/McpOAuthCallback.tsx
-msgid "Return to Rakazo"
-msgstr "Zurück zu Rakazo"
+msgid "Return to CutiePi"
+msgstr "Zurück zu CutiePi"
 
 #. placeholder {0}: doc.revision
 #: src/pages/KnowledgeSection.tsx
@@ -3430,8 +3430,8 @@ msgid "Sign in"
 msgstr "Anmelden"
 
 #: src/pages/Auth.tsx
-msgid "Sign in to Rakazo"
-msgstr "Bei Rakazo anmelden"
+msgid "Sign in to CutiePi"
+msgstr "Bei CutiePi anmelden"
 
 #: src/pages/Auth.tsx
 #: src/pages/Welcome.tsx
@@ -3689,8 +3689,8 @@ msgid "This server is already connected. Disconnect it first to authorize again.
 msgstr "Dieser Server ist bereits verbunden. Trenne zuerst die Verbindung, um ihn erneut zu autorisieren."
 
 #: src/pages/ModelSettingsOverlay.tsx
-msgid "This subscription sign-in is not available in Rakazo yet. Use a deployment credential or choose another provider."
-msgstr "Diese Abonnementanmeldung ist in Rakazo noch nicht verfügbar. Verwende Zugangsdaten der Bereitstellung oder wähle einen anderen Anbieter."
+msgid "This subscription sign-in is not available in CutiePi yet. Use a deployment credential or choose another provider."
+msgstr "Diese Abonnementanmeldung ist in CutiePi noch nicht verfügbar. Verwende Zugangsdaten der Bereitstellung oder wähle einen anderen Anbieter."
 
 #: src/pages/Artifacts.tsx
 msgid "This week"

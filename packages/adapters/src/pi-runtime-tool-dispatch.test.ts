@@ -1,4 +1,4 @@
-import type { AgentToolCompletion, ConnectorTool } from "@rakazo/adapter-kit";
+import type { AgentToolCompletion, ConnectorTool } from "@cutie-pi/adapter-kit";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 const fakeAgentState = vi.hoisted(() => ({
@@ -496,7 +496,7 @@ describe("Pi connector tool dispatch", () => {
     else process.env.MAX_TOOL_CALLS_PER_TURN = previousMaxToolCalls;
   });
 
-  it.each([undefined, "", ".", "/home/rakazo", "subdir"])(
+  it.each([undefined, "", ".", "/home/cutie-pi", "subdir"])(
     "preserves executor-owned shell cwd defaults (%j)",
     async (cwd) => {
       const command = "printf WORKSPACE_OK > roundtrip.txt";

@@ -12,7 +12,7 @@ test("create opens form, then empty chat; picker lists bots; sidebar collapses",
   page,
 }, testInfo) => {
   const stamp = Date.now();
-  await signup(page, `new-bot-ux-${stamp}@rakazo.test`, "password12", "New Bot UX");
+  await signup(page, `new-bot-ux-${stamp}@cutie-pi.test`, "password12", "New Bot UX");
   await completeOnboarding(page);
   await page.goto("/app");
   await page.waitForURL(/\/app\/[^/]+$/);
@@ -72,7 +72,7 @@ test("create opens form, then empty chat; picker lists bots; sidebar collapses",
 
 test("picker rows explain groups and spaces", async ({ page }, testInfo) => {
   const stamp = Date.now();
-  await signup(page, `picker-info-${stamp}@rakazo.test`, "password12", "Picker Info");
+  await signup(page, `picker-info-${stamp}@cutie-pi.test`, "password12", "Picker Info");
   await completeOnboarding(page);
   await page.goto("/app");
   await page.waitForURL(/\/app\/[^/]+$/);
@@ -111,7 +111,7 @@ test("picker rows explain groups and spaces", async ({ page }, testInfo) => {
 
 test("later bot waits before showing the focus card; sending cancels it", async ({ page }) => {
   const stamp = Date.now();
-  await signup(page, `focus-delay-${stamp}@rakazo.test`, "password12", "Focus Delay");
+  await signup(page, `focus-delay-${stamp}@cutie-pi.test`, "password12", "Focus Delay");
   await completeOnboarding(page);
   // First bot from onboarding shows the focus card immediately.
   await expect(page.getByText("What do you want me on first?", { exact: true })).toBeVisible();
@@ -150,7 +150,7 @@ test("later bot waits before showing the focus card; sending cancels it", async 
 
 test("plus picker can create a Private computer bot", async ({ page }, testInfo) => {
   const stamp = Date.now();
-  await signup(page, `new-bot-private-${stamp}@rakazo.test`, "password12", "New Bot Private");
+  await signup(page, `new-bot-private-${stamp}@cutie-pi.test`, "password12", "New Bot Private");
   await completeOnboarding(page);
   await page.goto("/app");
   await page.waitForURL(/\/app\/[^/]+$/);
@@ -166,7 +166,7 @@ test("plus picker can create a Private computer bot", async ({ page }, testInfo)
 
 test("second bot from plus opens create form before persist", async ({ page }, testInfo) => {
   const stamp = Date.now();
-  await signup(page, `second-bot-form-${stamp}@rakazo.test`, "password12", "Second Bot Form");
+  await signup(page, `second-bot-form-${stamp}@cutie-pi.test`, "password12", "Second Bot Form");
   await completeOnboarding(page);
   await page.goto("/app");
   await page.waitForURL(/\/app\/[^/]+$/);

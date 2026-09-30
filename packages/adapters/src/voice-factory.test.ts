@@ -1,4 +1,4 @@
-import { createLogger, createTestSink, installLogger } from "@rakazo/logging";
+import { createLogger, createTestSink, installLogger } from "@cutie-pi/logging";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { CartesiaVoiceProvider } from "./cartesia-voice.js";
 import { ElevenLabsVoiceProvider } from "./elevenlabs-voice.js";
@@ -33,7 +33,7 @@ afterEach(() => {
   vi.unstubAllEnvs();
   if (previousRuntime === undefined) delete process.env.AGENT_RUNTIME;
   else process.env.AGENT_RUNTIME = previousRuntime;
-  installLogger(createLogger({ service: "rakazo", level: "off", sinks: [] }));
+  installLogger(createLogger({ service: "cutie-pi", level: "off", sinks: [] }));
 });
 
 describe("createVoiceProvider", () => {
@@ -513,7 +513,7 @@ describe("FishAudioVoiceProvider", () => {
   it("logs the upstream Fish status and message without the API key", async () => {
     const apiKey = "sk-fishaudiokey12345";
     const sink = createTestSink();
-    installLogger(createLogger({ service: "rakazo-api", sinks: [sink] }));
+    installLogger(createLogger({ service: "cutie-pi-api", sinks: [sink] }));
     vi.stubEnv("FISH_TTS_MODEL", "s1");
     vi.stubGlobal(
       "fetch",
@@ -566,7 +566,7 @@ describe("FishAudioVoiceProvider", () => {
     ["listing voices", (provider: FishAudioVoiceProvider) => provider.listVoices("sk-test", ctx)],
   ])("logs Fish %s status when the error body cannot be read", async (operation, call) => {
     const sink = createTestSink();
-    installLogger(createLogger({ service: "rakazo-api", sinks: [sink] }));
+    installLogger(createLogger({ service: "cutie-pi-api", sinks: [sink] }));
     const cancel = vi.fn(() => new Promise<void>(() => undefined));
     vi.stubGlobal(
       "fetch",
@@ -595,7 +595,7 @@ describe("FishAudioVoiceProvider", () => {
   it("logs a non-JSON Fish body when speaking fails", async () => {
     const apiKey = "sk-fishaudiokey12345";
     const sink = createTestSink();
-    installLogger(createLogger({ service: "rakazo-api", sinks: [sink] }));
+    installLogger(createLogger({ service: "cutie-pi-api", sinks: [sink] }));
     vi.stubGlobal(
       "fetch",
       vi.fn().mockResolvedValue(new Response(`gateway down ${apiKey}`, { status: 502 })),

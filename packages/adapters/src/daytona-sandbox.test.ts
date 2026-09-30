@@ -19,12 +19,12 @@ describe("DaytonaSandboxProvider", () => {
   it("forwards an optional snapshot name to create()", async () => {
     const fixture = daytonaFixture();
     const provider = new DaytonaSandboxProvider(
-      { apiKey: "test-key", snapshot: "rakazo-computer" },
+      { apiKey: "test-key", snapshot: "cutie-pi-computer" },
       fixture.client,
     );
     await provider.provision({ botId: "bot-a", homePath: "/unused" }, context);
     expect(fixture.create).toHaveBeenCalledWith(
-      expect.objectContaining({ snapshot: "rakazo-computer" }),
+      expect.objectContaining({ snapshot: "cutie-pi-computer" }),
       { timeout: 120 },
     );
   });
@@ -86,7 +86,7 @@ describe("DaytonaSandboxProvider", () => {
     });
     expect(fixture.create).toHaveBeenCalledWith(
       expect.objectContaining({
-        labels: { botId: "bot-a", rakazo: "computer" },
+        labels: { botId: "bot-a", cutie-pi: "computer" },
         envVars: { VNC_RESOLUTION: "1280x800" },
       }),
       { timeout: 120 },
@@ -102,7 +102,7 @@ describe("DaytonaSandboxProvider", () => {
     ]);
     expect(fixture.executeCommand).toHaveBeenCalledWith(
       "'echo' 'hello'",
-      "/home/daytona/rakazo-home",
+      "/home/daytona/cutie-pi-home",
       undefined,
       300,
     );

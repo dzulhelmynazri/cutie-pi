@@ -9,7 +9,7 @@ import {
 
 test("bot creation, editing, and deletion persist", async ({ page }, testInfo) => {
   const stamp = Date.now();
-  await signup(page, `bot-crud-${stamp}@rakazo.test`, "password12", "Bot CRUD");
+  await signup(page, `bot-crud-${stamp}@cutie-pi.test`, "password12", "Bot CRUD");
   await completeOnboarding(page);
   await page.goto("/app");
   await page.waitForURL(/\/app\/[^/]+$/);

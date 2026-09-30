@@ -1,4 +1,4 @@
-# Set up Rakazo with a coding agent
+# Set up CutiePi with a coding agent
 
 Copy one of the prompts below into a coding agent.
 
@@ -7,7 +7,7 @@ Copy one of the prompts below into a coding agent.
 Prefer this when the user wants a running web UI with Docker only (no Node/pnpm clone).
 
 ```text
-Set up Rakazo from published GHCR images and leave the web UI running.
+Set up CutiePi from published GHCR images and leave the web UI running.
 
 Work like a careful onboarding engineer: perform the setup yourself, explain only decisions or blockers, and verify the product through the UI.
 
@@ -20,10 +20,10 @@ Safety rules:
 
 Before making changes, ask me these concise questions:
 
-1. Which directory should contain the Rakazo folder (or use the current directory)?
+1. Which directory should contain the CutiePi folder (or use the current directory)?
 2. How should models be connected?
    - Add a deployment-wide `OPENROUTER_API_KEY` to `.env`.
-   - Connect during Rakazo onboarding with a provider API key or with ChatGPT Plus/Pro, GitHub Copilot, or SuperGrok / X Premium.
+   - Connect during CutiePi onboarding with a provider API key or with ChatGPT Plus/Pro, GitHub Copilot, or SuperGrok / X Premium.
    - Defer model setup and verify infrastructure only. Make clear that bots cannot answer until a model is connected.
 3. Do I want remote computers instead of local Docker? If yes, choose E2B (`E2B_API_KEY`), Daytona (`DAYTONA_API_KEY`), or Box (`BOX_API_KEY`) and set `SANDBOX_PROVIDER` accordingly. If no, keep the default `SANDBOX_PROVIDER=docker` (local computers via the in-stack supervisor).
 
@@ -38,13 +38,13 @@ Setup:
 
 1. Create the directory if needed and enter it.
 2. Download and inspect this installer (do not clone the repository):
-   https://raw.githubusercontent.com/elie222/rakazo/main/infra/compose/install-images.sh
-   If that host is unreachable, use a mirror URL (e.g. set `RAKAZO_INSTALLER_URL` to
-   `https://example.com/mirror/rakazo/infra/compose/install-images.sh` and curl that instead).
+   https://raw.githubusercontent.com/elie222/cutie-pi/main/infra/compose/install-images.sh
+   If that host is unreachable, use a mirror URL (e.g. set `CUTIE_PI_INSTALLER_URL` to
+   `https://example.com/mirror/cutie-pi/infra/compose/install-images.sh` and curl that instead).
 3. Run `bash install-images.sh --prepare-only`. It downloads the Compose and environment example
    files, then creates `.env` with all required random secrets when one does not already exist.
-   Optional: set `RAKAZO_DOWNLOAD_BASE` to a generic mirror of `infra/compose`, and/or use
-   `--local` / `RAKAZO_DOWNLOAD_SKIP_EXISTING=1` when Compose files are already present locally.
+   Optional: set `CUTIE_PI_DOWNLOAD_BASE` to a generic mirror of `infra/compose`, and/or use
+   `--local` / `CUTIE_PI_DOWNLOAD_SKIP_EXISTING=1` when Compose files are already present locally.
    See docs/self-host.md (Restricted networks / mirror downloads).
 4. Preserve existing values. Keep `SANDBOX_PROVIDER=docker` unless I chose a remote computer
    provider, and add only the provider or model keys I selected.
@@ -68,9 +68,9 @@ When finished, report the directory path, effective Docker/Compose versions, con
 Use this for development, Docker sandboxes on the host, or Electron.
 
 ```text
-Set up Rakazo locally and leave it running in a usable state.
+Set up CutiePi locally and leave it running in a usable state.
 
-Repository: https://github.com/elie222/rakazo.git
+Repository: https://github.com/elie222/cutie-pi.git
 
 Work like a careful onboarding engineer: perform the setup yourself, explain only decisions or blockers, and verify the product through the UI rather than stopping after dependency installation.
 
@@ -84,10 +84,10 @@ Safety rules:
 
 Before making changes, ask me these concise questions:
 
-1. Should you clone into the current directory, or what parent directory should contain `rakazo`? If you are already inside a Rakazo checkout, offer to use it without recloning.
+1. Should you clone into the current directory, or what parent directory should contain `cutie-pi`? If you are already inside a CutiePi checkout, offer to use it without recloning.
 2. How should models be connected?
    - Add a deployment-wide `OPENROUTER_API_KEY` to `.env`.
-   - Connect during Rakazo onboarding with a provider API key or with ChatGPT Plus/Pro, GitHub Copilot, or SuperGrok / X Premium.
+   - Connect during CutiePi onboarding with a provider API key or with ChatGPT Plus/Pro, GitHub Copilot, or SuperGrok / X Premium.
    - Defer model setup and verify infrastructure only. Make clear that bots cannot answer until a model is connected.
 3. Do I want a managed app catalog? If yes, choose Composio (`COMPOSIO_API_KEY`) or Pipedream Connect (`PIPEDREAM_CLIENT_ID`, `PIPEDREAM_CLIENT_SECRET`, and `PIPEDREAM_PROJECT_ID`); otherwise leave them empty. Explain that this is optional and that users can still add Treg, HTTPS MCP, or OpenAPI sources in the app.
 4. Set up the web app only (recommended), or also launch the Electron desktop shell after the web stack works?
@@ -137,7 +137,7 @@ Verification:
 - Open the Agent computer pane and confirm the Docker computer reaches `running` and renders its desktop.
 - Open Integrations. If neither managed catalog was configured, confirm the view still offers Treg, HTTPS MCP, and OpenAPI sources. If one was configured, verify its app catalog loads without exposing any key or client secret.
 - Run `pnpm test` and `pnpm check`. Report failures with the relevant output; do not claim success if either fails.
-- If I requested Electron, leave the web stack running and then launch `pnpm --filter @rakazo/desktop dev`. Verify the shell loads the same app. Let me make the Docker-versus-This-Mac choice because This Mac grants bots access under my OS account.
+- If I requested Electron, leave the web stack running and then launch `pnpm --filter @cutie-pi/desktop dev`. Verify the shell loads the same app. Let me make the Docker-versus-This-Mac choice because This Mac grants bots access under my OS account.
 
 When finished, report:
 

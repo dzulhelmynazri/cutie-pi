@@ -3,7 +3,7 @@ import { activeBotId, captureScreenshot, completeOnboarding, rpc, signup } from 
 
 test("shows peer chips in transcript and opens view-only peer chat", async ({ page }, testInfo) => {
   const stamp = Date.now();
-  await signup(page, `peer-msg-${stamp}@rakazo.test`, "password12", "Peer Msg");
+  await signup(page, `peer-msg-${stamp}@cutie-pi.test`, "password12", "Peer Msg");
   await completeOnboarding(page);
   await page.goto("/app");
   await page.waitForURL(/\/app\/[^/]+$/);
@@ -55,7 +55,7 @@ test("shows peer chips in transcript and opens view-only peer chat", async ({ pa
   await expect(chip).toBeVisible({ timeout: 30_000 });
   await expect(chip.getByText(/Messaged|Message from/)).toBeVisible();
   await expect(chip).toHaveAccessibleName(/Messaged Researcher|Message from Researcher/);
-  await expect(chip.locator(".rakazo-bot-avatar")).toBeVisible();
+  await expect(chip.locator(".cutie-pi-bot-avatar")).toBeVisible();
   await expect(chip).not.toContainText("{peer}");
   // User bubble still contains the phrase; peer body must not appear outside the chip.
   await expect(chip).not.toContainText("peer-exchange-alpha");

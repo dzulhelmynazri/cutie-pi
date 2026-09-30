@@ -1,6 +1,6 @@
 import { spawn } from "node:child_process";
 import path from "node:path";
-import type { DesktopSetupLink } from "@rakazo/contracts";
+import type { DesktopSetupLink } from "@cutie-pi/contracts";
 
 /** Pages the setup window may open when Docker is missing. Nothing is ever installed by the app. */
 export const DOCKER_INSTALL_LINKS: Record<DesktopSetupLink, string> = {
@@ -43,7 +43,7 @@ export function dockerBinaryCandidates(platform: string, env: NodeJS.ProcessEnv)
 }
 
 /**
- * `RAKAZO_DOCKER_BINARY` is a test hook and the only candidate when set, so a
+ * `CUTIE_PI_DOCKER_BINARY` is a test hook and the only candidate when set, so a
  * fake docker in CI can never fall through to a real daemon.
  */
 export function resolveDockerBinary(
@@ -51,7 +51,7 @@ export function resolveDockerBinary(
   env: NodeJS.ProcessEnv,
   exists: (file: string) => boolean,
 ): string | null {
-  const override = env.RAKAZO_DOCKER_BINARY?.trim();
+  const override = env.CUTIE_PI_DOCKER_BINARY?.trim();
   if (override) return exists(override) ? override : null;
   return dockerBinaryCandidates(platform, env).find((candidate) => exists(candidate)) ?? null;
 }

@@ -1,4 +1,4 @@
-import { encodeTerminalInput, encodeTerminalResize } from "@rakazo/contracts";
+import { encodeTerminalInput, encodeTerminalResize } from "@cutie-pi/contracts";
 import { afterEach, describe, expect, it } from "vitest";
 import { FakeTerminalGateway } from "./fake-terminal.js";
 
@@ -8,7 +8,7 @@ afterEach(() => {
 });
 
 async function connect(
-  cwd = "/home/rakazo/bots/bot-1",
+  cwd = "/home/cutie-pi/bots/bot-1",
   gateway = new FakeTerminalGateway(),
   lease = "lease-1",
 ) {
@@ -59,7 +59,7 @@ describe("fake terminal gateway", () => {
     const output = await waitFor(/command not found\r\n\$ $/);
     expect(output).toContain("$ echo hello\r\nhello\r\n");
     expect(output).toContain("$ stty size\r\n40 132\r\n");
-    expect(output).toContain("$ pwd\r\n/home/rakazo/bots/bot-1\r\n");
+    expect(output).toContain("$ pwd\r\n/home/cutie-pi/bots/bot-1\r\n");
     expect(output).toContain("fake-shell: ls: command not found");
   });
 

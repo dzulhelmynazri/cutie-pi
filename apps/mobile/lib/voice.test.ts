@@ -45,7 +45,7 @@ describe("mobile speech", () => {
       apiBase: "https://support.example",
       headers: {
         authorization: "Bearer support-token",
-        "x-rakazo-space-id": "space-support",
+        "x-cutie-pi-space-id": "space-support",
       },
     });
     vi.mocked(rpc).mockImplementation(async (proc) => {
@@ -73,7 +73,7 @@ describe("mobile speech", () => {
       apiBase: "https://support.example",
       headers: {
         authorization: "Bearer support-token",
-        "x-rakazo-space-id": "space-support",
+        "x-cutie-pi-space-id": "space-support",
       },
     };
     expect(rpc).toHaveBeenCalledWith(

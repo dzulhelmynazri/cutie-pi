@@ -1,4 +1,4 @@
-import type { ModelCatalogEntry } from "@rakazo/contracts";
+import type { ModelCatalogEntry } from "@cutie-pi/contracts";
 import { describe, expect, it } from "vitest";
 import { featuredModelProviders, selectedProviderOutsideSearchResults } from "./model-providers.js";
 

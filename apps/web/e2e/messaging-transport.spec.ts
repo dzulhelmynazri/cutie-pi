@@ -48,7 +48,7 @@ function injectTransportMessage(body: ThreadPayload, stamp: number) {
 
 test("labels a Sendblue group message with its actual transport", async ({ page }, testInfo) => {
   const stamp = Date.now();
-  await signup(page, `messaging-transport-${stamp}@rakazo.test`, "password12", "Transport E2E");
+  await signup(page, `messaging-transport-${stamp}@cutie-pi.test`, "password12", "Transport E2E");
   await completeOnboarding(page);
   await page.goto("/app");
   await page.waitForURL(/\/app\/[^/]+$/);

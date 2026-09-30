@@ -271,7 +271,7 @@ else:
             },
           },
         );
-        expect(comment).toContain("<!-- rakazo-playwright-screenshots -->");
+        expect(comment).toContain("<!-- cutie-pi-playwright-screenshots -->");
         expect(existsSync(path.join(published, "prs/42/index.html"))).toBe(true);
       }
       expect(existsSync(env.ATTACK_MARKER)).toBe(false);

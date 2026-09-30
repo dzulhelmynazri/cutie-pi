@@ -120,9 +120,9 @@ jobs:
           node-version: 22
       - run: pnpm install --frozen-lockfile
       - name: Build renderer and Electron main process
-        run: pnpm --filter @rakazo/web build && pnpm --filter @rakazo/desktop build
+        run: pnpm --filter @cutie-pi/web build && pnpm --filter @cutie-pi/desktop build
         env:
-          RAKAZO_ALLOW_DEV_SECRETS: "1"
+          CUTIE_PI_ALLOW_DEV_SECRETS: "1"
 
       - name: Require macOS signing and notarization credentials
         if: runner.os == 'macOS'
@@ -153,7 +153,7 @@ jobs:
           APPLE_API_ISSUER: ${{ secrets.APPLE_API_ISSUER }}
           APPLE_API_KEY: ${{ runner.temp }}/apple-api-key.p8
         run: >-
-          pnpm --filter @rakazo/desktop exec electron-builder
+          pnpm --filter @cutie-pi/desktop exec electron-builder
           --mac --universal --publish never -c.forceCodeSigning=true
       - name: Remove the App Store Connect API key from the runner
         if: always() && runner.os == 'macOS'
@@ -166,13 +166,13 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          app="apps/desktop/out/mac-universal/Rakazo.app"
+          app="apps/desktop/out/mac-universal/CutiePi.app"
           codesign --verify --deep --strict --verbose=2 "$app"
           xcrun stapler validate "$app"
           spctl --assess --type execute --verbose=2 "$app"
           grep -Fqx "provider: github" "$app/Contents/Resources/app-update.yml"
           grep -Fqx "owner: elie222" "$app/Contents/Resources/app-update.yml"
-          grep -Fqx "repo: rakazo" "$app/Contents/Resources/app-update.yml"
+          grep -Fqx "repo: cutie-pi" "$app/Contents/Resources/app-update.yml"
 
       - name: Require Windows signing credentials
         if: runner.os == 'Windows'
@@ -190,7 +190,7 @@ jobs:
           WIN_CSC_LINK: ${{ secrets.DESKTOP_WIN_CSC_LINK }}
           WIN_CSC_KEY_PASSWORD: ${{ secrets.DESKTOP_WIN_CSC_KEY_PASSWORD }}
         run: >-
-          pnpm --filter @rakazo/desktop exec electron-builder
+          pnpm --filter @cutie-pi/desktop exec electron-builder
           --win --x64 --publish never -c.forceCodeSigning=true
       - name: Verify Windows Authenticode signature and publisher-bound update feed
         if: runner.os == 'Windows'
@@ -213,7 +213,7 @@ jobs:
             throw "Windows update config is not bound to the signing publisher."
           }
           $feed = Get-Content -Raw $config
-          foreach ($expected in @("provider: github", "owner: elie222", "repo: rakazo")) {
+          foreach ($expected in @("provider: github", "owner: elie222", "repo: cutie-pi")) {
             if ($feed -notmatch "(?m)^$([regex]::Escape($expected))\r?$") {
               throw "Windows update config missing '$expected'."
             }
@@ -222,7 +222,7 @@ jobs:
       - name: Package x64 Linux AppImage
         if: runner.os == 'Linux'
         run: >-
-          pnpm --filter @rakazo/desktop exec electron-builder
+          pnpm --filter @cutie-pi/desktop exec electron-builder
           --linux --x64 --publish never
       - name: Verify Linux update feed is pinned to the official GitHub channel
         if: runner.os == 'Linux'
@@ -239,7 +239,7 @@ jobs:
           test -f "$config"
           grep -Fqx "provider: github" "$config"
           grep -Fqx "owner: elie222" "$config"
-          grep -Fqx "repo: rakazo" "$config"
+          grep -Fqx "repo: cutie-pi" "$config"
           test -f apps/desktop/out/latest-linux.yml
           grep -Fqx "version: $RELEASE_VERSION" apps/desktop/out/latest-linux.yml
 
@@ -329,7 +329,7 @@ jobs:
           RELEASE_TAG: ${{ needs.validate.outputs.tag }}
         run: >-
           gh release create "$RELEASE_TAG" release-artifacts/*
-          --draft --generate-notes --title "Rakazo $RELEASE_TAG" --verify-tag
+          --draft --generate-notes --title "CutiePi $RELEASE_TAG" --verify-tag
       - name: Publish the completed release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

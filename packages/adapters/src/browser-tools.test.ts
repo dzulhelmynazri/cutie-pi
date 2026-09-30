@@ -1,4 +1,4 @@
-import type { AdapterContext, ComputerRef } from "@rakazo/adapter-kit";
+import type { AdapterContext, ComputerRef } from "@cutie-pi/adapter-kit";
 import { describe, expect, it } from "vitest";
 import {
   browserActFromTool,

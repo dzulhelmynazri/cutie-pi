@@ -1,4 +1,4 @@
-import type { AutoReviewProvider, AutoReviewRequest, AutoReviewResult } from "@rakazo/adapter-kit";
+import type { AutoReviewProvider, AutoReviewRequest, AutoReviewResult } from "@cutie-pi/adapter-kit";
 import type { LlmAutoReviewOptions } from "./auto-review.js";
 import {
   autoReviewMinConfidence,
@@ -23,7 +23,7 @@ export type CreateAutoReviewProviderOptions = {
 };
 
 /**
- * Construct the Auto Review adapter selected by `RAKAZO_AUTO_REVIEW_PROVIDER`.
+ * Construct the Auto Review adapter selected by `CUTIE_PI_AUTO_REVIEW_PROVIDER`.
  * `jev` needs TYPESAFE_API_KEY; `llm` wraps the existing JSON judge; `scripted` is offline.
  */
 export function createAutoReviewProvider(
@@ -39,7 +39,7 @@ export function createAutoReviewProvider(
         apiKey,
         fetch: options.fetch,
         timeoutMs: options.timeoutMs ?? autoReviewTimeoutMs(env),
-        model: options.model ?? env.RAKAZO_AUTO_REVIEW_MODEL?.trim() ?? DEFAULT_JEV_MODEL,
+        model: options.model ?? env.CUTIE_PI_AUTO_REVIEW_MODEL?.trim() ?? DEFAULT_JEV_MODEL,
         minConfidence: options.minConfidence ?? autoReviewMinConfidence(env),
       });
     }

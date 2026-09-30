@@ -1,4 +1,4 @@
-import type { ThreadSnapshot } from "@rakazo/contracts";
+import type { ThreadSnapshot } from "@cutie-pi/contracts";
 import { describe, expect, it, vi } from "vitest";
 import {
   readSeenRunErrorIds,
@@ -112,7 +112,7 @@ describe("seen run error storage", () => {
   it("does not refresh or prune an ID that is already recorded", () => {
     const values = new Map<string, string>();
     for (let index = 0; index < SEEN_RUN_ERROR_LIMIT; index += 1) {
-      values.set(`rakazo:seen-run-error:run-${index}`, String(index + 1));
+      values.set(`cutie-pi:seen-run-error:run-${index}`, String(index + 1));
     }
     const currentStorage = storage(values);
     const setItem = vi.fn(currentStorage.setItem);

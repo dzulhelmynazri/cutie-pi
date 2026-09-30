@@ -1,4 +1,4 @@
-import { RESPONSE_STREAMING_STORAGE_KEY } from "@rakazo/core";
+import { RESPONSE_STREAMING_STORAGE_KEY } from "@cutie-pi/core";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const store = new Map<string, string>();

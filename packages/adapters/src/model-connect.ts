@@ -1,6 +1,6 @@
 import { getSupportedThinkingLevels } from "@earendil-works/pi-ai";
-import type { ModelConnectInput, ModelCredential, ThinkingLevel } from "@rakazo/contracts";
-import { OPENAI_COMPATIBLE_PROVIDER_ID as CONTRACT_OPENAI_COMPAT } from "@rakazo/contracts";
+import type { ModelConnectInput, ModelCredential, ThinkingLevel } from "@cutie-pi/contracts";
+import { OPENAI_COMPATIBLE_PROVIDER_ID as CONTRACT_OPENAI_COMPAT } from "@cutie-pi/contracts";
 import { modelIdSupportsImages, updateModelImageCapabilities } from "./model-vision.js";
 import {
   CHATGPT_OAUTH_PROVIDER,

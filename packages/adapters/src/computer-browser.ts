@@ -12,7 +12,7 @@ import type {
   PageBrowserCommand,
   PageBrowserResult,
   SandboxProvider,
-} from "@rakazo/adapter-kit";
+} from "@cutie-pi/adapter-kit";
 import { FakeBrowserProvider, type FakeBrowserProviderOptions } from "./fake-browser.js";
 
 const DETACHED_MESSAGE =
@@ -31,7 +31,7 @@ export type LivePageBrowserDriver = (
  *
  * Fake computers (and the fake sandbox) use the in-process DOM session.
  * Real computers drive the live Chrome already on the graphical display via
- * CDP (`rakazo-page-browser`). If that path cannot operate, return
+ * CDP (`cutie-pi-page-browser`). If that path cannot operate, return
  * `fallback: "computer_act"` — never report success against a detached DOM.
  */
 export class ComputerBrowserProvider implements BrowserProvider {

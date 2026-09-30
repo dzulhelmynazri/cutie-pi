@@ -4,9 +4,9 @@ import {
   type SearchHit,
   type SpaceBot,
   type SpaceGroup,
-} from "@rakazo/contracts";
-import { ACTIVE_RUN_STATUSES } from "@rakazo/core";
-import { botColors } from "@rakazo/ui-tokens";
+} from "@cutie-pi/contracts";
+import { ACTIVE_RUN_STATUSES } from "@cutie-pi/core";
+import { botColors } from "@cutie-pi/ui-tokens";
 import { Redirect, useFocusEffect, useRouter } from "expo-router";
 import { type ReactNode, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {

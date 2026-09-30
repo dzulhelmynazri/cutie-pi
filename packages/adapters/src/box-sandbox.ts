@@ -24,8 +24,8 @@ import type {
   ScreenRequest,
   ScreenSession,
   TerminalRequest,
-} from "@rakazo/adapter-kit";
-import { boundedSandboxCommandTimeoutMs } from "@rakazo/core";
+} from "@cutie-pi/adapter-kit";
+import { boundedSandboxCommandTimeoutMs } from "@cutie-pi/core";
 import { boxResponseError, wrapBoxCall } from "./box-errors.js";
 import { normalizeWorkspacePath, shellQuote, workspacePath } from "./computer-support.js";
 import {
@@ -36,7 +36,7 @@ import { LinuxDesktop, PREPARE_LINUX_DESKTOP } from "./linux-desktop.js";
 import { withAbort } from "./web-ssrf.js";
 
 const BOX_API_BASE = "https://ascii.dev/api/box/v1";
-const BOX_WORKSPACE = "/home/user/rakazo-home";
+const BOX_WORKSPACE = "/home/user/cutie-pi-home";
 const BOX_BROWSER_PROFILES = `${BOX_WORKSPACE}/.browser-profiles`;
 const BOX_READY_TIMEOUT_MS = 5 * 60_000;
 const BOX_API_COMMAND_TIMEOUT_SECONDS = 600;
@@ -194,8 +194,8 @@ export class BoxSandboxProvider implements SandboxProvider {
           ttlSeconds: BOX_TTL_SECONDS,
           noEnv: true,
           env: {
-            RAKAZO_BOT_ID: request.botId,
-            RAKAZO_SANDBOX: "computer",
+            CUTIE_PI_BOT_ID: request.botId,
+            CUTIE_PI_SANDBOX: "computer",
           },
         },
       },
@@ -597,7 +597,7 @@ export class BoxSandboxProvider implements SandboxProvider {
     timeoutMs: number,
     signal?: AbortSignal,
   ): Promise<BoxCommandResult> {
-    const marker = `/tmp/rakazo-command-${randomUUID()}.completed-124`;
+    const marker = `/tmp/cutie-pi-command-${randomUUID()}.completed-124`;
     const wrapped = timeoutCommand(command, timeoutMs, marker);
     const timeoutSeconds = Math.ceil(timeoutMs / 1_000);
     const detached = timeoutSeconds + 5 > BOX_API_COMMAND_TIMEOUT_SECONDS;
@@ -668,7 +668,7 @@ export class BoxSandboxProvider implements SandboxProvider {
   }
 
   private async terminateCommand(id: string, marker: string): Promise<void> {
-    const pattern = marker.replace("rakazo", "[r]akazo");
+    const pattern = marker.replace("cutie-pi", "[r]akazo");
     await this.rawCommand(
       id,
       `pkill -TERM -f ${shellQuote(pattern)} 2>/dev/null || true; sleep 0.2; pkill -KILL -f ${shellQuote(pattern)} 2>/dev/null || true`,
@@ -799,18 +799,18 @@ function boxCwd(cwd: string | undefined): string {
     !cwd ||
     cwd === "." ||
     cwd === "/" ||
-    cwd === "/home/rakazo" ||
+    cwd === "/home/cutie-pi" ||
     cwd === "/home/user" ||
     cwd === BOX_WORKSPACE
   ) {
-    return "rakazo-home";
+    return "cutie-pi-home";
   }
   const relative = cwd.startsWith(`${BOX_WORKSPACE}/`)
     ? cwd.slice(BOX_WORKSPACE.length + 1)
-    : cwd.startsWith("/home/rakazo/")
-      ? cwd.slice("/home/rakazo/".length)
+    : cwd.startsWith("/home/cutie-pi/")
+      ? cwd.slice("/home/cutie-pi/".length)
       : cwd;
-  return path.posix.join("rakazo-home", normalizeWorkspacePath(relative));
+  return path.posix.join("cutie-pi-home", normalizeWorkspacePath(relative));
 }
 
 function configureBoxWorkspaceCommand(): string {

@@ -1,7 +1,7 @@
 import { i18n } from "@lingui/core";
 import { t } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
-import { ChatMarkdown, LinkifiedText } from "@rakazo/chat-ui/web";
+import { ChatMarkdown, LinkifiedText } from "@cutie-pi/chat-ui/web";
 import type {
   AgentSkillCatalogEntry,
   Bot,
@@ -22,7 +22,7 @@ import type {
   ThreadMessage,
   ThreadSnapshot,
   VoiceStatus,
-} from "@rakazo/contracts";
+} from "@cutie-pi/contracts";
 import {
   ATTACHMENT_ALLOWED_MIME_TYPES,
   ATTACHMENT_MAX_BYTES,
@@ -31,7 +31,7 @@ import {
   MESSAGE_REACTIONS,
   type MessageReaction,
   normalizeCreateBotProfile,
-} from "@rakazo/contracts";
+} from "@cutie-pi/contracts";
 import {
   attachmentsForThread,
   buildComposerMentionOptions,
@@ -62,7 +62,7 @@ import {
   truncateSlashDescription,
   userVisibleMessages,
   withLiveStreamingProgress,
-} from "@rakazo/core";
+} from "@cutie-pi/core";
 import {
   AvatarStyleProvider,
   BotAvatar,
@@ -81,7 +81,7 @@ import {
   PopoverContent,
   PopoverTrigger,
   resolvePersonaColorDef,
-} from "@rakazo/ui-web";
+} from "@cutie-pi/ui-web";
 import {
   ArrowDown,
   ArrowUp,
@@ -317,12 +317,12 @@ function voiceStatusRefreshTimeout(): Promise<never> {
 
 function collapsedSidebarSectionsStorageKey(userId: string | null | undefined): string | null {
   if (!userId) return null;
-  return `rakazo:collapsed-sidebar-sections:${userId}`;
+  return `cutie-pi:collapsed-sidebar-sections:${userId}`;
 }
 
 function collapsedRosterParentsStorageKey(userId: string | null | undefined): string | null {
   if (!userId) return null;
-  return `rakazo:collapsed-roster-parents:${userId}`;
+  return `cutie-pi:collapsed-roster-parents:${userId}`;
 }
 
 function readCollapsedIdSet(storageKey: string | null): Set<string> {

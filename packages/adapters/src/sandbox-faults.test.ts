@@ -1,7 +1,7 @@
 import { mkdtemp, realpath, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
-import type { PortableFile, SandboxProvider } from "@rakazo/adapter-kit";
+import type { PortableFile, SandboxProvider } from "@cutie-pi/adapter-kit";
 import { afterEach, describe, expect, it } from "vitest";
 import { BoxSandboxEmulator } from "./box-emulator.js";
 import { DaytonaSandboxEmulator } from "./daytona-emulator.js";
@@ -34,7 +34,7 @@ describe.each([
   [
     "desktop",
     async () => {
-      const root = await mkdtemp(path.join(tmpdir(), "rakazo-sandbox-faults-"));
+      const root = await mkdtemp(path.join(tmpdir(), "cutie-pi-sandbox-faults-"));
       temporaryRoots.push(root);
       return new DesktopSandboxProvider({ root: await realpath(root) });
     },
@@ -275,7 +275,7 @@ function faultOnce(provider: SandboxProvider, methods: FaultableMethod[]): Sandb
 }
 
 async function providerSet(label: string): Promise<Array<[string, SandboxProvider]>> {
-  const root = await mkdtemp(path.join(tmpdir(), `rakazo-sandbox-transfer-${label}-`));
+  const root = await mkdtemp(path.join(tmpdir(), `cutie-pi-sandbox-transfer-${label}-`));
   temporaryRoots.push(root);
   return [
     ["fake", new FakeSandboxProvider()],

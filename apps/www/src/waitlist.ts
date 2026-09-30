@@ -64,7 +64,7 @@ export async function captureWaitlistSignup(
         properties: {
           $process_person_profile: true,
           $set: { email, waitlist_status: "joined" },
-          $set_once: { waitlist_joined_at: joinedAt, waitlist_source: "rakazo.com" },
+          $set_once: { waitlist_joined_at: joinedAt, waitlist_source: "cutie-pi.com" },
         },
         timestamp: joinedAt,
       }),

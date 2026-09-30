@@ -15,21 +15,21 @@ afterEach(() => {
 });
 
 function fixture() {
-  const root = mkdtempSync(path.join(tmpdir(), "rakazo-profile-test-"));
+  const root = mkdtempSync(path.join(tmpdir(), "cutie-pi-profile-test-"));
   fixtures.push(root);
   const home = path.join(root, "home");
   const runtime = path.join(root, "runtime");
   const shared = path.join(home, ".browser-profiles/chromium");
   mkdirSync(shared, { recursive: true });
   mkdirSync(runtime);
-  const profile = (bot: string) => browserProfilePathForScreen(bot).replace("/home/rakazo", home);
+  const profile = (bot: string) => browserProfilePathForScreen(bot).replace("/home/cutie-pi", home);
   const run = (script: string) => {
     // GNU cp's reflink optimization has no macOS equivalent; all copy semantics remain intact.
     const portable =
       process.platform === "darwin" ? script.replaceAll(" --reflink=auto", "") : script;
     return spawnSync(
       "bash",
-      ["-eu", "-c", portable.replaceAll("/tmp/rakazo", runtime).replaceAll("/home/rakazo", home)],
+      ["-eu", "-c", portable.replaceAll("/tmp/cutie-pi", runtime).replaceAll("/home/cutie-pi", home)],
       {
         encoding: "utf8",
         timeout: 10_000,

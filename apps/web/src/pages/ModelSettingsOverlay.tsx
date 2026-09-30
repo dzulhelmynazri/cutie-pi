@@ -1,5 +1,5 @@
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
-import type { Me, ThinkingLevel } from "@rakazo/contracts";
+import type { Me, ThinkingLevel } from "@cutie-pi/contracts";
 import {
   DEFAULT_MODEL_CONTEXT_WINDOW,
   DEFAULT_MODEL_MAX_TOKENS,
@@ -11,8 +11,8 @@ import {
   parseModelContextWindow,
   parseModelMaxImagesPerPrompt,
   parseModelMaxTokens,
-} from "@rakazo/contracts";
-import { createModelProbe, initialModelProbeState } from "@rakazo/core";
+} from "@cutie-pi/contracts";
+import { createModelProbe, initialModelProbeState } from "@cutie-pi/core";
 import {
   Button,
   Dialog,
@@ -25,7 +25,7 @@ import {
   ModelThinkingOptions,
   NativeSelect,
   NativeSelectOption,
-} from "@rakazo/ui-web";
+} from "@cutie-pi/ui-web";
 import { ChevronDown, X } from "lucide-react";
 import {
   type KeyboardEvent as ReactKeyboardEvent,
@@ -380,7 +380,7 @@ export function ModelSettingsOverlay({
   ) : localOwner ? (
     <Trans>Models for the server owner’s default space.</Trans>
   ) : (
-    <Trans>Choose which connected model Rakazo uses.</Trans>
+    <Trans>Choose which connected model CutiePi uses.</Trans>
   );
 
   const body = (
@@ -500,7 +500,7 @@ export function ModelSettingsOverlay({
                         <Trans>Setup help</Trans>
                       </summary>
                       <p className="mt-1">
-                        {t`Paste the OpenAI-compatible address from your server. Rakazo adds /v1 if needed.`}
+                        {t`Paste the OpenAI-compatible address from your server. CutiePi adds /v1 if needed.`}
                       </p>
                     </details>
                     <div className="mt-3 flex items-center gap-2">
@@ -837,7 +837,7 @@ export function ModelSettingsOverlay({
               {selected.auth === "oauth" && !subscriptionSignIn ? (
                 <p className="mt-5 text-sm leading-[1.5] text-muted-foreground">
                   <Trans>
-                    This subscription sign-in is not available in Rakazo yet. Use a deployment
+                    This subscription sign-in is not available in CutiePi yet. Use a deployment
                     credential or choose another provider.
                   </Trans>
                 </p>

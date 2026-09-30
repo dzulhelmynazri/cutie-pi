@@ -37,7 +37,7 @@ interpolates it into `DATABASE_URL` the same way the images stack does. Hex from
 `openssl rand` is safe; characters such as `@ : / ? # %` are not.
 
 Existing source-checkout `pgdata` volumes keep the user, password, and database
-from first init (often the former hardcoded `rakazo` / `rakazo`). Keep those
+from first init (often the former hardcoded `cutie-pi` / `cutie-pi`). Keep those
 values in `.env`, or change them in place with `ALTER ROLE` / rename. Recreate
 the volume only after a backup (or when the data is disposable);
 `docker compose down -v` deletes all Postgres state.
@@ -56,7 +56,7 @@ secret into multiple keys):
 - `ENCRYPTION_KEY`
 - `SCREEN_PROXY_SECRET`
 - `SANDBOX_SUPERVISOR_TOKEN`
-- `RAKAZO_UPDATER_TOKEN` (only if the updater profile is enabled; ≥32 chars,
+- `CUTIE_PI_UPDATER_TOKEN` (only if the updater profile is enabled; ≥32 chars,
   also distinct from the four above)
 
 Rotating `ENCRYPTION_KEY` after credentials were stored makes old ciphertext
@@ -70,7 +70,7 @@ From `.env.images.example` (images installer). Leave blank if unused:
 | Key(s) | When needed |
 | --- | --- |
 | `OPENROUTER_API_KEY` | Deployment-wide OpenRouter models |
-| `TYPESAFE_API_KEY` | Optional TypeSafe Jev Auto Review verifier (`RAKAZO_AUTO_REVIEW_PROVIDER=jev`) |
+| `TYPESAFE_API_KEY` | Optional TypeSafe Jev Auto Review verifier (`CUTIE_PI_AUTO_REVIEW_PROVIDER=jev`) |
 | `COMPOSIO_API_KEY` | Composio managed catalog |
 | `E2B_API_KEY` / `DAYTONA_API_KEY` / `BOX_API_KEY` | Remote computers when `SANDBOX_PROVIDER` is not `docker` |
 | `SMTP_URL` / `EMAIL_FROM` | Password-recovery email |

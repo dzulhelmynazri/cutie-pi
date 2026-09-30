@@ -5,7 +5,7 @@ test("account settings avatar style previews differ for robot and organic", asyn
   page,
 }, testInfo) => {
   const stamp = Date.now();
-  await signup(page, `avatar-style-${stamp}@rakazo.test`, "password12", "Avatar style QA");
+  await signup(page, `avatar-style-${stamp}@cutie-pi.test`, "password12", "Avatar style QA");
   await completeOnboarding(page);
 
   const settings = await openUserSettings(page);
@@ -16,10 +16,10 @@ test("account settings avatar style previews differ for robot and organic", asyn
   await expect(robot).toBeVisible();
   await expect(organic).toBeVisible();
   await expect(robot).toHaveAttribute("aria-pressed", "true");
-  await expect(robot.locator(".rakazo-bot-avatar")).toBeVisible();
-  await expect(organic.locator(".rakazo-organic-avatar")).toBeVisible();
-  await expect(robot.locator(".rakazo-organic-avatar")).toHaveCount(0);
-  await expect(organic.locator(".rakazo-bot-avatar")).toHaveCount(0);
+  await expect(robot.locator(".cutie-pi-bot-avatar")).toBeVisible();
+  await expect(organic.locator(".cutie-pi-organic-avatar")).toBeVisible();
+  await expect(robot.locator(".cutie-pi-organic-avatar")).toHaveCount(0);
+  await expect(organic.locator(".cutie-pi-bot-avatar")).toHaveCount(0);
 
   const robotMarkup = await robot
     .locator("svg")

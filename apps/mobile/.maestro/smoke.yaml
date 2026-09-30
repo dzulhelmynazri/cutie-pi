@@ -1,21 +1,21 @@
-appId: com.rakazo.app
-name: Rakazo mobile smoke
+appId: com.cutie-pi.app
+name: CutiePi mobile smoke
 ---
 - launchApp:
     clearState: true
 
-- assertVisible: "Sign in to Rakazo"
+- assertVisible: "Sign in to CutiePi"
 - assertVisible: "Sign up"
 - tapOn: "Sign up"
-- assertVisible: "Sign up for Rakazo"
+- assertVisible: "Sign up for CutiePi"
 - assertVisible: "Name"
 - tapOn: "Sign in"
-- assertVisible: "Sign in to Rakazo"
+- assertVisible: "Sign in to CutiePi"
 - tapOn: "Email"
-- inputText: ${RAKAZO_E2E_EMAIL}
+- inputText: ${CUTIE_PI_E2E_EMAIL}
 - tapOn: "Password"
-- inputText: ${RAKAZO_E2E_PASSWORD}
-- tapOn: "Sign in to Rakazo"
+- inputText: ${CUTIE_PI_E2E_PASSWORD}
+- tapOn: "Sign in to CutiePi"
 - tapOn: "Sign in"
 
 - extendedWaitUntil:
@@ -24,7 +24,7 @@ name: Rakazo mobile smoke
 - tapOn: "New bot"
 - assertVisible: "Name this bot"
 - tapOn: "Name this bot"
-- inputText: ${RAKAZO_E2E_BOT_NAME}
+- inputText: ${CUTIE_PI_E2E_BOT_NAME}
 - hideKeyboard
 - tapOn: "Create"
 
@@ -32,9 +32,9 @@ name: Rakazo mobile smoke
     visible: "Message…"
     timeout: 30000
 - tapOn: "Message…"
-- inputText: ${RAKAZO_E2E_MESSAGE}
+- inputText: ${CUTIE_PI_E2E_MESSAGE}
 - pressKey: Enter
-- assertVisible: ${RAKAZO_E2E_MESSAGE}
+- assertVisible: ${CUTIE_PI_E2E_MESSAGE}
 
 - tapOn: "Bot actions"
 - tapOn: "Open computer"

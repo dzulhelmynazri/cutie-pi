@@ -1,6 +1,6 @@
 import { Trans, useLingui } from "@lingui/react/macro";
-import type { ComputerStatus } from "@rakazo/contracts";
-import { Button, Label, Popover, PopoverContent, PopoverTrigger, Textarea } from "@rakazo/ui-web";
+import type { ComputerStatus } from "@cutie-pi/contracts";
+import { Button, Label, Popover, PopoverContent, PopoverTrigger, Textarea } from "@cutie-pi/ui-web";
 import { useEffect, useRef, useState } from "react";
 import { rpc } from "../../lib/rpc";
 

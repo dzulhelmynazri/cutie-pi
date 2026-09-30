@@ -1,6 +1,6 @@
 import * as SecureStore from "expo-secure-store";
 
-export const DEVICE_VOICE_KEY = "rakazo.device-voice";
+export const DEVICE_VOICE_KEY = "cutie-pi.device-voice";
 
 export async function loadDeviceVoiceEnabled(): Promise<boolean> {
   return (await SecureStore.getItemAsync(DEVICE_VOICE_KEY)) === "1";

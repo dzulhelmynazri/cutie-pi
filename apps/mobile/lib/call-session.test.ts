@@ -1,4 +1,4 @@
-import { callIdFromClientNonce } from "@rakazo/core";
+import { callIdFromClientNonce } from "@cutie-pi/core";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { CallClip, CallDeps, CallEnded, DictationHandlers } from "./call-session";
 import {

@@ -1,4 +1,4 @@
-import { readBoundedResponseBytes } from "@rakazo/core";
+import { readBoundedResponseBytes } from "@cutie-pi/core";
 import { selectedSpaceId, withSpaceHeaders } from "./rpc.js";
 
 export type DictationMode = "hold" | "endpoint";
@@ -49,8 +49,8 @@ export function webSpeechAvailable(): boolean {
  */
 function electronSpeechHost(): boolean {
   if (typeof window !== "undefined") {
-    const host = window as Window & { rakazoDesktop?: unknown };
-    if (host.rakazoDesktop) return true;
+    const host = window as Window & { cutie-piDesktop?: unknown };
+    if (host.cutie-piDesktop) return true;
   }
   if (typeof navigator === "undefined") return false;
   const agent = navigator.userAgent;

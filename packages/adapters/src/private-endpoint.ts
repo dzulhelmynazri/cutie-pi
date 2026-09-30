@@ -1,4 +1,4 @@
-import type { PrismaClient } from "@rakazo/db";
+import type { PrismaClient } from "@cutie-pi/db";
 
 /**
  * Whether a user may reach loopback, LAN and Docker-network endpoints from the server

@@ -7,10 +7,10 @@ import type {
   ComputerRef,
   PortableFile,
   SandboxProvider,
-} from "@rakazo/adapter-kit";
-import type { ComputerMode } from "@rakazo/contracts";
-import { parseScreenLeaseId } from "@rakazo/core";
-import type { PrismaClient } from "@rakazo/db";
+} from "@cutie-pi/adapter-kit";
+import type { ComputerMode } from "@cutie-pi/contracts";
+import { parseScreenLeaseId } from "@cutie-pi/core";
+import type { PrismaClient } from "@cutie-pi/db";
 import { normalizeWorkspacePath, teamBotWorkspaceDirectory } from "./computer-support.js";
 import { LocalAgentHomeStore } from "./home.js";
 
@@ -91,7 +91,7 @@ export async function checkpointComputerWorkspace(
   if (computer.kind === "docker" && home instanceof LocalAgentHomeStore) {
     return home.revise(homeKey);
   }
-  const staging = await mkdtemp(path.join(tmpdir(), "rakazo-workspace-"));
+  const staging = await mkdtemp(path.join(tmpdir(), "cutie-pi-workspace-"));
   try {
     for await (const file of sandbox.exportWorkspace(computer, context)) {
       await writePortableFile(staging, file);

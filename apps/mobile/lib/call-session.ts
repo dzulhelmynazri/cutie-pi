@@ -5,7 +5,7 @@ import {
   isFarewell,
   latestSpokenCallReply,
   spokenMemory,
-} from "@rakazo/core";
+} from "@cutie-pi/core";
 import type { AudioRecorder } from "expo-audio";
 import { File } from "expo-file-system";
 import { useSyncExternalStore } from "react";
@@ -542,7 +542,7 @@ async function transcribeClip(clip: CallClip, signal: AbortSignal): Promise<stri
   const { apiBase, headers } = await captureApiRequestContext();
   const res = await fetch(`${apiBase}/api/voice/transcribe`, {
     method: "POST",
-    headers: { "content-type": "application/json", origin: "rakazo://", ...headers },
+    headers: { "content-type": "application/json", origin: "cutie-pi://", ...headers },
     body: JSON.stringify({ audioBase64: clip.base64, mimeType: clip.mimeType }),
     signal,
   });

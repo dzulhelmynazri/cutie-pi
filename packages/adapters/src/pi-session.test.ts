@@ -42,7 +42,7 @@ describe("Pi JSONL sessions", () => {
   });
 
   it("uses Pi's session format for context and completed messages", async () => {
-    const root = await mkdtemp(path.join(os.tmpdir(), "rakazo-pi-session-"));
+    const root = await mkdtemp(path.join(os.tmpdir(), "cutie-pi-pi-session-"));
     try {
       const recorder = new PiJsonlSessionRecorder(path.join(root, "sessions"), root);
       const session = await recorder.start({
@@ -88,10 +88,10 @@ describe("Pi JSONL sessions", () => {
       expect(records).toContainEqual(
         expect.objectContaining({
           kind: "entry",
-          customType: "rakazo_context",
+          customType: "cutie-pi_context",
           data: expect.objectContaining({
-            rakazoThreadId: "thread-1",
-            rakazoTraceId: "trace-1",
+            cutie-piThreadId: "thread-1",
+            cutie-piTraceId: "trace-1",
           }),
         }),
       );
@@ -109,7 +109,7 @@ describe("Pi JSONL sessions", () => {
   });
 
   it("keeps sessions scoped and bounded by the retention policy", async () => {
-    const root = await mkdtemp(path.join(os.tmpdir(), "rakazo-pi-retention-"));
+    const root = await mkdtemp(path.join(os.tmpdir(), "cutie-pi-pi-retention-"));
     try {
       const sessionsRoot = path.join(root, "sessions");
       const botRoot = piSessionBotRoot(sessionsRoot, "user-1", "bot-1");
@@ -146,7 +146,7 @@ describe("Pi JSONL sessions", () => {
   });
 
   it("removes bot and account session scopes", async () => {
-    const root = await mkdtemp(path.join(os.tmpdir(), "rakazo-pi-cleanup-"));
+    const root = await mkdtemp(path.join(os.tmpdir(), "cutie-pi-pi-cleanup-"));
     try {
       const sessionsRoot = path.join(root, "pi-sessions");
       const botRoot = piSessionBotRoot(sessionsRoot, "user-1", "bot-1");

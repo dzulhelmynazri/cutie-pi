@@ -6,7 +6,7 @@ import { describe, expect, it } from "vitest";
 /** The live page helper's isolated-world script, executed here rather than reimplemented. */
 function installPageHelper(url: string, html: string) {
   const source = readFileSync(
-    new URL("../../../infra/sandboxes/computer/rakazo-page-browser", import.meta.url),
+    new URL("../../../infra/sandboxes/computer/cutie-pi-page-browser", import.meta.url),
     "utf8",
   );
   const match = source.match(/EVAL_HELPERS = r"""\n([\s\S]*?)\n"""/);
@@ -39,12 +39,12 @@ function installPageHelper(url: string, html: string) {
   vm.runInContext(match[1], dom.getInternalVMContext());
   const browser = (
     domWindow as unknown as {
-      __rakazoPageBrowser: {
+      __cutie-piPageBrowser: {
         snapshot: () => { elements: Array<{ ref: string; name: string; value?: string }> };
         fill: (ref: string, value: string, origin?: string) => { url: string };
       };
     }
-  ).__rakazoPageBrowser;
+  ).__cutie-piPageBrowser;
   return { domWindow, browser };
 }
 

@@ -1,4 +1,4 @@
-import { readBoundedJsonResponse } from "@rakazo/core";
+import { readBoundedJsonResponse } from "@cutie-pi/core";
 import { GITHUB_API_REPO } from "./site";
 
 export const GITHUB_STARS_TIMEOUT_MS = 5_000;
@@ -12,7 +12,7 @@ export async function fetchGithubStars(fetchImpl: typeof fetch = fetch): Promise
       fetchImpl(GITHUB_API_REPO, {
         headers: {
           Accept: "application/vnd.github+json",
-          "User-Agent": "rakazo-www",
+          "User-Agent": "cutie-pi-www",
         },
         signal: controller.signal,
       }),
