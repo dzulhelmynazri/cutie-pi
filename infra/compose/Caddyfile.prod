@@ -1,0 +1,36 @@
+(deploy_retry) {
+	lb_try_duration 10s
+	lb_try_interval 250ms
+}
+
+{$RAKAZO_HOST:app.example.com} {
+	encode zstd gzip
+
+	# A localhost trial must not pin HTTPS onto every local dev server.
+	@hsts not host localhost 127.0.0.1
+	header @hsts Strict-Transport-Security "max-age=31536000"
+
+	handle /health {
+		reverse_proxy api:3100 {
+			import deploy_retry
+		}
+	}
+
+	handle /api/* {
+		reverse_proxy api:3100 {
+			import deploy_retry
+		}
+	}
+
+	handle /rpc/* {
+		reverse_proxy api:3100 {
+			import deploy_retry
+		}
+	}
+
+	handle {
+		reverse_proxy web:5173 {
+			import deploy_retry
+		}
+	}
+}
